@@ -25,13 +25,32 @@
               return {
                 title: "Submit TimeSheet",
                 projects: projects,
-                currentProject : null
+                currentProject : projects[0]
               };
             },
             updateCurrentProject: function(projectName) {
               console.log("updateCurrentProject " + projectName)
-              this.setState({"currentProject" : projectName});
-              console.log(this.state)
+
+              // this.state.projects.map(function (e) {
+              //   if (e.name == projectName) {
+              //     console.log("found it")
+              //     console.log(e)
+
+              //   }
+
+              // });
+
+              for (var i = 0; i < this.state.projects.length; i++) {
+                if (this.state.projects[i].name ==projectName) {
+                  console.log(this.state.projects[i])
+                  this.setState({"currentProject" : this.state.projects[i]});
+                  break;
+                }
+              }
+
+
+              // this.setState({"currentProject" : projectName});
+              // console.log(this.state)
             },
             render: function() {
               return (
@@ -92,7 +111,8 @@
             render: function() {
               return (
                 <div id="ProjectView">
-                current project :{this.props.currentProject}
+                  <p>current project :{this.props.currentProject}</p>
+                  <p>color {this.props.currentProject.color} </p>
                 </div>
               );
             }
