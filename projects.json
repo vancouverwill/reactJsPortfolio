@@ -1,2 +1,7 @@
-{"projects" :[{"name": "my first project"}, {"name" : "wings"}
-]}
+ var projects = [
+ 				{"name": "my first project", "color" : "green"}, 
+ 				{"name" : "brazil", "color" : "blue", "images" : ["brazil1.jpg", "brazil2.jpg", "brazil3.jpg"]},
+ 				{"name" : "Italy", "color" : "yellow", "images" : ["italy1.jpg", "italy2.jpg", "italy3.jpg", "italy4.jpg"]},
+ 				{"name" : "Morocco", "color" : "red", "images" : ["morocco1.jpg", "morocco2.jpg", "morocco3.jpg", "morocco4.jpg"]},
+ 				{"name" : "Japan", "color" : ""},
+ 				];

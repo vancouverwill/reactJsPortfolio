@@ -1,0 +1,14 @@
+#ProjectList 
+{
+	width: 50%;
+	float: left;
+}
+
+#ProjectView {
+	width: 50%;
+	float: left;
+}
+
+.project-title {
+	cursor: pointer;
+}

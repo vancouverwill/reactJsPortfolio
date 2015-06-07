@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="thirdparty/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
 
+    <script src="projects.json"></script>
     <script src="thirdparty/react.0.12.2.js"></script>
     <script src="thirdparty/JSXTransformer.0.12.2.js"></script>
     <script type="text/javascript" src="thirdparty/jquery.min.js" charset="utf-8"></script>
@@ -18,55 +19,88 @@
     </div>
     <script type="text/jsx">
 
-    var projects = [{"name": "my first project"}, {"name" : "wings"}];
 
-     var SimpleContainer = React.createClass({
+     var Container = React.createClass({
             getInitialState: function() {
               return {
                 title: "Submit TimeSheet",
-                email: "",
-                hours: "",
-                minutes: "",
                 projects: projects,
+                currentProject : null
               };
+            },
+            updateCurrentProject: function(projectName) {
+              console.log("updateCurrentProject " + projectName)
+              this.setState({"currentProject" : projectName});
+              console.log(this.state)
             },
             render: function() {
               return (
-                <div id="actionableItems">
-                  <h2> first react element </h2>
+                <div id="mainView">
                   <p>{this.state.title}</p>
-                  <SimpleProjectList projects={this.state.projects} />
+                  <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject}></ProjectList>
+                   <ProjectView currentProject={this.state.currentProject}></ProjectView>
                 </div>
+
               );
             }
         });
 
 
-         var SimpleProjectList = React.createClass({
+         var ProjectList = React.createClass({
             getInitialState: function() {
                 return {
                     projects : []
                 };
             },
+            handleProjectShow: function(projectName) {
+              console.log(projectName);
+              this.props.clickCurrentProject(projectName);
+            },
             render: function() {
                 console.log(this.props)
                 var loop = this.props.projects.map(function (e) {
                       return (
-                            <h3>project - {e.name}</h3>
+                            <ProjectName name={e.name} handleProjectShow={this.handleProjectShow}></ProjectName>
                         );
                     }, this);
                 return (
-                    <div>
-                        <p>SimpleProjectList</p>
+                    <div id="ProjectList">
+                        <p>Project List</p>
                         {loop}
                     </div>
             );
             }
          });
 
+         var ProjectName = React.createClass({
+            handleProjectShow: function() {
+              console.log(this.props.name);
+              this.props.handleProjectShow(this.props.name);
+            },
+            render: function() {
+              return (
+                <h3 className="project-title" onClick={this.handleProjectShow}>project - {this.props.name}</h3>
+                )
+            }
+         });
+
+         var ProjectView = React.createClass({
+            getInitialState: function() {
+                return {
+                };
+            },
+            render: function() {
+              return (
+                <div id="ProjectView">
+                current project :{this.props.currentProject}
+                </div>
+              );
+            }
+         });
+
 
         React.render(
-          <SimpleContainer />,
+          <Container />,
         document.getElementById('container')
       );
     </script>
