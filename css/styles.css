@@ -12,3 +12,15 @@
 .project-title {
 	cursor: pointer;
 }
+
+
+#ProjectView__p {
+  border: red solid;
+  width: 50%;
+  right: 0;
+  left: 50%;
+  position: absolute;
+  height: 100%;
+  top: 0px;
+}
+

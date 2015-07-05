@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html>
   <head>
     <title>Hello React</title>
@@ -7,8 +7,7 @@
     <link rel="stylesheet" href="css/styles.css" type="text/css" />
 
     <script src="projects.json"></script>
-    <script src="thirdparty/react.0.12.2.js"></script>
-    <script src="thirdparty/JSXTransformer.0.12.2.js"></script>
+    <script src="node_modules/react/dist/react-with-addons.js"></script>
     <script type="text/javascript" src="thirdparty/jquery.min.js" charset="utf-8"></script>
     <script type="text/javascript" src="thirdparty/bootstrap.min.js" charset="utf-8"></script>
 
@@ -17,112 +16,10 @@
     <h1> starting the page off right</h1>
     <div id="container">
     </div>
-    <script type="text/jsx">
+    <script src="build/portfolio.js">
 
 
-     var Container = React.createClass({
-            getInitialState: function() {
-              return {
-                title: "Submit TimeSheet",
-                projects: projects,
-                currentProject : projects[0]
-              };
-            },
-            updateCurrentProject: function(projectName) {
-              console.log("updateCurrentProject " + projectName)
 
-              // this.state.projects.map(function (e) {
-              //   if (e.name == projectName) {
-              //     console.log("found it")
-              //     console.log(e)
-
-              //   }
-
-              // });
-
-              for (var i = 0; i < this.state.projects.length; i++) {
-                if (this.state.projects[i].name ==projectName) {
-                  console.log(this.state.projects[i])
-                  this.setState({"currentProject" : this.state.projects[i]});
-                  break;
-                }
-              }
-
-
-              // this.setState({"currentProject" : projectName});
-              // console.log(this.state)
-            },
-            render: function() {
-              return (
-                <div id="mainView">
-                  <p>{this.state.title}</p>
-                  <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject}></ProjectList>
-                   <ProjectView currentProject={this.state.currentProject}></ProjectView>
-                </div>
-
-              );
-            }
-        });
-
-
-         var ProjectList = React.createClass({
-            getInitialState: function() {
-                return {
-                    projects : []
-                };
-            },
-            handleProjectShow: function(projectName) {
-              console.log(projectName);
-              this.props.clickCurrentProject(projectName);
-            },
-            render: function() {
-                console.log(this.props)
-                var loop = this.props.projects.map(function (e) {
-                      return (
-                            <ProjectName name={e.name} handleProjectShow={this.handleProjectShow}></ProjectName>
-                        );
-                    }, this);
-                return (
-                    <div id="ProjectList">
-                        <p>Project List</p>
-                        {loop}
-                    </div>
-            );
-            }
-         });
-
-         var ProjectName = React.createClass({
-            handleProjectShow: function() {
-              console.log(this.props.name);
-              this.props.handleProjectShow(this.props.name);
-            },
-            render: function() {
-              return (
-                <h3 className="project-title" onClick={this.handleProjectShow}>project - {this.props.name}</h3>
-                )
-            }
-         });
-
-         var ProjectView = React.createClass({
-            getInitialState: function() {
-                return {
-                };
-            },
-            render: function() {
-              return (
-                <div id="ProjectView">
-                  <p>current project :{this.props.currentProject}</p>
-                  <p>color {this.props.currentProject.color} </p>
-                </div>
-              );
-            }
-         });
-
-
-        React.render(
-          <Container />,
-        document.getElementById('container')
-      );
     </script>
   </body>
   </html>
