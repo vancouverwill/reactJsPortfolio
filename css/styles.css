@@ -13,14 +13,18 @@
 	cursor: pointer;
 }
 
+#ProjectViews_container__p {
+	position: absolute;
+	width: 50%;
+  	right: 0;
+}
+
 
 #ProjectView__p {
   border: red solid;
-  width: 50%;
-  right: 0;
-  left: 50%;
-  position: absolute;
-  height: 100%;
-  top: 0px;
+  
+  /*left: 50%;*/
+  height: 20%;
+  /*top: 0px;*/
 }
 

@@ -26,10 +26,10 @@ var Container = React.createClass({
             },
             render: function() {
               return (
-                <div id="mainView">
+                <div id="mainView"> 
                   <p>{this.state.title}</p>
                   <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject}></ProjectList>
-                   <ProjectView currentProject={this.state.currentProject}></ProjectView>
+                   <ProjectViews projects={this.state.projects} currentProject={this.state.currentProject}></ProjectViews>
                 </div>
 
               );
@@ -84,7 +84,7 @@ var Container = React.createClass({
             }
          });
 
-         var ProjectView = React.createClass({
+         var ProjectViews = React.createClass({
             getInitialState: function() {
 
                 return {
@@ -98,7 +98,7 @@ var Container = React.createClass({
                   var imageUrl = "url('images/" + this.props.currentProject.images[0] + "')";
 
                   console.log("imageUrl")
-                console.log(imageUrl)
+                  console.log(imageUrl)
                 }
 
                 // else {
@@ -110,11 +110,20 @@ var Container = React.createClass({
 
                   var backgroundStyles = {"background-image" : imageUrl}
 
+                  var projectsLoop = this.props.projects.map(function (e) {
+                      return (
+                            <div id="ProjectView__p" style={backgroundStyles}>
+                              <p>current project :{this.props.currentProject}</p>
+                              <p>color {this.props.currentProject.color} </p>
+                              <p>image  {imageUrl}</p>
+                            </div>
+                        );
+                    }, this);
+
+
               return (
-                <div id="ProjectView__p" style={backgroundStyles}>
-                  <p>current project :{this.props.currentProject}</p>
-                  <p>color {this.props.currentProject.color} </p>
-                  <p>image  {imageUrl}</p>
+                                <div id="ProjectViews_container__p">
+                  {projectsLoop} 
                 </div>
               );
             }
