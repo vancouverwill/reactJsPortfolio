@@ -21,6 +21,7 @@
 
 
 #ProjectView__p {
+	  background-size: 20%;
   border: red solid;
   
   /*left: 50%;*/
@@ -28,3 +29,7 @@
   /*top: 0px;*/
 }
 
+#ProjectView__p.active{
+
+	 border: black solid;
+}

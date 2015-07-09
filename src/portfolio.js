@@ -86,36 +86,49 @@ var Container = React.createClass({
 
          var ProjectViews = React.createClass({
             getInitialState: function() {
-
                 return {
                 };
             },
             render: function() {
-              if (this.props.currentProject.images !== undefined && this.props.currentProject.images[0] ) {
-                  console.log("not undefined")
-                  // this.setState({imageUrl : this.props.currentProject.images[0]})
-
-                  var imageUrl = "url('images/" + this.props.currentProject.images[0] + "')";
-
-                  console.log("imageUrl")
-                  console.log(imageUrl)
-                }
+              
 
                 // else {
                 //   var imageUrl = "none";
                 //   var imageUrl = "url('images/italy1.jpg')";
                 // }
-                console.log("imageUrl")
-                console.log(imageUrl)
+                // console.log("imageUrl")
+                // console.log(imageUrl)
 
-                  var backgroundStyles = {"background-image" : imageUrl}
+                  
+                  var projectsLoop = this.props.projects.map(function (project) {
 
-                  var projectsLoop = this.props.projects.map(function (e) {
+                    // if (this.props.currentProject.images !== undefined && this.props.currentProject.images[0]) {
+                    if (project.images !== undefined && project.images[0]) {
+                      console.log("not undefined")
+                      // this.setState({imageUrl : this.props.currentProject.images[0]})
+
+                      var imageUrl = "url('images/" + project.images[0] + "')";
+
+                      console.log("imageUrl")
+                      console.log(imageUrl)
+                      var backgroundStyles = {"background-image" : imageUrl}
+                    }
+
+                    if (this.props.currentProject.name == project.name) {
+                      var temp = React;
+                      var cx = React.addons.classSet;
+                      var classes = cx({
+                        'active': true
+                      });
+                    }
+
+
+
                       return (
-                            <div id="ProjectView__p" style={backgroundStyles}>
-                              <p>current project :{this.props.currentProject}</p>
-                              <p>color {this.props.currentProject.color} </p>
-                              <p>image  {imageUrl}</p>
+                            <div id="ProjectView__p" style={backgroundStyles} className={classes}>
+                              <p>current project :{project.currentProject}</p>
+                              <p>color {project.color} </p>
+                              <p>image  {project}</p>
                             </div>
                         );
                     }, this);
