@@ -4,7 +4,8 @@ var Container = React.createClass({
               return {
                 title: "Submit TimeSheet",
                 projects: projects,
-                currentProject : projects[0]
+                currentProject : projects[0],
+                previousProject : null
               };
             },
             updateCurrentProject: function(projectName) {
@@ -12,6 +13,7 @@ var Container = React.createClass({
               for (var i = 0; i < this.state.projects.length; i++) {
                 if (this.state.projects[i].name == projectName) {
                   console.log(this.state.projects[i])
+                  this.setState({"previousProject" : this.state.currentProject});
                   this.setState({"currentProject" : this.state.projects[i]});
                   this.state.projects[i].active = true;
                   console.log(this.state.projects[i])
@@ -28,6 +30,8 @@ var Container = React.createClass({
               return (
                 <div id="mainView"> 
                   <p>{this.state.title}</p>
+                  <p>currentProject {this.state.currentProject}</p>
+                  <p>previousProject {this.state.previousProject}</p>
                   <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject}></ProjectList>
                    <ProjectViews projects={this.state.projects} currentProject={this.state.currentProject}></ProjectViews>
                 </div>
@@ -57,7 +61,7 @@ var Container = React.createClass({
                     }, this);
                 return (
                     <div id="ProjectList">
-                        <p>Project List</p>
+                        <h3>Project List</h3>
                         {loop}
                     </div>
             );
@@ -77,9 +81,9 @@ var Container = React.createClass({
                 'project-title' : true
               });
               return (
-                <h3 className={classes} onClick={this.handleProjectShow}>
+                <h4 className={classes} onClick={this.handleProjectShow}>
                   project - {this.props.name} {this.props.active
-                  }</h3>
+                  }</h4>
                 )
             }
          });
@@ -111,21 +115,32 @@ var Container = React.createClass({
 
                       console.log("imageUrl")
                       console.log(imageUrl)
-                      var backgroundStyles = {"background-image" : imageUrl}
+                      var backgroundStyles = {"backgroundImage" : imageUrl}
                     }
 
                     if (this.props.currentProject.name == project.name) {
                       var temp = React;
                       var cx = React.addons.classSet;
                       var classes = cx({
-                        'active': true
+                        'active': true, 
+                        'opacityShow' : true,
+                        'opacityTransition' : true
+                      });
+                    }
+                    else {
+                      var temp = React;
+                      var cx = React.addons.classSet;
+                      var classes = cx({
+                        'active': false, 
+                        'opacityHide' : true,
+                        'opacityTransition' : true
                       });
                     }
 
 
 
                       return (
-                            <div id="ProjectView__p" style={backgroundStyles} className={classes}>
+                            <div id="ProjectView__p" style={backgroundStyles} className={classes} class="projectView">
                               <p>current project :{project.currentProject}</p>
                               <p>color {project.color} </p>
                               <p>image  {project}</p>

@@ -4,6 +4,11 @@
 	float: left;
 }
 
+#ProjectList .active
+{
+ font-weight: bold;
+	}
+
 #ProjectView {
 	width: 50%;
 	float: left;
@@ -32,4 +37,16 @@
 #ProjectView__p.active{
 
 	 border: black solid;
+}
+
+.opacityShow {
+	opacity : 1;
+}
+
+.opacityHide {
+	opacity : 0.4;
+}
+
+.opacityTransition {
+	transition: opacity 2s;
 }
