@@ -5,11 +5,13 @@ var Container = React.createClass({
                 title: "Submit TimeSheet",
                 projects: projects,
                 currentProject : projects[0],
-                previousProject : null
+                previousProject : null,
+                animating : false
               };
             },
             updateCurrentProject: function(projectName) {
               console.log("updateCurrentProject " + projectName)
+              this.setState({"animating" : true})
               for (var i = 0; i < this.state.projects.length; i++) {
                 if (this.state.projects[i].name == projectName) {
                   console.log(this.state.projects[i])
@@ -25,11 +27,24 @@ var Container = React.createClass({
                 }
               }
               this.setState(projects);
+
+              var self = this;
+              this.timeout = setTimeout(function(){ 
+                self.setState({"animating" : false}) 
+              }, 2000);
             },
             render: function() {
+              if (this.state.animating) {
+                var animatingSentence = "animation : in progress"
+              }
+              else {
+                var animatingSentence = "animation : static"
+              }
+               
               return (
                 <div id="mainView"> 
                   <p>{this.state.title}</p>
+                  <p>{animatingSentence}</p>
                   <p>currentProject {this.state.currentProject}</p>
                   <p>previousProject {this.state.previousProject}</p>
                   <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject}></ProjectList>
