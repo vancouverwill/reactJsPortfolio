@@ -4,12 +4,15 @@ var Container = React.createClass({
               return {
                 title: "Submit TimeSheet",
                 projects: projects,
+                currentProjectIndex : 0,
                 currentProject : projects[0],
                 previousProject : null,
                 animating : false
               };
             },
             updateCurrentProject: function(projectName) {
+              if (this.state.animating == true) return false;
+              
               console.log("updateCurrentProject " + projectName)
               this.setState({"animating" : true})
               for (var i = 0; i < this.state.projects.length; i++) {
@@ -17,6 +20,7 @@ var Container = React.createClass({
                   console.log(this.state.projects[i])
                   this.setState({"previousProject" : this.state.currentProject});
                   this.setState({"currentProject" : this.state.projects[i]});
+                  this.setState({"currentProjectIndex" : i});
                   this.state.projects[i].active = true;
                   console.log(this.state.projects[i])
                   // delete projects[i]
@@ -33,9 +37,34 @@ var Container = React.createClass({
                 self.setState({"animating" : false}) 
               }, 2000);
             },
+            componentDidMount: function() {
+              elem = this.getDOMNode();
+              elem.addEventListener('wheel', this.handleWheel);
+            },
+            handleWheel: function(event) {
+              elem = this.getDOMNode();
+              console.log("handleWheel")
+              console.log(elem)
+              console.log(event)
+
+              if (this.state.animating !== false) return;
+
+              if (event.deltaY < 0) (this.moveDown())
+              if (event.deltaY > 0) (this.moveUp())
+              if (event.deltaY < 0) (this.moveDown())
+              // this.setState({windowWidth: window.innerWidth});
+            },
+            moveUp: function() {
+                console.log("moveUp")
+                if (this.state.currentProjectIndex < (projects.length - 1)) this.updateCurrentProject(this.state.projects[this.state.currentProjectIndex + 1].name)
+            },
+            moveDown: function(){
+              console.log("moveDown")
+              if (this.state.currentProjectIndex > 0) this.updateCurrentProject(this.state.projects[this.state.currentProjectIndex - 1].name)
+            },
             render: function() {
               if (this.state.animating) {
-                var animatingSentence = "animation : in progress"
+                var animatingSentence = "in progress"
               }
               else {
                 var animatingSentence = "animation : static"
@@ -43,7 +72,7 @@ var Container = React.createClass({
                
               return (
                 <div id="mainView"> 
-                  <p>{this.state.title}</p>
+                  <p>animation : <b>{this.state.title}</b></p>
                   <p>{animatingSentence}</p>
                   <p>currentProject {this.state.currentProject}</p>
                   <p>previousProject {this.state.previousProject}</p>
