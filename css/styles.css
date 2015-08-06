@@ -50,3 +50,46 @@
 .opacityTransition {
 	transition: opacity 2s;
 }
+
+
+/** animations */
+
+.item {
+	border: solid orange 1px;
+	left: 50%;
+  	position: absolute;
+	width: auto;
+}
+
+#portfolioAnimationContainer {
+	height: 5em;
+	position: relative;
+	width: auto;
+  	border: solid 1px;
+}
+
+.portfolioAnimation-enter {
+position: absolute;
+  opacity: 0.01;
+  left:0%;
+  transition: opacity 2.5s ease-in, left 2.5s ease-in;
+}
+
+.portfolioAnimation-enter.portfolioAnimation-enter-active {
+  opacity: 1;
+  left:50%;
+}
+
+
+
+.portfolioAnimation-leave {
+	position: absolute;
+	opacity: 1;
+	left:50%;
+	transition: opacity 2.5s ease-in, left 2.5s ease-in;
+}
+
+.portfolioAnimation-leave.portfolioAnimation-leave-active {
+ 	left:100%;
+  	opacity: 0.01;
+}

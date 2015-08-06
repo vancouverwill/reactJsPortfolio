@@ -1,5 +1,7 @@
+var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var Container = React.createClass({
+            isAnimating : false,
             getInitialState: function() {
               return {
                 title: "Submit TimeSheet",
@@ -7,14 +9,16 @@ var Container = React.createClass({
                 currentProjectIndex : 0,
                 currentProject : projects[0],
                 previousProject : null,
-                animating : false
+                animating : false,
+                items : []
               };
             },
             updateCurrentProject: function(projectName) {
-              if (this.state.animating == true) return false;
-              
+              if (this.isAnimating ===   true) return false;
+
               console.log("updateCurrentProject " + projectName)
-              this.setState({"animating" : true})
+              // this.setState({"animating" : true})
+              this.isAnimating = true;
               for (var i = 0; i < this.state.projects.length; i++) {
                 if (this.state.projects[i].name == projectName) {
                   console.log(this.state.projects[i])
@@ -23,6 +27,8 @@ var Container = React.createClass({
                   this.setState({"currentProjectIndex" : i});
                   this.state.projects[i].active = true;
                   console.log(this.state.projects[i])
+
+                  var currentProject = this.state.projects[i]
                   // delete projects[i]
                   
                   // break;
@@ -32,9 +38,20 @@ var Container = React.createClass({
               }
               this.setState(projects);
 
+              var newItems = this.state.items;
+
+              // newItems = [];
+
+              // newItems = [this.state.currentProject]
+
+              newItems.splice(0, 1);
+              newItems = this.state.items.concat(currentProject);
+
+              this.setState({"items" : newItems});
+
               var self = this;
               this.timeout = setTimeout(function(){ 
-                self.setState({"animating" : false}) 
+                self.isAnimating = false;
               }, 2000);
             },
             componentDidMount: function() {
@@ -47,7 +64,7 @@ var Container = React.createClass({
               console.log(elem)
               console.log(event)
 
-              if (this.state.animating !== false) return;
+              if (this.isAnimating !== false) return;
 
               if (event.deltaY < 0) (this.moveDown())
               if (event.deltaY > 0) (this.moveUp())
@@ -63,12 +80,20 @@ var Container = React.createClass({
               if (this.state.currentProjectIndex > 0) this.updateCurrentProject(this.state.projects[this.state.currentProjectIndex - 1].name)
             },
             render: function() {
-              if (this.state.animating) {
+              if (this.isAnimating) {
                 var animatingSentence = "in progress"
               }
               else {
                 var animatingSentence = "animation : static"
               }
+
+              var items = this.state.items.map(function(item, i) {
+                return (
+                  <div key={item.name} className="item">
+                    {item.name}
+                  </div>
+                );
+              }.bind(this));
                
               return (
                 <div id="mainView"> 
@@ -76,8 +101,14 @@ var Container = React.createClass({
                   <p>{animatingSentence}</p>
                   <p>currentProject {this.state.currentProject}</p>
                   <p>previousProject {this.state.previousProject}</p>
+                  
+                  <div id="portfolioAnimationContainer">
+                    Items: <ReactCSSTransitionGroup transitionName="portfolioAnimation">
+                    {items}
+                    </ReactCSSTransitionGroup>
+                  </div>
                   <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject}></ProjectList>
-                   <ProjectViews projects={this.state.projects} currentProject={this.state.currentProject}></ProjectViews>
+                  <ProjectViews projects={this.state.projects} currentProject={this.state.currentProject}></ProjectViews>
                 </div>
 
               );
@@ -168,7 +199,8 @@ var Container = React.createClass({
                       var classes = cx({
                         'active': true, 
                         'opacityShow' : true,
-                        'opacityTransition' : true
+                        'opacityTransition' : true,
+                        'projectView' : true
                       });
                     }
                     else {
@@ -177,14 +209,15 @@ var Container = React.createClass({
                       var classes = cx({
                         'active': false, 
                         'opacityHide' : true,
-                        'opacityTransition' : true
+                        'opacityTransition' : true,
+                        'projectView' : true
                       });
                     }
 
 
 
                       return (
-                            <div id="ProjectView__p" style={backgroundStyles} className={classes} class="projectView">
+                            <div id="ProjectView__p" style={backgroundStyles} className={classes}>
                               <p>current project :{project.currentProject}</p>
                               <p>color {project.color} </p>
                               <p>image  {project}</p>
