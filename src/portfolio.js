@@ -16,17 +16,13 @@ var Container = React.createClass({
             updateCurrentProject: function(projectName) {
               if (this.isAnimating ===   true) return false;
 
-              console.log("updateCurrentProject " + projectName)
-              // this.setState({"animating" : true})
               this.isAnimating = true;
               for (var i = 0; i < this.state.projects.length; i++) {
                 if (this.state.projects[i].name == projectName) {
-                  console.log(this.state.projects[i])
                   this.setState({"previousProject" : this.state.currentProject});
                   this.setState({"currentProject" : this.state.projects[i]});
                   this.setState({"currentProjectIndex" : i});
                   this.state.projects[i].active = true;
-                  console.log(this.state.projects[i])
 
                   var currentProject = this.state.projects[i]
                   // delete projects[i]
@@ -60,9 +56,6 @@ var Container = React.createClass({
             },
             handleWheel: function(event) {
               elem = this.getDOMNode();
-              console.log("handleWheel")
-              console.log(elem)
-              console.log(event)
 
               if (this.isAnimating !== false) return;
 
@@ -72,11 +65,9 @@ var Container = React.createClass({
               // this.setState({windowWidth: window.innerWidth});
             },
             moveUp: function() {
-                console.log("moveUp")
                 if (this.state.currentProjectIndex < (projects.length - 1)) this.updateCurrentProject(this.state.projects[this.state.currentProjectIndex + 1].name)
             },
             moveDown: function(){
-              console.log("moveDown")
               if (this.state.currentProjectIndex > 0) this.updateCurrentProject(this.state.projects[this.state.currentProjectIndex - 1].name)
             },
             render: function() {
@@ -89,9 +80,7 @@ var Container = React.createClass({
 
               var items = this.state.items.map(function(item, i) {
                 return (
-                  <div key={item.name} className="item">
-                    {item.name}
-                  </div>
+                  <Project key={item.name} name={item.name} description={item.description} images={item.images}></Project>
                 );
               }.bind(this));
                
@@ -103,35 +92,47 @@ var Container = React.createClass({
                   <p>previousProject {this.state.previousProject}</p>
                   
                   <div id="portfolioAnimationContainer">
-                    Items: <ReactCSSTransitionGroup transitionName="portfolioAnimation">
-                    {items}
+                    <ReactCSSTransitionGroup transitionName="portfolioAnimation">
+                      {items}
                     </ReactCSSTransitionGroup>
                   </div>
                   <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject}></ProjectList>
                   <ProjectViews projects={this.state.projects} currentProject={this.state.currentProject}></ProjectViews>
                 </div>
-
               );
             }
         });
 
 
+        var Project = React.createClass({
+            render: function() {
+              if (this.props.images !== undefined && this.props.images[0]) {
+                      var imageUrl = "url('images/" + this.props.images[0] + "')";
+                      var backgroundStyles = {"backgroundImage" : imageUrl}
+                    }
+
+              return (
+                <div key={this.props.name} className="item"  style={backgroundStyles}>
+                    <p>{this.props.name}</p>
+                    <p>{this.props.description}</p>
+                  </div>
+                )
+            }
+         });
+
+
          var ProjectList = React.createClass({
             getInitialState: function() {
                 return {
-                    projects : []
                 };
             },
             handleProjectShow: function(projectName) {
-              console.log(projectName);
               this.props.clickCurrentProject(projectName);
-              console.log(this.props.projects);
             },
             render: function() {
-                console.log(this.props)
                 var loop = this.props.projects.map(function (e) {
                       return (
-                            <ProjectName name={e.name} active={e.active} handleProjectShow={this.handleProjectShow}></ProjectName>
+                            <ProjectName key={e.name} name={e.name} active={e.active} handleProjectShow={this.handleProjectShow}></ProjectName>
                         );
                     }, this);
                 return (
@@ -145,7 +146,6 @@ var Container = React.createClass({
 
          var ProjectName = React.createClass({
             handleProjectShow: function() {
-              // console.log(this.props.name);
               this.props.handleProjectShow(this.props.name);
             },
             render: function() {
@@ -170,26 +170,11 @@ var Container = React.createClass({
             },
             render: function() {
               
-
-                // else {
-                //   var imageUrl = "none";
-                //   var imageUrl = "url('images/italy1.jpg')";
-                // }
-                // console.log("imageUrl")
-                // console.log(imageUrl)
-
                   
                   var projectsLoop = this.props.projects.map(function (project) {
 
-                    // if (this.props.currentProject.images !== undefined && this.props.currentProject.images[0]) {
                     if (project.images !== undefined && project.images[0]) {
-                      console.log("not undefined")
-                      // this.setState({imageUrl : this.props.currentProject.images[0]})
-
                       var imageUrl = "url('images/" + project.images[0] + "')";
-
-                      console.log("imageUrl")
-                      console.log(imageUrl)
                       var backgroundStyles = {"backgroundImage" : imageUrl}
                     }
 
@@ -214,18 +199,14 @@ var Container = React.createClass({
                       });
                     }
 
-
-
                       return (
-                            <div id="ProjectView__p" style={backgroundStyles} className={classes}>
+                            <div key={project.name} id="ProjectView__p" style={backgroundStyles} className={classes}>
                               <p>current project :{project.currentProject}</p>
                               <p>color {project.color} </p>
                               <p>image  {project}</p>
                             </div>
                         );
                     }, this);
-
-
               return (
                                 <div id="ProjectViews_container__p">
                   {projectsLoop} 

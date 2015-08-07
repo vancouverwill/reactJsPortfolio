@@ -58,11 +58,12 @@
 	border: solid orange 1px;
 	left: 50%;
   	position: absolute;
-	width: auto;
+	width: 100px;
+	  height: 150px;
 }
 
 #portfolioAnimationContainer {
-	height: 5em;
+	  height: 150px;
 	position: relative;
 	width: auto;
   	border: solid 1px;
