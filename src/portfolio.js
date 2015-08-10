@@ -84,12 +84,12 @@ var Container = React.createClass({
               return (
                 <div id="mainView"> 
                   <p>animation : <b>{this.state.title}</b></p>
+                  <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject}></ProjectList>
                   <div id="portfolioAnimationContainer" className={classes}>
                     <ReactCSSTransitionGroup transitionName="portfolioAnimation">
                       {items}
                     </ReactCSSTransitionGroup>
                   </div>
-                  <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject}></ProjectList>
                 </div>
               );
             }
