@@ -5,12 +5,12 @@ var Container = React.createClass({
             currentProjectIndex : 0,
             getInitialState: function() {
               return {
-                title: "Submit TimeSheet",
+                title: "Portfolio Site",
                 projects: projects,
                 
-                currentProject : projects[0],
-                previousProject : null,
-                animating : false,
+                // currentProject : projects[0],
+                // previousProject : null,
+                // animating : false,
                 items : []
               };
             },
@@ -25,7 +25,7 @@ var Container = React.createClass({
                   } else {
                     this.decreasing = false;
                   }
-                  this.setState({"previousProject" : this.state.currentProject});
+                  // this.setState({"previousProject" : this.state.currentProject});
                   this.setState({"currentProject" : this.state.projects[i]});
                   this.currentProjectIndex = i;
                   this.state.projects[i].active = true;
@@ -46,7 +46,7 @@ var Container = React.createClass({
               var self = this;
               this.timeout = setTimeout(function(){ 
                 self.isAnimating = false;
-              }, 2000);
+              }, 3000);
             },
             componentDidMount: function() {
               elem = this.getDOMNode();
@@ -69,13 +69,6 @@ var Container = React.createClass({
               }
             },
             render: function() {
-              if (this.isAnimating) {
-                var animatingSentence = "in progress"
-              }
-              else {
-                var animatingSentence = "animation : static"
-              }
-
               var items = this.state.items.map(function(item, i) {
                 return (
                   <Project key={item.name} name={item.name} description={item.description} images={item.images}></Project>
@@ -91,17 +84,12 @@ var Container = React.createClass({
               return (
                 <div id="mainView"> 
                   <p>animation : <b>{this.state.title}</b></p>
-                  <p>{animatingSentence}</p>
-                  <p>currentProject {this.state.currentProject}</p>
-                  <p>previousProject {this.state.previousProject}</p>
-                  
                   <div id="portfolioAnimationContainer" className={classes}>
                     <ReactCSSTransitionGroup transitionName="portfolioAnimation">
                       {items}
                     </ReactCSSTransitionGroup>
                   </div>
                   <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject}></ProjectList>
-                  <ProjectViews projects={this.state.projects} currentProject={this.state.currentProject}></ProjectViews>
                 </div>
               );
             }
