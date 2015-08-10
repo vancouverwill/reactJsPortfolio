@@ -94,3 +94,22 @@ position: absolute;
  	left:100%;
   	opacity: 0.01;
 }
+
+
+.oppositeDirection .portfolioAnimation-enter {
+  left:100%;
+}
+
+.oppositeDirection .portfolioAnimation-enter.portfolioAnimation-enter-active {
+  left:50%;
+}
+
+
+
+.oppositeDirection .portfolioAnimation-leave {
+	left:50%;
+}
+
+.oppositeDirection .portfolioAnimation-leave.portfolioAnimation-leave-active {
+ 	left:0%;
+}

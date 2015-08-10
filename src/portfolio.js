@@ -2,11 +2,12 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var Container = React.createClass({
             isAnimating : false,
+            currentProjectIndex : 0,
             getInitialState: function() {
               return {
                 title: "Submit TimeSheet",
                 projects: projects,
-                currentProjectIndex : 0,
+                
                 currentProject : projects[0],
                 previousProject : null,
                 animating : false,
@@ -19,15 +20,16 @@ var Container = React.createClass({
               this.isAnimating = true;
               for (var i = 0; i < this.state.projects.length; i++) {
                 if (this.state.projects[i].name == projectName) {
+                  if (i < this.currentProjectIndex) {
+                    this.decreasing = true;
+                  } else {
+                    this.decreasing = false;
+                  }
                   this.setState({"previousProject" : this.state.currentProject});
                   this.setState({"currentProject" : this.state.projects[i]});
-                  this.setState({"currentProjectIndex" : i});
+                  this.currentProjectIndex = i;
                   this.state.projects[i].active = true;
-
                   var currentProject = this.state.projects[i]
-                  // delete projects[i]
-                  
-                  // break;
                 } else {
                   this.state.projects[i].active = false;
                 }
@@ -35,10 +37,6 @@ var Container = React.createClass({
               this.setState(projects);
 
               var newItems = this.state.items;
-
-              // newItems = [];
-
-              // newItems = [this.state.currentProject]
 
               newItems.splice(0, 1);
               newItems = this.state.items.concat(currentProject);
@@ -55,20 +53,20 @@ var Container = React.createClass({
               elem.addEventListener('wheel', this.handleWheel);
             },
             handleWheel: function(event) {
-              elem = this.getDOMNode();
-
               if (this.isAnimating !== false) return;
 
               if (event.deltaY < 0) (this.moveDown())
               if (event.deltaY > 0) (this.moveUp())
-              if (event.deltaY < 0) (this.moveDown())
-              // this.setState({windowWidth: window.innerWidth});
             },
             moveUp: function() {
-                if (this.state.currentProjectIndex < (projects.length - 1)) this.updateCurrentProject(this.state.projects[this.state.currentProjectIndex + 1].name)
+                if (this.currentProjectIndex < (projects.length - 1)) {
+                  this.updateCurrentProject(this.state.projects[this.currentProjectIndex + 1].name)
+                }
             },
             moveDown: function(){
-              if (this.state.currentProjectIndex > 0) this.updateCurrentProject(this.state.projects[this.state.currentProjectIndex - 1].name)
+              if (this.currentProjectIndex > 0) {
+                this.updateCurrentProject(this.state.projects[this.currentProjectIndex - 1].name)
+              }
             },
             render: function() {
               if (this.isAnimating) {
@@ -83,6 +81,12 @@ var Container = React.createClass({
                   <Project key={item.name} name={item.name} description={item.description} images={item.images}></Project>
                 );
               }.bind(this));
+
+              var temp = React;
+              var cx = React.addons.classSet;
+              var classes = cx({
+                'oppositeDirection': this.decreasing
+              });
                
               return (
                 <div id="mainView"> 
@@ -91,7 +95,7 @@ var Container = React.createClass({
                   <p>currentProject {this.state.currentProject}</p>
                   <p>previousProject {this.state.previousProject}</p>
                   
-                  <div id="portfolioAnimationContainer">
+                  <div id="portfolioAnimationContainer" className={classes}>
                     <ReactCSSTransitionGroup transitionName="portfolioAnimation">
                       {items}
                     </ReactCSSTransitionGroup>

@@ -3,5 +3,5 @@
  				{"name" : "brazil", "color" : "blue", "images" : ["brazil1.jpg", "brazil2.jpg", "brazil3.jpg"], "description" : "beautiful country in south america"},
  				{"name" : "Italy", "color" : "yellow", "images" : ["italy1.jpg", "italy2.jpg", "italy3.jpg", "italy4.jpg"], "description" : "the best coffee"},
  				{"name" : "Morocco", "color" : "red", "images" : ["morocco1.jpg", "morocco2.jpg", "morocco3.jpg", "morocco4.jpg"], "description" : "endless points breaks"},
- 				{"name" : "Japan", "color" : "white", "description" : "the far east"},
+ 				{"name" : "Japan", "color" : "white", "images" : ["japan1.jpg", "japan2.jpg"], "description" : "the far east"},
  				];
