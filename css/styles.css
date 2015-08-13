@@ -1,7 +1,9 @@
 #ProjectList 
 {
-	width: 50%;
-	float: left;
+	width: 300px;
+    margin: auto;
+    position: relative;
+    z-index: 10;
 }
 
 
@@ -14,17 +16,19 @@
 .project-title {
 	cursor: pointer;
 	border-bottom: solid 1px gray;
-	padding-top: 5px;
-    padding-bottom: 5px;
-    color: gray;
+	padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
 
 #ProjectList .active
 {
 	color: black;
 	 font-weight: bold;
-	 padding-top: 15px;
-    padding-bottom: 15px;
+	 padding-top: 25px;
+    padding-bottom: 25px;
 	}
 
 #ProjectViews_container__p {
@@ -74,7 +78,7 @@
 
 #portfolioAnimationContainer {
 	  position: absolute;
-  width: 50%;
+  width: 100%;
   border: solid 1px;
   right: 0px;
   height: 100%;
