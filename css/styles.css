@@ -4,10 +4,7 @@
 	float: left;
 }
 
-#ProjectList .active
-{
- font-weight: bold;
-	}
+
 
 #ProjectView {
 	width: 50%;
@@ -16,7 +13,19 @@
 
 .project-title {
 	cursor: pointer;
+	border-bottom: solid 1px gray;
+	padding-top: 5px;
+    padding-bottom: 5px;
+    color: gray;
 }
+
+#ProjectList .active
+{
+	color: black;
+	 font-weight: bold;
+	 padding-top: 15px;
+    padding-bottom: 15px;
+	}
 
 #ProjectViews_container__p {
 	position: absolute;
@@ -60,7 +69,7 @@
   	position: absolute;
 	  width: 100%;
   height: 100%;
-  background-size: 100%;
+      background-size: auto 100%;
 }
 
 #portfolioAnimationContainer {
