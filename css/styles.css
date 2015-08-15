@@ -1,3 +1,10 @@
+.backgroundView {
+	transition: left 2s;
+	position: absolute;
+	width:100%;
+	height: 100%;
+}
+
 #ProjectList 
 {
 	width: 300px;
@@ -23,12 +30,26 @@
     margin-top: 0px;
 }
 
-#ProjectList .active
-{
+.arrow {
+	
+    cursor: pointer;
+    font-size: 20px;
+}
+.project-title .arrow {
+	display: none;
+	float: right;
+}
+.active .arrow {
+	display: block;
+	padding-top: 25px;
+}
+
+#ProjectList .active h4 {
 	color: black;
 	 font-weight: bold;
 	 padding-top: 25px;
     padding-bottom: 25px;
+    margin: 0px;
 	}
 
 #ProjectViews_container__p {
@@ -67,22 +88,39 @@
 
 /** animations */
 
-.item {
-	border: solid orange 1px;
+
+
+.portfolioSlide {
+	/*border: solid orange 1px;*/
 	top: 0%;
   	position: absolute;
 	  width: 100%;
-  height: 100%;
-      background-size: auto 100%;
+	  height: 100%;
+      
 }
 
 #portfolioAnimationContainer {
-	  position: absolute;
+  position: absolute;
   width: 100%;
   border: solid 1px;
   right: 0px;
   height: 100%;
   top: 0px;
+}
+
+.slideImage {
+	background-size: auto 100%;
+	width: 100%;
+	  height: 100%;
+}
+
+.slideImageOpacityOverlay {
+    background: black;
+    opacity: 0.5;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
 }
 
 .portfolioAnimation-enter {

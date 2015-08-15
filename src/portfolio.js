@@ -3,12 +3,13 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var Container = React.createClass({
             isAnimating : false,
             currentProjectIndex : 0,
+            
             getInitialState: function() {
               return {
                 title: "Portfolio Site",
                 projects: projects,
-                
-                // currentProject : projects[0],
+                showListView: true,
+                currentProject : projects[0],
                 // previousProject : null,
                 // animating : false,
                 items : []
@@ -48,6 +49,13 @@ var Container = React.createClass({
                 self.isAnimating = false;
               }, 3000);
             },
+            handleProjectDetailsShow:function() {
+              console.log("handleProjectDetailsShow")
+                this.setState({"showListView" : false});
+            },
+            handleProjectListShow:function() {
+                this.setState({"showListView" : true});
+            },
             componentDidMount: function() {
               elem = this.getDOMNode();
               elem.addEventListener('wheel', this.handleWheel);
@@ -80,15 +88,28 @@ var Container = React.createClass({
               var classes = cx({
                 'oppositeDirection': this.decreasing
               });
+
+              if (this.state.showListView == true) { 
+                var listViewStyles = {"left" : "0%"};
+                var detailsViewStyles = {"left" : "100%"};
+              } else {
+                var listViewStyles = {"left" : "-100%"};
+                var detailsViewStyles = {"left" : "00%"};
+              }
                
               return (
-                <div id="mainView"> 
-                  <p>animation : <b>{this.state.title}</b></p>
-                  <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject}></ProjectList>
-                  <div id="portfolioAnimationContainer" className={classes}>
-                    <ReactCSSTransitionGroup transitionName="portfolioAnimation">
-                      {items}
-                    </ReactCSSTransitionGroup>
+                <div id="mainView">
+                  <div className="projectListView backgroundView" style={listViewStyles}> 
+                    <p>animation : <b>{this.state.title}</b></p>
+                    <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
+                    <div id="portfolioAnimationContainer" className={classes}>
+                      <ReactCSSTransitionGroup transitionName="portfolioAnimation">
+                        {items}
+                      </ReactCSSTransitionGroup>
+                    </div>
+                  </div>
+                  <div className="projectDetailsView backgroundView" style={detailsViewStyles}>
+                    <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
                   </div>
                 </div>
               );
@@ -104,10 +125,28 @@ var Container = React.createClass({
                     }
 
               return (
-                <div key={this.props.name} className="item"  style={backgroundStyles}>
-                    <p>{this.props.name}</p>
-                    <p>{this.props.description}</p>
+                <div key={this.props.name} className="portfolioSlide"  >
+                  <div className="slideImage" style={backgroundStyles} ></div>
+                  <div className="slideImageOpacityOverlay" ></div>
                   </div>
+                )
+            }
+         });
+
+
+        var ProjectDetails = React.createClass({
+            handleProjectListShow: function() {
+              this.props.handleProjectListShow();
+            },
+            render: function() {
+              
+
+              return (
+                <div key={this.props.currentProject.name}>
+                    <h2>project details</h2>
+                    <i className="fa fa-arrow-left" onClick={this.handleProjectListShow}></i>
+                    <div>{this.props.currentProject.description}</div>
+                </div>
                 )
             }
          });
@@ -121,10 +160,13 @@ var Container = React.createClass({
             handleProjectShow: function(projectName) {
               this.props.clickCurrentProject(projectName);
             },
+            handleProjectDetailsShow: function() {
+              this.props.handleProjectDetailsShow();
+            },
             render: function() {
                 var loop = this.props.projects.map(function (e) {
                       return (
-                            <ProjectName key={e.name} name={e.name} active={e.active} handleProjectShow={this.handleProjectShow}></ProjectName>
+                            <ProjectName key={e.name} name={e.name} shortDescription={e.shortDescription} active={e.active} handleProjectShow={this.handleProjectShow} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
                         );
                     }, this);
                 return (
@@ -140,6 +182,9 @@ var Container = React.createClass({
             handleProjectShow: function() {
               this.props.handleProjectShow(this.props.name);
             },
+            handleProjectDetailsShow: function() {
+              this.props.handleProjectDetailsShow();
+            },
             render: function() {
               var temp = React;
               var cx = React.addons.classSet;
@@ -148,9 +193,11 @@ var Container = React.createClass({
                 'project-title' : true
               });
               return (
-                <h4 className={classes} onClick={this.handleProjectShow}>
-                  project - {this.props.name} {this.props.active
-                  }</h4>
+                <div className={classes}>
+                  <i className="fa fa-arrow-right arrow" onClick={this.handleProjectDetailsShow}></i>
+                  <h4  onClick={this.handleProjectShow}>{this.props.name} {this.props.active}</h4>
+                  <p>{this.props.shortDescription}</p>
+                </div>
                 )
             }
          });
