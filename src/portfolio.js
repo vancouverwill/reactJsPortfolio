@@ -50,10 +50,12 @@ var Container = React.createClass({
               }, 3000);
             },
             handleProjectDetailsShow:function() {
+              this.isAnimating = true;
               console.log("handleProjectDetailsShow")
                 this.setState({"showListView" : false});
             },
             handleProjectListShow:function() {
+                this.isAnimating = false;
                 this.setState({"showListView" : true});
             },
             componentDidMount: function() {
@@ -90,27 +92,52 @@ var Container = React.createClass({
               });
 
               if (this.state.showListView == true) { 
-                var listViewStyles = {"left" : "0%"};
-                var detailsViewStyles = {"left" : "100%"};
+                var listViewStyles = {"width" : "100%", "height" : "100%"};
+                
+                // var detailsViewStyles = {"bottom" : "-100%"};
+                var detailsViewStyles = {"opacity" : "0", "top" : "100%"};
+
+                var projectDetailsView = '';
+
+                var projectListOpacity = {"opacity" : "1"};
               } else {
-                var listViewStyles = {"left" : "-100%"};
-                var detailsViewStyles = {"left" : "00%"};
+                // var listViewStyles = {"left" : "-100%"};
+                var listViewStyles = {"width" : "70%", "height" : "300px", "left" : "15%"};
+                // var detailsViewStyles = {"bottom" : "00%"};
+                // var detailsViewStyles = {"bottom" : "00%"};
+                var detailsViewStyles = {"opacity" : "1", "top" : "300px"};
+
+                var projectListOpacity = {"opacity" : "0"}
+
+                var projectDetailsView = <div className='projectDetailsView backgroundView' style={detailsViewStyles}>
+                      <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
+                    </div>;
               }
+
+              if (this.state.items.length <= 0) {
+                listColor = {"color" :  "black"}
+              }
+              else {
+                listColor = {"color" :  "white"}
+              }
+
+              
                
               return (
                 <div id="mainView">
+                   
                   <div className="projectListView backgroundView" style={listViewStyles}> 
-                    <p>animation : <b>{this.state.title}</b></p>
-                    <ProjectList projects={this.state.projects} clickCurrentProject={this.updateCurrentProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
+                    <h1 style={listColor} > Will Melbourne</h1>
                     <div id="portfolioAnimationContainer" className={classes}>
                       <ReactCSSTransitionGroup transitionName="portfolioAnimation">
                         {items}
                       </ReactCSSTransitionGroup>
                     </div>
+
                   </div>
-                  <div className="projectDetailsView backgroundView" style={detailsViewStyles}>
-                    <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
-                  </div>
+                  <ProjectList projects={this.state.projects} projectListOpacity={projectListOpacity} listColor={listColor} clickCurrentProject={this.updateCurrentProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
+
+                  {projectDetailsView}
                 </div>
               );
             }
@@ -142,10 +169,11 @@ var Container = React.createClass({
               
 
               return (
-                <div key={this.props.currentProject.name}>
-                    <h2>project details</h2>
-                    <i className="fa fa-arrow-left" onClick={this.handleProjectListShow}></i>
-                    <div>{this.props.currentProject.description}</div>
+                <div key={this.props.currentProject.name} className="ProjectDetailsContent">
+                  <i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i>
+                    <h2>{this.props.currentProject.name}</h2>
+                    
+                    <p>{this.props.currentProject.description}</p>
                 </div>
                 )
             }
@@ -166,13 +194,14 @@ var Container = React.createClass({
             render: function() {
                 var loop = this.props.projects.map(function (e) {
                       return (
-                            <ProjectName key={e.name} name={e.name} shortDescription={e.shortDescription} active={e.active} handleProjectShow={this.handleProjectShow} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
+                            <ProjectName key={e.name} name={e.name} fontColor={e.fontColor} shortDescription={e.shortDescription} active={e.active} handleProjectShow={this.handleProjectShow} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
                         );
                     }, this);
                 return (
-                    <div id="ProjectList">
-                        <h3>Project List</h3>
+                    <div id="ProjectList" style={this.props.projectListOpacity}>
+                      <div id="ProjectListMenu" style={this.props.listColor} >
                         {loop}
+                        </div>
                     </div>
             );
             }
@@ -192,15 +221,24 @@ var Container = React.createClass({
                 'active': this.props.active,
                 'project-title' : true
               });
+
+              if (this.props.active == true) {
+                var fontColor = {"color" : this.props.fontColor};
+              }
+              else {
+                var fontColor = {};
+              }
+
               return (
                 <div className={classes}>
-                  <i className="fa fa-arrow-right arrow" onClick={this.handleProjectDetailsShow}></i>
-                  <h4  onClick={this.handleProjectShow}>{this.props.name} {this.props.active}</h4>
+                  <i className="fa fa-arrow-right arrow" onClick={this.handleProjectDetailsShow} style={fontColor}></i>
+                  <h4  onClick={this.handleProjectShow} style={fontColor} >{this.props.name} {this.props.active}</h4>
                   <p>{this.props.shortDescription}</p>
                 </div>
                 )
             }
          });
+
 
          var ProjectViews = React.createClass({
             getInitialState: function() {
@@ -208,8 +246,6 @@ var Container = React.createClass({
                 };
             },
             render: function() {
-              
-                  
                   var projectsLoop = this.props.projects.map(function (project) {
 
                     if (project.images !== undefined && project.images[0]) {
@@ -247,7 +283,7 @@ var Container = React.createClass({
                         );
                     }, this);
               return (
-                                <div id="ProjectViews_container__p">
+                <div id="ProjectViews_container__p">
                   {projectsLoop} 
                 </div>
               );

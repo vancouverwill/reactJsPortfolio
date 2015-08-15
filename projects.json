@@ -1,17 +1,30 @@
  var projects = [
- 				{"name" : "brazil", "color" : "blue", "images" : ["brazil1.jpg", "brazil2.jpg", "brazil3.jpg"]
+ 				{	"name" : "brazil", 
+ 					"color" : "blue", 
+ 					"fontColor" : "orange", 
+					"images" : ["brazil1.jpg", "brazil2.jpg", "brazil3.jpg"]
  				, "description" : "Brazil, a vast South American country, stretches from the Amazon Basin in the north to vineyards and massive Iguaçu Falls in the south. Rio de Janeiro, symbolized by its 38m Christ the Redeemer statue atop Mt. Corcovado, is famed for its busy Copacabana and Ipanema beaches as well as its enormous, raucous Carnival festival, featuring parade floats, flamboyant costumes and samba."
  				, "shortDescription" : "beautiful country in south america"
  				},
- 				{"name" : "Italy", "color" : "yellow", "images" : ["italy1.jpg", "italy2.jpg", "italy3.jpg", "italy4.jpg"]
- 				, "description" : "Italy, commanding a long Mediterranean coastline, has left a powerful mark on Western culture and cuisine. Its capital, Rome, is home to the Vatican as well as landmark art and ancient ruins. Other major cities include Florence, with Renaissance treasures such as Michelangelo’s \"David\" and its leather and paper artisans; Venice, the sinking city of canals; and Milan, Italy’s fashion capital."
- 				, "shortDescription" : "the best coffee"
+ 				{	"name" : "Italy", 
+ 					"color" : "yellow", 
+ 					"fontColor" : "yellow", 
+ 					"images" : ["italy1.jpg", "italy2.jpg", "italy3.jpg", "italy4.jpg"],
+ 					"description" : "Italy, commanding a long Mediterranean coastline, has left a powerful mark on Western culture and cuisine. Its capital, Rome, is home to the Vatican as well as landmark art and ancient ruins. Other major cities include Florence, with Renaissance treasures such as Michelangelo’s \"David\" and its leather and paper artisans; Venice, the sinking city of canals; and Milan, Italy’s fashion capital.",
+ 					"shortDescription" : "the best coffee"
  				},
- 				{"name" : "Morocco", "color" : "red", "images" : ["morocco1.jpg", "morocco2.jpg", "morocco3.jpg", "morocco4.jpg"]
+ 				{	"name" : "Morocco", 
+ 					"color" : "red", 
+ 					"fontColor" : "red", 
+ 					"images" : ["morocco1.jpg", "morocco2.jpg", "morocco3.jpg", "morocco4.jpg"]
  				, "description" : "Morocco, a North African country bordering the Atlantic Ocean and the Mediterranean Sea, is distinguished by its Berber, Arabian and European cultural influences. Marrakesh’s walled medina, a mazelike medieval quarter, offers entertainment in its Djemaa el-Fna square and souks (marketplaces) selling traditional ceramics, jewelry and metal lanterns. The capital Rabat’s Kasbah of the Udayas is a 12th-century royal fort overlooking the water."
  				, "shortDescription" : "endless points breaks"
  				},
- 				{"name" : "Japan", "color" : "white", "images" : ["japan1.jpg", "japan2.jpg"]
+ 				{	
+ 					"name" : "Japan", 
+					"color" : "white", 
+					"fontColor" : "#61FFFF", 
+					"images" : ["japan1.jpg", "japan2.jpg"]
  				, "description" : "Japan is an island nation in the Pacific Ocean with high-rise-filled cities, imperial palaces, mountainous national parks and thousands of shrines and temples. Tokyo, the crowded capital, is known for its neon skyscrapers and pop culture. In contrast, Kyoto offers Buddhist temples, Shinto shrines, gardens and cherry blossoms. Sushi, the national dish, is served everywhere from casual pubs to gourmet restaurants."
  				, "shortDescription" : "the far east"
  				},

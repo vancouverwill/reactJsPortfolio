@@ -1,16 +1,60 @@
-.backgroundView {
-	transition: left 2s;
+#container {
+    /*position: relative;*/
+}
+
+h1 {
 	position: absolute;
+    text-align: center;
+	z-index: 10;
+	width: 100%;
+	transition: color 1s;
+}
+
+.backgroundView {
+	transition: left 2s, width 2s, height 2s, top 2s;
+	/*position: absolute;*/
+	
+	margin: auto;
 	width:100%;
 	height: 100%;
 }
 
+.projectDetailsView {
+	position: absolute;
+	transition: opacity 2s;
+	z-index: 30;
+}
+
+.ProjectDetailsContent {
+    padding-top: 40px;
+	text-align: center;
+}
+
+.projectListView {
+		left: 0px;
+		position: absolute;
+		top: 0px;
+	/*position: relative;*/
+}
+
 #ProjectList 
 {
-	width: 300px;
-    margin: auto;
-    position: relative;
+	width: 100%;
+    /*margin: auto;*/
+    position: absolute;
     z-index: 10;
+    /* margin-top: 30%; */
+    height: 70%;
+    overflow: scroll;
+    top: 30%;
+    transition: opacity 1s;
+}
+
+#ProjectListMenu
+{
+	margin: auto;
+	transition: color 5s;
+	width: 300px;
 }
 
 
@@ -25,7 +69,7 @@
 	border-bottom: solid 1px gray;
 	padding-top: 10px;
     padding-bottom: 10px;
-    color: white;
+    /*color: white;*/
     margin-bottom: 0px;
     margin-top: 0px;
 }
@@ -42,6 +86,11 @@
 .active .arrow {
 	display: block;
 	padding-top: 25px;
+}
+
+#ProjectList  h4 {
+	margin: 0px;
+	transition: padding-top 1s, padding-bottom 1s;
 }
 
 #ProjectList .active h4 {
@@ -95,21 +144,22 @@
 	top: 0%;
   	position: absolute;
 	  width: 100%;
-	  height: 100%;
-      
+	  height: 100%;    
 }
 
 #portfolioAnimationContainer {
   position: absolute;
   width: 100%;
-  border: solid 1px;
+  border: none;
   right: 0px;
   height: 100%;
   top: 0px;
 }
 
 .slideImage {
-	background-size: auto 100%;
+	/*background-size: 100% auto ;*/
+	/*background-size: cover ;*/
+	background-size: 100vh 100vh ;
 	width: 100%;
 	  height: 100%;
 }
@@ -127,7 +177,7 @@
 position: absolute;
   opacity: 0.01;
   top:-100%;
-  transition: opacity 2.5s ease-in, top 2.5s ease-in;
+  transition: opacity 1.0s ease-in, top 1.0s ease-in;
 }
 
 .portfolioAnimation-enter.portfolioAnimation-enter-active {
@@ -141,7 +191,7 @@ position: absolute;
 	position: absolute;
 	opacity: 1;
 	top:00%;
-	transition: opacity 2.5s ease-in, top 2.5s ease-in;
+	transition: opacity 1.0s ease-in, top 1.0s ease-in;
 }
 
 .portfolioAnimation-leave.portfolioAnimation-leave-active {
