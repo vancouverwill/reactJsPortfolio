@@ -149,11 +149,18 @@ var Container = React.createClass({
               if (this.props.images !== undefined && this.props.images[0]) {
                       var imageUrl = "url('images/" + this.props.images[0] + "')";
                       var backgroundStyles = {"backgroundImage" : imageUrl}
+
+                      // var imageUrlLocal = "/images/" + imageUrl;
+                      var imageUrlLocal = "/images/" + this.props.images[0];
                     }
 
               return (
                 <div key={this.props.name} className="portfolioSlide"  >
-                  <div className="slideImage" style={backgroundStyles} ></div>
+                  <div className="slideImage2" style={backgroundStyles} ></div>
+                  
+                  <div className="crop-height">
+                    <img className="slideImageImg" src={imageUrlLocal} />
+                  </div>
                   <div className="slideImageOpacityOverlay" ></div>
                   </div>
                 )
