@@ -40,7 +40,10 @@ var Container = React.createClass({
               var newItems = this.state.items;
 
               newItems.splice(0, 1);
-              newItems = this.state.items.concat(currentProject);
+
+              if (currentProject !== undefined) {
+                newItems = this.state.items.concat(currentProject);
+              }
 
               this.setState({"items" : newItems});
 
@@ -76,6 +79,10 @@ var Container = React.createClass({
             moveDown: function(){
               if (this.currentProjectIndex > 0) {
                 this.updateCurrentProject(this.state.projects[this.currentProjectIndex - 1].name)
+              }
+
+              if (this.currentProjectIndex == 0) {
+                this.updateCurrentProject('')
               }
             },
             render: function() {
@@ -130,7 +137,7 @@ var Container = React.createClass({
                
               return (
                 <div id="mainView">
-                   
+                    <button  id="contactButton" type="button" className="btn btn-default">Contact</button>
                   <div className="projectListView backgroundView" style={listViewStyles}> 
                     <h1 style={listColor} > Will Melbourne</h1>
                     <div id="portfolioAnimationContainer" className={classes}>
