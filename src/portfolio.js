@@ -95,24 +95,29 @@ var Container = React.createClass({
                 var listViewStyles = {"width" : "100%", "height" : "100%"};
                 
                 // var detailsViewStyles = {"bottom" : "-100%"};
-                var detailsViewStyles = {"opacity" : "0", "top" : "100%"};
+                // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "height" : "0px"};
+                var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"};
 
-                var projectDetailsView = '';
+                // var projectDetailsView = '';
 
                 var projectListOpacity = {"opacity" : "1"};
               } else {
                 // var listViewStyles = {"left" : "-100%"};
-                var listViewStyles = {"width" : "70%", "height" : "300px", "left" : "15%"};
+                // var listViewStyles = {"width" : "70%", "height" : "300px", "left" : "15%"};
+                var listViewStyles = {"transform" : "scale(0.7,0.7)"};
                 // var detailsViewStyles = {"bottom" : "00%"};
                 // var detailsViewStyles = {"bottom" : "00%"};
-                var detailsViewStyles = {"opacity" : "1", "top" : "300px"};
+                // var detailsViewStyles = {"opacity" : "1", "top" : "70%", "height" : "auto"};
+                var detailsViewStyles = {"opacity" : "1", "top" : "70%", "transform" : "scale(1,1)"};
 
                 var projectListOpacity = {"opacity" : "0"}
 
-                var projectDetailsView = <div className='projectDetailsView backgroundView' style={detailsViewStyles}>
+                
+              }
+
+              var projectDetailsView = <div className='projectDetailsView backgroundView' style={detailsViewStyles}>
                       <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
                     </div>;
-              }
 
               if (this.state.items.length <= 0) {
                 listColor = {"color" :  "black"}
@@ -157,7 +162,7 @@ var Container = React.createClass({
               return (
                 <div key={this.props.name} className="portfolioSlide"  >
                   <div className="slideImage2" style={backgroundStyles} ></div>
-                  
+
                   <div className="crop-height">
                     <img className="slideImageImg" src={imageUrlLocal} />
                   </div>
