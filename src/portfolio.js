@@ -2,7 +2,7 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var Container = React.createClass({
             isAnimating : false,
-            currentProjectIndex : 0,
+            currentProjectIndex : -1,
             
             getInitialState: function() {
               return {
@@ -236,16 +236,20 @@ var Container = React.createClass({
 
               if (this.props.active == true) {
                 var fontColor = {"color" : this.props.fontColor};
+                var spacingDivTransform = {"transform" : "scaleY(2)"}
               }
               else {
                 var fontColor = {};
+                var spacingDivTransform = {"transform" : "scaleY(1)"}
               }
 
               return (
                 <div className={classes}>
+                  <div className="spacingDivTransform" style={spacingDivTransform}></div>
                   <i className="fa fa-arrow-right arrow" onClick={this.handleProjectDetailsShow} style={fontColor}></i>
                   <h4  onClick={this.handleProjectShow} style={fontColor} >{this.props.name} {this.props.active}</h4>
                   <p>{this.props.shortDescription}</p>
+                  <div className="spacingDivTransform"></div>
                 </div>
                 )
             }
