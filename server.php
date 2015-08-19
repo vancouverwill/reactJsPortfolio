@@ -3,8 +3,8 @@ $scriptInvokedFromCli =
     isset($_SERVER['argv'][0]) && $_SERVER['argv'][0] === 'server.php';
 
 if($scriptInvokedFromCli) {
-    echo 'starting server on port 4000' . PHP_EOL;
-    exec('php -S localhost:4000 -t ./ server.php');
+    echo 'starting server on port 5000' . PHP_EOL;
+    exec('php -S 127.0.0.1:5000 -t ./ server.php');
 } else {
     return routeRequest();
 }
@@ -12,7 +12,7 @@ if($scriptInvokedFromCli) {
 function routeRequest()
 {
 
-    
+
 
     switch($_SERVER["REQUEST_URI"]) {
         case '/':

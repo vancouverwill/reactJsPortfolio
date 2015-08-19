@@ -3,7 +3,7 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var Container = React.createClass({
             isAnimating : false,
             currentProjectIndex : -1,
-            
+
             getInitialState: function() {
               return {
                 title: "Portfolio Site",
@@ -48,7 +48,7 @@ var Container = React.createClass({
               this.setState({"items" : newItems});
 
               var self = this;
-              this.timeout = setTimeout(function(){ 
+              this.timeout = setTimeout(function(){
                 self.isAnimating = false;
               }, 3000);
             },
@@ -60,6 +60,9 @@ var Container = React.createClass({
             handleProjectListShow:function() {
                 this.isAnimating = false;
                 this.setState({"showListView" : true});
+            },
+            showContactView : function() {
+              this.updateCurrentProject(-1);
             },
             componentDidMount: function() {
               elem = this.getDOMNode();
@@ -98,9 +101,9 @@ var Container = React.createClass({
                 'oppositeDirection': this.decreasing
               });
 
-              if (this.state.showListView == true) { 
+              if (this.state.showListView == true) {
                 var listViewStyles = {"width" : "100%", "height" : "100%"};
-                
+
                 // var detailsViewStyles = {"bottom" : "-100%"};
                 // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "height" : "0px"};
                 var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"};
@@ -119,7 +122,7 @@ var Container = React.createClass({
 
                 var projectListOpacity = {"opacity" : "0"}
 
-                
+
               }
 
               var projectDetailsView = <div className='projectDetailsView backgroundView' style={detailsViewStyles}>
@@ -133,12 +136,12 @@ var Container = React.createClass({
                 listColor = {"color" :  "white"}
               }
 
-              
-               
+
+
               return (
                 <div id="mainView">
-                    <button  id="contactButton" type="button" className="btn btn-default">Contact</button>
-                  <div className="projectListView backgroundView" style={listViewStyles}> 
+                    <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
+                  <div className="projectListView backgroundView" style={listViewStyles}>
                     <h1 style={listColor} > Will Melbourne</h1>
                     <div id="portfolioAnimationContainer" className={classes}>
                       <ReactCSSTransitionGroup transitionName="portfolioAnimation">
@@ -168,13 +171,9 @@ var Container = React.createClass({
 
               return (
                 <div key={this.props.name} className="portfolioSlide"  >
-                  <div className="slideImage2" style={backgroundStyles} ></div>
-
-                  <div className="crop-height">
-                    <img className="slideImageImg" src={imageUrlLocal} />
-                  </div>
-                  <div className="slideImageOpacityOverlay" ></div>
-                  </div>
+                    <div className="slideImage2" style={backgroundStyles} ></div>
+                    <div className="slideImageOpacityOverlay" ></div>
+                </div>
                 )
             }
          });
@@ -185,13 +184,13 @@ var Container = React.createClass({
               this.props.handleProjectListShow();
             },
             render: function() {
-              
+
 
               return (
                 <div key={this.props.currentProject.name} className="ProjectDetailsContent">
                   <i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i>
                     <h2>{this.props.currentProject.name}</h2>
-                    
+
                     <p>{this.props.currentProject.description}</p>
                 </div>
                 )
@@ -280,7 +279,7 @@ var Container = React.createClass({
                       var temp = React;
                       var cx = React.addons.classSet;
                       var classes = cx({
-                        'active': true, 
+                        'active': true,
                         'opacityShow' : true,
                         'opacityTransition' : true,
                         'projectView' : true
@@ -290,7 +289,7 @@ var Container = React.createClass({
                       var temp = React;
                       var cx = React.addons.classSet;
                       var classes = cx({
-                        'active': false, 
+                        'active': false,
                         'opacityHide' : true,
                         'opacityTransition' : true,
                         'projectView' : true
@@ -307,7 +306,7 @@ var Container = React.createClass({
                     }, this);
               return (
                 <div id="ProjectViews_container__p">
-                  {projectsLoop} 
+                  {projectsLoop}
                 </div>
               );
             }

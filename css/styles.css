@@ -1,5 +1,10 @@
+body {
+	background: white;
+}
+
 #container {
     /*position: relative;*/
+    background: white;
 }
 
 #contactButton {
@@ -21,7 +26,7 @@ h1 {
 	/*transition: left 2s ease-in-out, width 2s ease-in-out, height 2s ease-in-out, top 2s ease-in-out, transform 2s ease-in-out, opacity 2s;*/
 	transition: transform 2s ease-in-out, opacity 2s, top 2s;
 	/*position: absolute;*/
-	
+
 	margin: auto;
 	width:100%;
 	height: 100%;
@@ -51,7 +56,7 @@ h1 {
 	/*position: relative;*/
 }
 
-#ProjectList 
+#ProjectList
 {
 	width: 100%;
     /*margin: auto;*/
@@ -94,7 +99,7 @@ h1 {
 }
 
 .arrow {
-	
+
     cursor: pointer;
     font-size: 20px;
 }
@@ -132,7 +137,7 @@ h1 {
 #ProjectView__p {
 	  background-size: 20%;
   border: red solid;
-  
+
   /*left: 50%;*/
   height: 20%;
   /*top: 0px;*/
@@ -165,17 +170,22 @@ h1 {
 	top: 0%;
   	position: absolute;
 	  width: 100%;
-	  height: 100%;    
+	  height: 100%;
 	  background:white;
 }
 
+.portfolioSlideContainer {
+	/*position:relative;*/
+}
+
 #portfolioAnimationContainer {
-  position: absolute;
-  width: 100%;
-  border: none;
-  right: 0px;
-  height: 100%;
-  top: 0px;
+	background-color: white;
+	position: absolute;
+	width: 100%;
+	border: none;
+	right: 0px;
+	height: 100%;
+	top: 0px;
 }
 
 .slideImage {
@@ -200,35 +210,6 @@ h1 {
     transition: none;
 }
 
-.crop-height {
-	display: block;
-	display: none;
-	height: 100%;
-    max-height: 100%;
-    overflow: hidden;
-}
-
-.bg { /* test */
-  position: fixed; 
-  top: 0; 
-  left: 0; 
-
-  /* Preserve aspet ratio */
-  min-width: 100%;
-  min-height: 100%;
-}
-
-.slideImageImg {
-	  /* corrects inline gap in enclosing div */
-  /*display: none;*/
-  width: 100%;
-  max-width: 100%;
-  /* just in case, to force correct aspect ratio */
-  height: auto !important;
-  width: auto\9; /* ie8+9 */
-  /* lt ie8 */
-  -ms-interpolation-mode: bicubic; 
-}
 
 .slideImageOpacityOverlay {
     background: black;
@@ -236,7 +217,7 @@ h1 {
     width: 100%;
     height: 100%;
     position: absolute;
-    /*top: 0;*/
+    top: 0;
 }
 
 .portfolioAnimation-enter {
