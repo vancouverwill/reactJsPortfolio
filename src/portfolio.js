@@ -3,6 +3,7 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var Container = React.createClass({
             isAnimating : false,
             currentProjectIndex : -1,
+            decreasing : false,
 
             getInitialState: function() {
               return {
@@ -17,6 +18,7 @@ var Container = React.createClass({
             },
             updateCurrentProject: function(projectName) {
               if (this.isAnimating ===   true) return false;
+              if (this.state.showListView ===  false) return false;
 
               this.isAnimating = true;
               for (var i = 0; i < this.state.projects.length; i++) {
@@ -44,6 +46,12 @@ var Container = React.createClass({
               if (currentProject !== undefined) {
                 newItems = this.state.items.concat(currentProject);
               }
+              else {
+                // no project means reset
+                this.decreasing = true;
+                this.currentProjectIndex = -1;
+                // this.setState({"currentProject" : null});
+              }
 
               this.setState({"items" : newItems});
 
@@ -62,6 +70,8 @@ var Container = React.createClass({
                 this.setState({"showListView" : true});
             },
             showContactView : function() {
+              
+              
               this.updateCurrentProject(-1);
             },
             componentDidMount: function() {
@@ -109,6 +119,12 @@ var Container = React.createClass({
                 var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"};
 
                 // var projectDetailsView = '';
+                // 
+                  var listViewStatusClasses = cx({
+                  'listViewStatus': true,
+                  'projectListView' : true,
+                  'backgroundView': true
+                });
 
                 var projectListOpacity = {"opacity" : "1"};
               } else {
@@ -121,6 +137,12 @@ var Container = React.createClass({
                 var detailsViewStyles = {"opacity" : "1", "top" : "70%", "transform" : "scale(1,1)"};
 
                 var projectListOpacity = {"opacity" : "0"}
+
+                var listViewStatusClasses = cx({
+                  'listViewStatus': false,
+                  'projectListView' : true,
+                  'backgroundView': true
+                });
 
 
               }
@@ -141,7 +163,10 @@ var Container = React.createClass({
               return (
                 <div id="mainView">
                     <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
-                  <div className="projectListView backgroundView" style={listViewStyles}>
+                  <div id="leftArrow">
+                    <i className="fa fa-arrow-left"></i>
+                    </div>
+                  <div className={listViewStatusClasses} style={listViewStyles}>
                     <h1 style={listColor} > Will Melbourne</h1>
                     <div id="portfolioAnimationContainer" className={classes}>
                       <ReactCSSTransitionGroup transitionName="portfolioAnimation">
@@ -242,20 +267,19 @@ var Container = React.createClass({
 
               if (this.props.active == true) {
                 var fontColor = {"color" : this.props.fontColor};
-                var spacingDivTransform = {"transform" : "scaleY(2)"}
+                // var spacingDivBorder = {"transform" : "translateY(-15px)"}
               }
               else {
                 var fontColor = {};
-                var spacingDivTransform = {"transform" : "scaleY(1)"}
+                // var spacingDivBorder = {"transform" : "translateY(0px)"}
               }
 
               return (
                 <div className={classes}>
-                  <div className="spacingDivTransform" style={spacingDivTransform}></div>
+                  <div className="spacingDivBorder"  ></div>
                   <i className="fa fa-arrow-right arrow" onClick={this.handleProjectDetailsShow} style={fontColor}></i>
                   <h4  onClick={this.handleProjectShow} style={fontColor} >{this.props.name} {this.props.active}</h4>
                   <p>{this.props.shortDescription}</p>
-                  <div className="spacingDivTransform"></div>
                 </div>
                 )
             }
