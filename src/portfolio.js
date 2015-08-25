@@ -102,6 +102,9 @@ var Container = React.createClass({
                 this.updateCurrentProject('')
               }
             },
+            clickLeftIndividualProjectCarousel: function() {
+              console.log("clickLeftIndividualProjectCarousel")
+            },
             render: function() {
               
 
@@ -167,7 +170,10 @@ var Container = React.createClass({
               // animatedProject
 
                 if (this.state.animatedProject != null) {
-                  var animateProject = <Project key={this.state.animatedProject.name} name={this.state.animatedProject.name} description={this.state.animatedProject.description} images={this.state.animatedProject.images}></Project>
+                  // var animateProject = <Project key={this.state.animatedProject.name} name={this.state.animatedProject.name} description={this.state.animatedProject.description} images={this.state.animatedProject.images}></Project>
+                  var imageUrl = "url('images/" + this.state.animatedProject.images[0] + "')";
+                  var backgroundStyles = {"backgroundImage" : imageUrl}
+                  var animateProject = <div key={this.state.animatedProject.name} className="portfolioSlide"  ><div className="slideImage2" style={backgroundStyles} ></div></div>
                 }
                 else {
                   var animateProject = null
@@ -177,7 +183,7 @@ var Container = React.createClass({
                 <div id="mainView">
                     <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
                   <div id="leftArrow">
-                    <i className="fa fa-chevron-left"></i>
+                    <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
                     </div>
                   <div className={listViewStatusClasses} style={listViewStyles}>
                     <h1 style={listColor} > Will Melbourne</h1>
@@ -185,6 +191,7 @@ var Container = React.createClass({
                       <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation">
                         {animateProject}                      
                       </ReactCSSTransitionGroup>
+                      <div className="slideImageOpacityOverlay" ></div>
                     </div>
 
                   </div>
@@ -204,13 +211,15 @@ var Container = React.createClass({
                       var backgroundStyles = {"backgroundImage" : imageUrl}
                     }
 
+                    var leftParagrah =  {"position" : "absolute", "left": "-15%", "top": "10%"}
+
               return (
                 <div key={this.props.name} className="portfolioSlide"  >
                     <ReactCSSTransitionGroup transitionName="projectImagesAnimation">
                       <div className="slideImage2" style={backgroundStyles} ></div>
                     </ReactCSSTransitionGroup>
                     
-                    <div className="slideImageOpacityOverlay" ></div>
+                    
                 </div>
                 )
             }
