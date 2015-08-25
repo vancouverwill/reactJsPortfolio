@@ -192,7 +192,7 @@ h1 {
 	/*position:relative;*/
 }
 
-#portfolioAnimationContainer {
+#portfolioProjectAnimationContainer {
 	background-color: white;
 	position: absolute;
 	width: 100%;
@@ -241,7 +241,7 @@ h1 {
     top: 15%;
 }
 
-.portfolioAnimation-enter {
+.portfolioProjectAnimation-enter {
 position: absolute;
   /*opacity: 0.01;*/
   top:-100%;
@@ -249,12 +249,12 @@ position: absolute;
   /*transform: matrix(1, 0, 0, 1, 0, 0);*/
   /*transition: opacity 2.0s ease-in, top 1.0s ease-in;*/
   /*transition: top 2.0s ease-in-out .001s, transform 2.0s ease-in-out .001s;*/
-  transition: transform 2.0s ease-in-out .001s;
+  transition: transform 2.0s ease-in-out .000s;
   /*transform: scaleY(0px);*/
   /*transform: translate(50%,0);*/
 }
 
-.portfolioAnimation-enter.portfolioAnimation-enter-active {
+.portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
   opacity: 1;
   /*top:00%;*/
   transform: translateY(100%);
@@ -263,16 +263,16 @@ position: absolute;
 
 
 
-.portfolioAnimation-leave {
+.portfolioProjectAnimation-leave {
 	position: absolute;
 	opacity: 1;
 	/*top:00%;*/
 	/*transition: opacity 2.0s ease-in, top 2.0s ease-in;*/
 	/*transition: top 2.0s ease-in-out, transform 2.0s ease-in-out; */
-	transition: transform 2.0s ease-in-out .001s;
+	transition: transform 2.0s ease-in-out .000s;
 }
 
-.portfolioAnimation-leave.portfolioAnimation-leave-active {
+.portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
  	/*top:100%;*/
   	/*opacity: 0.01;*/
   	transform: translateY(100%);
@@ -282,22 +282,22 @@ position: absolute;
 
 
 
-.oppositeDirection .portfolioAnimation-enter {
+.oppositeDirection .portfolioProjectAnimation-enter {
   top:100%;
 }
 
-.oppositeDirection .portfolioAnimation-enter.portfolioAnimation-enter-active {
+.oppositeDirection .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
   /*top:0%;*/
   transform: translateY(-100%);
 }
 
 
 
-.oppositeDirection .portfolioAnimation-leave {
+.oppositeDirection .portfolioProjectAnimation-leave {
 	top:0%;
 }
 
-.oppositeDirection .portfolioAnimation-leave.portfolioAnimation-leave-active {
+.oppositeDirection .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
  	/*top:-100%;*/
  	transform: translateY(-100%);
 }

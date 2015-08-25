@@ -39,26 +39,28 @@ var Container = React.createClass({
               }
               this.setState(projects);
 
-              var newItems = this.state.items;
+              // var newItems = this.state.items;
 
-              newItems.splice(0, 1);
+              // newItems.splice(0, 1);
 
               if (currentProject !== undefined) {
                 newItems = this.state.items.concat(currentProject);
+                this.setState({"animatedProject" : currentProject});
               }
               else {
                 // no project means reset
                 this.decreasing = true;
                 this.currentProjectIndex = -1;
+                this.setState({"animatedProject" : null});
                 // this.setState({"currentProject" : null});
               }
 
-              this.setState({"items" : newItems});
+              // this.setState({"items" : newItems});
 
               var self = this;
               this.timeout = setTimeout(function(){
                 self.isAnimating = false;
-              }, 3000);
+              }, 2500);
             },
             handleProjectDetailsShow:function() {
               this.isAnimating = true;
@@ -70,7 +72,9 @@ var Container = React.createClass({
                 this.setState({"showListView" : true});
             },
             showContactView : function() {
-              
+              if (this.state.showListView == false) {
+                this.handleProjectListShow();
+              }
               
               this.updateCurrentProject(-1);
             },
@@ -99,11 +103,7 @@ var Container = React.createClass({
               }
             },
             render: function() {
-              var items = this.state.items.map(function(item, i) {
-                return (
-                  <Project key={item.name} name={item.name} description={item.description} images={item.images}></Project>
-                );
-              }.bind(this));
+              
 
               var temp = React;
               var cx = React.addons.classSet;
@@ -158,19 +158,32 @@ var Container = React.createClass({
                 listColor = {"color" :  "white"}
               }
 
+              // var items = this.state.items.map(function(item, i) {
+              //   return (
+              //     <Project key={item.name} name={item.name} description={item.description} images={item.images}></Project>
+              //   );
+              // }.bind(this));
+              // 
+              // animatedProject
 
+                if (this.state.animatedProject != null) {
+                  var animateProject = <Project key={this.state.animatedProject.name} name={this.state.animatedProject.name} description={this.state.animatedProject.description} images={this.state.animatedProject.images}></Project>
+                }
+                else {
+                  var animateProject = null
+                }
 
               return (
                 <div id="mainView">
                     <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
                   <div id="leftArrow">
-                    <i className="fa fa-arrow-left"></i>
+                    <i className="fa fa-chevron-left"></i>
                     </div>
                   <div className={listViewStatusClasses} style={listViewStyles}>
                     <h1 style={listColor} > Will Melbourne</h1>
-                    <div id="portfolioAnimationContainer" className={classes}>
-                      <ReactCSSTransitionGroup transitionName="portfolioAnimation">
-                        {items}
+                    <div id="portfolioProjectAnimationContainer" className={classes}>
+                      <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation">
+                        {animateProject}                      
                       </ReactCSSTransitionGroup>
                     </div>
 
@@ -189,14 +202,14 @@ var Container = React.createClass({
               if (this.props.images !== undefined && this.props.images[0]) {
                       var imageUrl = "url('images/" + this.props.images[0] + "')";
                       var backgroundStyles = {"backgroundImage" : imageUrl}
-
-                      // var imageUrlLocal = "/images/" + imageUrl;
-                      var imageUrlLocal = "/images/" + this.props.images[0];
                     }
 
               return (
                 <div key={this.props.name} className="portfolioSlide"  >
-                    <div className="slideImage2" style={backgroundStyles} ></div>
+                    <ReactCSSTransitionGroup transitionName="projectImagesAnimation">
+                      <div className="slideImage2" style={backgroundStyles} ></div>
+                    </ReactCSSTransitionGroup>
+                    
                     <div className="slideImageOpacityOverlay" ></div>
                 </div>
                 )
@@ -277,8 +290,11 @@ var Container = React.createClass({
               return (
                 <div className={classes}>
                   <div className="spacingDivBorder"  ></div>
-                  <i className="fa fa-arrow-right arrow" onClick={this.handleProjectDetailsShow} style={fontColor}></i>
-                  <h4  onClick={this.handleProjectShow} style={fontColor} >{this.props.name} {this.props.active}</h4>
+                  
+                  <h4  onClick={this.handleProjectShow} style={fontColor} >
+                    {this.props.name} {this.props.active}
+                    <i className="fa fa-arrow-right arrow" onClick={this.handleProjectDetailsShow} style={fontColor}></i>
+                  </h4>
                   <p>{this.props.shortDescription}</p>
                 </div>
                 )
