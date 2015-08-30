@@ -282,26 +282,26 @@ position: absolute;
 
 
 
-.oppositeDirection .portfolioProjectAnimation-enter {
+.movingDown .portfolioProjectAnimation-enter {
   top:100%;
 }
 
-.oppositeDirection .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+.movingDown .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
   /*top:0%;*/
   transform: translateY(-100%);
 }
 
 
 
-.oppositeDirection .portfolioProjectAnimation-leave {
+.movingDown .portfolioProjectAnimation-leave {
 	top:0%;
 }
 
-.oppositeDirection .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+.movingDown .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
  	/*top:-100%;*/
  	transform: translateY(-100%);
 }
 
 .projectImagesAnimation {
-	
+
 }

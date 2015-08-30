@@ -3,8 +3,7 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var Container = React.createClass({
             isAnimating : false,
             currentProjectIndex : -1,
-            decreasing : false,
-
+            goingDown : false,
             getInitialState: function() {
               return {
                 title: "Portfolio Site",
@@ -24,9 +23,9 @@ var Container = React.createClass({
               for (var i = 0; i < this.state.projects.length; i++) {
                 if (this.state.projects[i].name == projectName) {
                   if (i < this.currentProjectIndex) {
-                    this.decreasing = true;
+                    this.goingDown = true;
                   } else {
-                    this.decreasing = false;
+                    this.goingDown = false;
                   }
                   // this.setState({"previousProject" : this.state.currentProject});
                   this.setState({"currentProject" : this.state.projects[i]});
@@ -46,12 +45,16 @@ var Container = React.createClass({
               if (currentProject !== undefined) {
                 newItems = this.state.items.concat(currentProject);
                 this.setState({"animatedProject" : currentProject});
+                this.setState({"animatedImageUrl" : currentProject.images[0]});
+                this.setState({"animatedImageUrlIndex" : 0});
               }
               else {
                 // no project means reset
-                this.decreasing = true;
+                this.goingDown = true;
                 this.currentProjectIndex = -1;
                 this.setState({"animatedProject" : null});
+                this.setState({"animatedImageUrl" : null});
+                this.setState({"animatedImageUrlIndex" : null});
                 // this.setState({"currentProject" : null});
               }
 
@@ -102,8 +105,27 @@ var Container = React.createClass({
                 this.updateCurrentProject('')
               }
             },
-            clickLeftIndividualProjectCarousel: function() {
+            clickLeftIndividualProjectCarousel: function(e) {
               console.log("clickLeftIndividualProjectCarousel")
+              // if (this.isAnimating ===   true) return e.stopPropagation();
+              // if (this.state.showListView ===  false) return e.stopPropagation();
+
+              // this.isAnimating = true;
+
+              
+
+              if (this.state.animatedImageUrlIndex != 0) {
+                var newIndex = this.state.animatedImageUrlIndex - 1
+              } else {
+                var newIndex = this.state.currentProject.images.length - 1 
+              }
+
+              this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
+                this.setState({"animatedImageUrlIndex" : newIndex});
+
+
+              // this.setState({"animatedImageUrl" : currentProject.images[0]});
+              //   this.setState({"animatedImageUrlIndex" : 0);
             },
             render: function() {
               
@@ -111,7 +133,7 @@ var Container = React.createClass({
               var temp = React;
               var cx = React.addons.classSet;
               var classes = cx({
-                'oppositeDirection': this.decreasing
+                'movingDown': this.goingDown
               });
 
               if (this.state.showListView == true) {
@@ -169,11 +191,12 @@ var Container = React.createClass({
               // 
               // animatedProject
 
-                if (this.state.animatedProject != null) {
-                  // var animateProject = <Project key={this.state.animatedProject.name} name={this.state.animatedProject.name} description={this.state.animatedProject.description} images={this.state.animatedProject.images}></Project>
-                  var imageUrl = "url('images/" + this.state.animatedProject.images[0] + "')";
+                if (this.state.animatedImageUrl != null) {
+                  var imageUrl = "url('images/" + this.state.animatedImageUrl + "')";
                   var backgroundStyles = {"backgroundImage" : imageUrl}
-                  var animateProject = <div key={this.state.animatedProject.name} className="portfolioSlide"  ><div className="slideImage2" style={backgroundStyles} ></div></div>
+
+                // var animateProject = <Project key={this.state.animatedProject.name} name={this.state.animatedProject.name} description={this.state.animatedProject.description} images={this.state.animatedProject.images}></Project>
+                  var animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  ><div className="slideImage2" style={backgroundStyles} ></div></div>
                 }
                 else {
                   var animateProject = null
