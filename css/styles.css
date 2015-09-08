@@ -279,6 +279,9 @@ position: absolute;
 }
 
 
+.projectImagesAnimation {
+
+}
 
 
 
@@ -287,7 +290,6 @@ position: absolute;
 }
 
 .movingDown .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
-  /*top:0%;*/
   transform: translateY(-100%);
 }
 
@@ -298,10 +300,29 @@ position: absolute;
 }
 
 .movingDown .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
- 	/*top:-100%;*/
  	transform: translateY(-100%);
 }
 
-.projectImagesAnimation {
 
+
+
+
+.movingLeft .portfolioProjectAnimation-enter {
+  right:100%;
 }
+
+.movingLeft .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  transform: translateX(-100%);
+}
+
+
+
+.movingLeft .portfolioProjectAnimation-leave {
+	right:0%;
+}
+
+.movingLeft .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+ 	transform: translateY(-100%);
+}
+
+

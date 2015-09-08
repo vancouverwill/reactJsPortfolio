@@ -3,7 +3,8 @@ var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 var Container = React.createClass({
             isAnimating : false,
             currentProjectIndex : -1,
-            goingDown : false,
+            // goingDown : false,
+            animationDirection : "up",
             getInitialState: function() {
               return {
                 title: "Portfolio Site",
@@ -23,9 +24,11 @@ var Container = React.createClass({
               for (var i = 0; i < this.state.projects.length; i++) {
                 if (this.state.projects[i].name == projectName) {
                   if (i < this.currentProjectIndex) {
-                    this.goingDown = true;
+                    // this.goingDown = true;
+                    this.animationDirection = "down"
                   } else {
-                    this.goingDown = false;
+                    // this.goingDown = false;
+                    this.animationDirection = "up"
                   }
                   // this.setState({"previousProject" : this.state.currentProject});
                   this.setState({"currentProject" : this.state.projects[i]});
@@ -50,7 +53,8 @@ var Container = React.createClass({
               }
               else {
                 // no project means reset
-                this.goingDown = true;
+                // this.goingDown = true;
+                this.animationDirection = "down"
                 this.currentProjectIndex = -1;
                 this.setState({"animatedProject" : null});
                 this.setState({"animatedImageUrl" : null});
@@ -111,6 +115,13 @@ var Container = React.createClass({
               // if (this.state.showListView ===  false) return e.stopPropagation();
 
               // this.isAnimating = true;
+              // if (i < this.currentProjectIndex) {
+                    // this.goingDown = true;
+                    this.animationDirection = "left"
+                  // } else {
+                    // this.goingDown = false;
+                    // this.animationDirection = "right"
+                  // }
 
               
 
@@ -132,9 +143,30 @@ var Container = React.createClass({
 
               var temp = React;
               var cx = React.addons.classSet;
-              var classes = cx({
-                'movingDown': this.goingDown
-              });
+              // var classes = cx({
+              //   'movingDown': this.goingDown
+              // });
+
+              if (this.animationDirection == "up") {
+                var classes = cx({
+                'movingUp': true
+                });
+              }
+              else if (this.animationDirection == "down") {
+                var classes = cx({
+                'movingDown': true
+                });
+              }
+              else if (this.animationDirection == "left") {
+                var classes = cx({
+                'movingLeft': true
+                });
+              }
+              else if (this.animationDirection == "right") {
+                var classes = cx({
+                'movingRight': true
+                });
+              }
 
               if (this.state.showListView == true) {
                 var listViewStyles = {"width" : "100%", "height" : "100%"};
