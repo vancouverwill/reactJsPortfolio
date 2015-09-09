@@ -5,6 +5,7 @@ var Container = React.createClass({
             currentProjectIndex : -1,
             // goingDown : false,
             animationDirection : "up",
+            animationDuration : 2500,
             getInitialState: function() {
               return {
                 title: "Portfolio Site",
@@ -46,7 +47,7 @@ var Container = React.createClass({
               // newItems.splice(0, 1);
 
               if (currentProject !== undefined) {
-                newItems = this.state.items.concat(currentProject);
+                // newItems = this.state.items.concat(currentProject);
                 this.setState({"animatedProject" : currentProject});
                 this.setState({"animatedImageUrl" : currentProject.images[0]});
                 this.setState({"animatedImageUrlIndex" : 0});
@@ -67,7 +68,7 @@ var Container = React.createClass({
               var self = this;
               this.timeout = setTimeout(function(){
                 self.isAnimating = false;
-              }, 2500);
+              }, this.animationDuration);
             },
             handleProjectDetailsShow:function() {
               this.isAnimating = true;
@@ -110,6 +111,9 @@ var Container = React.createClass({
               }
             },
             clickLeftIndividualProjectCarousel: function(e) {
+              if (this.isAnimating ===   true) return false;
+              this.isAnimating = true;
+
               console.log("clickLeftIndividualProjectCarousel")
               this.animationDirection = "left"              
 
@@ -120,9 +124,17 @@ var Container = React.createClass({
               }
 
               this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
-                this.setState({"animatedImageUrlIndex" : newIndex});
+              this.setState({"animatedImageUrlIndex" : newIndex});
+
+              var self = this;
+              this.timeout = setTimeout(function(){
+                self.isAnimating = false;
+              }, this.animationDuration);
             },
             clickRightIndividualProjectCarousel: function(e) {
+              if (this.isAnimating ===   true) return false;
+              this.isAnimating = true;
+
               console.log("clickRightIndividualProjectCarousel")
               this.animationDirection = "right"              
 
@@ -133,7 +145,12 @@ var Container = React.createClass({
               }
 
               this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
-                this.setState({"animatedImageUrlIndex" : newIndex});
+              this.setState({"animatedImageUrlIndex" : newIndex});
+
+              var self = this;
+              this.timeout = setTimeout(function(){
+                self.isAnimating = false;
+              }, this.animationDuration);
             },
             render: function() {
               
@@ -205,8 +222,10 @@ var Container = React.createClass({
                       <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
                     </div>;
 
-              if (this.state.items.length <= 0) {
+              // if (this.state.items.length <= 0) {
+              if (this.currentProjectIndex == -1) {
                 listColor = {"color" :  "black"}
+              
               }
               else {
                 listColor = {"color" :  "white"}
@@ -225,7 +244,7 @@ var Container = React.createClass({
                   var backgroundStyles = {"backgroundImage" : imageUrl}
 
                 // var animateProject = <Project key={this.state.animatedProject.name} name={this.state.animatedProject.name} description={this.state.animatedProject.description} images={this.state.animatedProject.images}></Project>
-                  var animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  ><div className="slideImage" style={backgroundStyles} ></div></div>
+                  var animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  ><div className="slideImage" style={backgroundStyles} ></div><div className="slideImageOpacityOverlay" ></div></div>
                 }
                 else {
                   var animateProject = null
@@ -246,7 +265,7 @@ var Container = React.createClass({
                       <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation">
                         {animateProject}                      
                       </ReactCSSTransitionGroup>
-                      <div className="slideImageOpacityOverlay" ></div>
+                      
                     </div>
 
                   </div>
@@ -290,10 +309,10 @@ var Container = React.createClass({
 
               return (
                 <div key={this.props.currentProject.name} className="ProjectDetailsContent">
-                  <i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i>
-                    <h2>{this.props.currentProject.name}</h2>
+                  <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
+                  <h2>{this.props.currentProject.name}</h2>
 
-                    <p>{this.props.currentProject.description}</p>
+                  <p>{this.props.currentProject.description}</p>
                 </div>
                 )
             }
