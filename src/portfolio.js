@@ -111,19 +111,7 @@ var Container = React.createClass({
             },
             clickLeftIndividualProjectCarousel: function(e) {
               console.log("clickLeftIndividualProjectCarousel")
-              // if (this.isAnimating ===   true) return e.stopPropagation();
-              // if (this.state.showListView ===  false) return e.stopPropagation();
-
-              // this.isAnimating = true;
-              // if (i < this.currentProjectIndex) {
-                    // this.goingDown = true;
-                    this.animationDirection = "left"
-                  // } else {
-                    // this.goingDown = false;
-                    // this.animationDirection = "right"
-                  // }
-
-              
+              this.animationDirection = "left"              
 
               if (this.state.animatedImageUrlIndex != 0) {
                 var newIndex = this.state.animatedImageUrlIndex - 1
@@ -133,10 +121,19 @@ var Container = React.createClass({
 
               this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
                 this.setState({"animatedImageUrlIndex" : newIndex});
+            },
+            clickRightIndividualProjectCarousel: function(e) {
+              console.log("clickRightIndividualProjectCarousel")
+              this.animationDirection = "right"              
 
+              if (this.state.animatedImageUrlIndex != this.state.currentProject.images.length - 1) {
+                var newIndex = this.state.animatedImageUrlIndex + 1
+              } else {
+                var newIndex =  0
+              }
 
-              // this.setState({"animatedImageUrl" : currentProject.images[0]});
-              //   this.setState({"animatedImageUrlIndex" : 0);
+              this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
+                this.setState({"animatedImageUrlIndex" : newIndex});
             },
             render: function() {
               
@@ -228,7 +225,7 @@ var Container = React.createClass({
                   var backgroundStyles = {"backgroundImage" : imageUrl}
 
                 // var animateProject = <Project key={this.state.animatedProject.name} name={this.state.animatedProject.name} description={this.state.animatedProject.description} images={this.state.animatedProject.images}></Project>
-                  var animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  ><div className="slideImage2" style={backgroundStyles} ></div></div>
+                  var animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  ><div className="slideImage" style={backgroundStyles} ></div></div>
                 }
                 else {
                   var animateProject = null
@@ -239,7 +236,10 @@ var Container = React.createClass({
                     <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
                   <div id="leftArrow">
                     <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
-                    </div>
+                  </div>
+                  <div id="rightArrow">
+                    <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
+                  </div>
                   <div className={listViewStatusClasses} style={listViewStyles}>
                     <h1 style={listColor} > Will Melbourne</h1>
                     <div id="portfolioProjectAnimationContainer" className={classes}>
@@ -271,7 +271,7 @@ var Container = React.createClass({
               return (
                 <div key={this.props.name} className="portfolioSlide"  >
                     <ReactCSSTransitionGroup transitionName="projectImagesAnimation">
-                      <div className="slideImage2" style={backgroundStyles} ></div>
+                      <div className="slideImage" style={backgroundStyles} ></div>
                     </ReactCSSTransitionGroup>
                     
                     

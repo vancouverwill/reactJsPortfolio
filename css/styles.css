@@ -186,6 +186,7 @@ h1 {
 	  width: 100%;
 	  height: 100%;
 	  background:white;
+
 }
 
 .portfolioSlideContainer {
@@ -204,20 +205,18 @@ h1 {
 
 
 
-.slideImage2 {
+.slideImage {
 	height: 100vh;
     min-height: 300px;
     background-size: cover;
     background-position: 50% 50%;
     background-repeat: no-repeat;
-    /*background-attachment: fixed;*/
     display: flex;
     align-items: flex-end;
     transition: none;
 }
 
-
-.slideImageOpacityOverlay {
+.slideImageOpacityOverlay { 
 	opacity: 0;
 	transition: opacity 2s ease-in-out;
 	width: 100%;
@@ -234,10 +233,18 @@ h1 {
 }
 
 #leftArrow {
-	    color: black;
+    color: black;
     font-size: 5em;
     position: absolute;
     left: 10%;
+    top: 15%;
+}
+
+#rightArrow {
+    color: black;
+    font-size: 5em;
+    position: absolute;
+    right: 10%;
     top: 15%;
 }
 
@@ -249,7 +256,7 @@ position: absolute;
   /*transform: matrix(1, 0, 0, 1, 0, 0);*/
   /*transition: opacity 2.0s ease-in, top 1.0s ease-in;*/
   /*transition: top 2.0s ease-in-out .001s, transform 2.0s ease-in-out .001s;*/
-  transition: transform 2.0s ease-in-out .000s;
+  transition: transform 1.0s ease-in-out .000s;
   /*transform: scaleY(0px);*/
   /*transform: translate(50%,0);*/
 }
@@ -269,7 +276,7 @@ position: absolute;
 	/*top:00%;*/
 	/*transition: opacity 2.0s ease-in, top 2.0s ease-in;*/
 	/*transition: top 2.0s ease-in-out, transform 2.0s ease-in-out; */
-	transition: transform 2.0s ease-in-out .000s;
+	transition: transform 1.0s ease-in-out .000s;
 }
 
 .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
@@ -308,7 +315,9 @@ position: absolute;
 
 
 .movingLeft .portfolioProjectAnimation-enter {
-  right:100%;
+	top:0%;	
+  left:100%;
+  transition: transform 2.0s ease-in-out .000s;
 }
 
 .movingLeft .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
@@ -318,11 +327,37 @@ position: absolute;
 
 
 .movingLeft .portfolioProjectAnimation-leave {
-	right:0%;
+	top:0%;
+	left:0%;
+	transition: transform 2.0s ease-in-out .000s;
 }
 
 .movingLeft .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
- 	transform: translateY(-100%);
+ 	transform: translateX(-100%);
+}
+
+
+
+.movingRight .portfolioProjectAnimation-enter {
+	top:0%;	
+  right:100%;
+  transition: transform 2.0s ease-in-out .000s;
+}
+
+.movingRight .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  transform: translateX(100%);
+}
+
+
+
+.movingRight .portfolioProjectAnimation-leave {
+	top:0%;
+	/*left:0%;*/
+	transition: transform 2.0s ease-in-out .000s;
+}
+
+.movingRight .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+ 	transform: translateX(100%);
 }
 
 
