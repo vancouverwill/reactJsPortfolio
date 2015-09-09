@@ -96,6 +96,9 @@ var Container = React.createClass({
               if (event.deltaY < 0) (this.moveDown())
               if (event.deltaY > 0) (this.moveUp())
             },
+            chooseProjectOne: function() {
+              this.updateCurrentProject(0);
+            },
             moveUp: function() {
                 if (this.currentProjectIndex < (projects.length - 1)) {
                   this.updateCurrentProject(this.state.projects[this.currentProjectIndex + 1].name)
@@ -261,6 +264,7 @@ var Container = React.createClass({
                   </div>
                   <div className={listViewStatusClasses} style={listViewStyles}>
                     <h1 style={listColor} > Will Melbourne</h1>
+                    <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada<i className="fa fa-arrow-down" onClick={this.chooseProjectOne}>Back to Projects</i></p>
                     <div id="portfolioProjectAnimationContainer" className={classes}>
                       <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation">
                         {animateProject}                      
