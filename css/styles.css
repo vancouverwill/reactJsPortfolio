@@ -22,11 +22,19 @@ h1 {
 	transition: color 1s;
 }
 
+.introTextContainer {
+	position: absolute;
+	text-align: center;
+    top: 70px;
+    width: 100%;
+    transition: opacity 2s ease-in-out;
+}
+
 .introText {
-	    position: absolute;
-    top: 40px;
     z-index: 20;
-    text-align: center;
+    width:150px;
+    position: relative;
+    margin: auto;
 }
 
 .backgroundView {

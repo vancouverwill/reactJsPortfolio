@@ -97,7 +97,8 @@ var Container = React.createClass({
               if (event.deltaY > 0) (this.moveUp())
             },
             chooseProjectOne: function() {
-              this.updateCurrentProject(0);
+              console.log("chooseProjectOne")
+              this.moveUp();
             },
             moveUp: function() {
                 if (this.currentProjectIndex < (projects.length - 1)) {
@@ -185,6 +186,8 @@ var Container = React.createClass({
                 });
               }
 
+              
+
               if (this.state.showListView == true) {
                 var listViewStyles = {"width" : "100%", "height" : "100%"};
 
@@ -228,10 +231,11 @@ var Container = React.createClass({
               // if (this.state.items.length <= 0) {
               if (this.currentProjectIndex == -1) {
                 listColor = {"color" :  "black"}
-              
+                introContainerOpacity = {"opacity" : 1}
               }
               else {
                 listColor = {"color" :  "white"}
+                introContainerOpacity = {"opacity" : 0}
               }
 
               // var items = this.state.items.map(function(item, i) {
@@ -264,7 +268,9 @@ var Container = React.createClass({
                   </div>
                   <div className={listViewStatusClasses} style={listViewStyles}>
                     <h1 style={listColor} > Will Melbourne</h1>
-                    <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada<i className="fa fa-arrow-down" onClick={this.chooseProjectOne}>Back to Projects</i></p>
+                    <div className="introTextContainer" style={introContainerOpacity}>
+                      <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada<i className="fa fa-arrow-down" onClick={this.chooseProjectOne}></i></p>
+                    </div>
                     <div id="portfolioProjectAnimationContainer" className={classes}>
                       <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation">
                         {animateProject}                      
