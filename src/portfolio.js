@@ -6,6 +6,7 @@ var Container = React.createClass({
             // goingDown : false,
             animationDirection : "up",
             animationDuration : 2500,
+            // currentState: "home",
             getInitialState: function() {
               return {
                 title: "Portfolio Site",
@@ -14,14 +15,16 @@ var Container = React.createClass({
                 currentProject : projects[0],
                 // previousProject : null,
                 // animating : false,
+                showIsAnimating : false,
                 items : []
               };
             },
             updateCurrentProject: function(projectName) {
-              if (this.isAnimating ===   true) return false;
-              if (this.state.showListView ===  false) return false;
+              if (this.isAnimating ===   true) return;
+              if (this.state.showListView ===  false) return;
 
               this.isAnimating = true;
+              this.setState({"showIsAnimating" : true});
               for (var i = 0; i < this.state.projects.length; i++) {
                 if (this.state.projects[i].name == projectName) {
                   if (i < this.currentProjectIndex) {
@@ -65,15 +68,19 @@ var Container = React.createClass({
 
               // this.setState({"items" : newItems});
 
-              var self = this;
-              this.timeout = setTimeout(function(){
-                self.isAnimating = false;
-              }, this.animationDuration);
+              // var self = this;
+              // this.timeout = setTimeout(function(){
+              //   self.isAnimating = false;
+              // }, this.animationDuration);
+
+              this.setNotAnimating();
             },
             handleProjectDetailsShow:function() {
               this.isAnimating = true;
+              this.setState({"showIsAnimating" : true});
               console.log("handleProjectDetailsShow")
-                this.setState({"showListView" : false});
+              this.setState({"showListView" : false});
+              this.setNotAnimating();
             },
             handleProjectListShow:function() {
                 this.isAnimating = false;
@@ -83,6 +90,8 @@ var Container = React.createClass({
               if (this.state.showListView == false) {
                 this.handleProjectListShow();
               }
+
+              // this.currentState = "home";
               
               this.updateCurrentProject(-1);
             },
@@ -114,9 +123,18 @@ var Container = React.createClass({
                 this.updateCurrentProject('')
               }
             },
+            setNotAnimating: function() {
+              var self = this;
+
+              this.timeout = setTimeout(function(){
+                self.isAnimating = false;
+                self.setState({"showIsAnimating" : false});
+              }, this.animationDuration);
+            },
             clickLeftIndividualProjectCarousel: function(e) {
-              if (this.isAnimating ===   true) return false;
+              if (this.isAnimating ===   true) return;
               this.isAnimating = true;
+              this.setState({"showIsAnimating" : true});
 
               console.log("clickLeftIndividualProjectCarousel")
               this.animationDirection = "left"              
@@ -130,14 +148,17 @@ var Container = React.createClass({
               this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
               this.setState({"animatedImageUrlIndex" : newIndex});
 
-              var self = this;
-              this.timeout = setTimeout(function(){
-                self.isAnimating = false;
-              }, this.animationDuration);
+              // var self = this;
+              // this.timeout = setTimeout(function(){
+              //   self.isAnimating = false;
+              // }, this.animationDuration);
+
+              this.setNotAnimating();
             },
             clickRightIndividualProjectCarousel: function(e) {
-              if (this.isAnimating ===   true) return false;
+              if (this.isAnimating ===   true) return;
               this.isAnimating = true;
+              this.setState({"showIsAnimating" : true});
 
               console.log("clickRightIndividualProjectCarousel")
               this.animationDirection = "right"              
@@ -151,19 +172,18 @@ var Container = React.createClass({
               this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
               this.setState({"animatedImageUrlIndex" : newIndex});
 
-              var self = this;
-              this.timeout = setTimeout(function(){
-                self.isAnimating = false;
-              }, this.animationDuration);
+              // var self = this;
+              // this.timeout = setTimeout(function(){
+              //   self.isAnimating = false;
+              // }, this.animationDuration);
+
+              this.setNotAnimating();
             },
             render: function() {
               
 
               var temp = React;
               var cx = React.addons.classSet;
-              // var classes = cx({
-              //   'movingDown': this.goingDown
-              // });
 
               if (this.animationDirection == "up") {
                 var classes = cx({
@@ -186,57 +206,64 @@ var Container = React.createClass({
                 });
               }
 
-              
+
 
               if (this.state.showListView == true) {
                 var listViewStyles = {"width" : "100%", "height" : "100%"};
 
-                // var detailsViewStyles = {"bottom" : "-100%"};
-                // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "height" : "0px"};
                 var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"};
-
-                // var projectDetailsView = '';
-                // 
-                  var listViewStatusClasses = cx({
-                  'listViewStatus': true,
-                  'projectListView' : true,
-                  'backgroundView': true
-                });
-
                 var projectListOpacity = {"opacity" : "1"};
-              } else {
-                // var listViewStyles = {"left" : "-100%"};
-                // var listViewStyles = {"width" : "70%", "height" : "300px", "left" : "15%"};
-                var listViewStyles = {"transform" : "scale(0.7,0.7)"};
-                // var detailsViewStyles = {"bottom" : "00%"};
-                // var detailsViewStyles = {"bottom" : "00%"};
-                // var detailsViewStyles = {"opacity" : "1", "top" : "70%", "height" : "auto"};
-                var detailsViewStyles = {"opacity" : "1", "top" : "70%", "transform" : "scale(1,1)"};
+                  var listViewStatusClasses = cx({
+                    // 'listViewStatus': true,
+                    'projectListView' : true
+                  });
 
+
+
+                if (this.currentProjectIndex == -1) {
+                  listColor = {"color" :  "black"}
+                  introContainerOpacity = {"opacity" : 1}
+
+                  var overallStatusClasses = cx({
+                  'homeView_active': true,
+                  'animating_active' : this.state.showIsAnimating
+                });
+                }
+                else {
+                  listColor = {"color" :  "white"};
+                  introContainerOpacity = {"opacity" : 0};
+
+                  var overallStatusClasses = cx({
+                    'ProjectListView_active': true,
+                    'animating_active' : this.state.showIsAnimating
+                  });
+                }
+
+                
+              } else {
+                var listViewStyles = {"transform" : "scale(0.7,0.7)"};
+                
+                var detailsViewStyles = {"opacity" : "1", "top" : "70%", "transform" : "scale(1,1)"};
                 var projectListOpacity = {"opacity" : "0"}
 
                 var listViewStatusClasses = cx({
-                  'listViewStatus': false,
+                  // 'listViewStatus': false,
                   'projectListView' : true,
-                  'backgroundView': true
+                });
+
+                var overallStatusClasses = cx({
+                  'ProjectDetailsView_active': true,
+                  'animating_active' : this.state.showIsAnimating
                 });
 
 
               }
 
-              var projectDetailsView = <div className='projectDetailsView backgroundView' style={detailsViewStyles}>
+              var projectDetailsView = <div className='projectDetailsView' style={detailsViewStyles}>
                       <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
                     </div>;
 
-              // if (this.state.items.length <= 0) {
-              if (this.currentProjectIndex == -1) {
-                listColor = {"color" :  "black"}
-                introContainerOpacity = {"opacity" : 1}
-              }
-              else {
-                listColor = {"color" :  "white"}
-                introContainerOpacity = {"opacity" : 0}
-              }
+              
 
               // var items = this.state.items.map(function(item, i) {
               //   return (
@@ -258,18 +285,18 @@ var Container = React.createClass({
                 }
 
               return (
-                <div id="mainView">
+                <div id="mainView" className={overallStatusClasses}>
                     <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
-                  <div id="leftArrow">
+                  <div id="leftArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
                     <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
                   </div>
-                  <div id="rightArrow">
+                  <div id="rightArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
                     <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
                   </div>
                   <div className={listViewStatusClasses} style={listViewStyles}>
                     <h1 style={listColor} > Will Melbourne</h1>
                     <div className="introTextContainer" style={introContainerOpacity}>
-                      <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada<i className="fa fa-arrow-down" onClick={this.chooseProjectOne}></i></p>
+                      <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada<i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne}></i></p>
                     </div>
                     <div id="portfolioProjectAnimationContainer" className={classes}>
                       <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation">
@@ -386,7 +413,7 @@ var Container = React.createClass({
                   
                   <h4  onClick={this.handleProjectShow} style={fontColor} >
                     {this.props.name} {this.props.active}
-                    <i className="fa fa-arrow-right arrow" onClick={this.handleProjectDetailsShow} style={fontColor}></i>
+                    <i className="fa fa-arrow-right arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow} style={fontColor}></i>
                   </h4>
                   <p>{this.props.shortDescription}</p>
                 </div>

@@ -12,6 +12,12 @@ body {
 	left:25px;
 	top: 10px;
 	z-index:40;
+	opacity: 1;
+	transition: opacity 2s ease-in-out;
+}
+
+.ProjectDetailsView_active #contactButton {
+	opacity: 0;
 }
 
 h1 {
@@ -37,24 +43,27 @@ h1 {
     margin: auto;
 }
 
-.backgroundView {
-	/*transition: left 2s ease-in-out, width 2s ease-in-out, height 2s ease-in-out, top 2s ease-in-out, transform 2s ease-in-out, opacity 2s;*/
-	transition: transform 2s ease-in-out, opacity 2s, top 2s;
-	/*position: absolute;*/
+.introText__arrow {
+	cursor: pointer;
+}
 
-	margin: auto;
-	width:100%;
-	height: 100%;
+.backgroundView {
+	/*margin: auto;*/
+	
 }
 
 .projectDetailsView {
 	overflow: hidden;
 	position: absolute;
-	top:70%;
+	/*top:70%;*/
 	/*transition: opacity 2s, transform 2s, top 2s;*/
+	transition: transform 2s ease-in-out, opacity 2s, top 2s;
 	z-index: 30;
 	height: auto;
 	transform-origin: bottom;
+
+	width:100%;
+	height: 100%;
 }
 
 .ProjectDetailsContent {
@@ -63,21 +72,22 @@ h1 {
 }
 
 .projectListView {
+		transition: transform 2s ease-in-out, opacity 2s, top 2s;
 		left: 0px;
 		position: absolute;
 		top: 0px;
 		overflow: hidden;
 		    transform-origin: top;
-	/*position: relative;*/
+
+		    width:100%;
+	height: 100%;
 }
 
 #ProjectList
 {
 	width: 100%;
-    /*margin: auto;*/
     position: absolute;
     z-index: 10;
-    /* margin-top: 30%; */
     height: 70%;
     overflow: scroll;
     top: 30%;
@@ -125,16 +135,15 @@ h1 {
 	transform: translateY(+15px);
 }	
 
-.arrow {
-
+.arrowSeeProjectDetails {
     cursor: pointer;
     font-size: 20px;
 }
-.project-title .arrow {
+.project-title .arrowSeeProjectDetails {
 	display: none;
 	float: right;
 }
-.active .arrow {
+.active .arrowSeeProjectDetails {
 	display: block;
 	/*padding-top: 25px;*/
 }
@@ -241,7 +250,7 @@ h1 {
     background: black;
 }
 
-.listViewStatus .slideImageOpacityOverlay {
+.ProjectListView_active .slideImageOpacityOverlay {
     
     opacity: 0.5;
     
@@ -251,20 +260,23 @@ h1 {
 	cursor: pointer;
 }
 
-#leftArrow {
-    color: black;
+.arrow__IndividualProjecCarousel {
+	color: black;
     cursor: pointer;
     font-size: 5em;
     position: absolute;
+}
+
+.animating_active .arrow__IndividualProjecCarousel {
+	opacity: 0.1;
+}
+
+#leftArrow__IndividualProjecCarousel {
     left: 10%;
     top: 15%;
 }
 
-#rightArrow {
-    color: black;
-    cursor: pointer;
-    font-size: 5em;
-    position: absolute;
+#rightArrow__IndividualProjecCarousel {
     right: 10%;
     top: 15%;
 }
