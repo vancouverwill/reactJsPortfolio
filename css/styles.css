@@ -13,11 +13,16 @@ body {
 	top: 10px;
 	z-index:40;
 	opacity: 1;
-	transition: opacity 2s ease-in-out;
+	transition: opacity 1s ease-out;
 }
 
 .ProjectDetailsView_active #contactButton {
 	opacity: 0;
+}
+
+.animating_active #contactButton{
+	opacity: 0.2;
+	cursor: default;
 }
 
 h1 {
@@ -33,16 +38,24 @@ h1 {
 	text-align: center;
     top: 70px;
     width: 100%;
-    transition: opacity 2s ease-in-out;
+    
 }
+
+
 
 .introText {
     z-index: 20;
     width:150px;
     position: relative;
     margin: auto;
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
 }
 
+.homeView_active .introText {
+	opacity: 1;
+	transition: opacity 0.5s ease-out 1s;
+}
 .introText__arrow {
 	cursor: pointer;
 }
@@ -90,8 +103,12 @@ h1 {
     z-index: 10;
     height: 70%;
     overflow: scroll;
-    top: 30%;
-    transition: opacity 1s;
+    bottom: 0%;
+    transition: opacity 1s, transform 2s ease-out;
+}
+
+.homeView_active #ProjectList {	
+transform: translateY(80%); 
 }
 
 #ProjectListMenu
