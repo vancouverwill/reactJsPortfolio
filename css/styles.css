@@ -27,8 +27,20 @@ h1 {
 	text-align: center;
     top: 70px;
     width: 100%;
-    transition: opacity 2s ease-in-out;
+    
 }
+
+.introText {
+	transition: opacity 0.5s;
+    opacity: 1;
+}
+
+
+
+.intiatedListViewState .introText, .detailsViewState .introText {
+	opacity: 0;
+}
+
 
 .introText {
     z-index: 20;
@@ -47,6 +59,7 @@ h1 {
 	height: 100%;
 }
 
+
 .projectDetailsView {
 	overflow: hidden;
 	position: absolute;
@@ -55,14 +68,24 @@ h1 {
 	z-index: 30;
 	height: auto;
 	transform-origin: bottom;
+	opacity : 0; 
+	top : 100%; 
+	transform : scale(0.0,0.0);
 }
+
+.detailsViewState .projectDetailsView {
+	opacity : 1; 
+	top : 70%; 
+	transform : scale(1,1);
+}
+
 
 .ProjectDetailsContent {
     padding-top: 40px;
 	text-align: center;
 }
 
-.intiatedListView {
+.intiatedListViewState {
 
 }
 
@@ -76,11 +99,11 @@ h1 {
 		height : 100%;
 }
 
-.intiatedListView .projectListView {
+.intiatedListViewState .projectListView {
 	
 }
 
-.detailsView .projectListView {
+.detailsViewState .projectListView {
 	transform : scale(0.7, 0.7);
 }
 
@@ -156,16 +179,22 @@ h1 {
 	margin: 0px;
 	padding-top: 25px;
     padding-bottom: 5px;
-	/*transition: padding-top 0s, padding-bottom 0s;*/
+	
 }
 
-#ProjectList .active h4 {
-	/*color: black;*/
-	 font-weight: bold;
-	 /*padding-top: 25px;*/
-    /*padding-bottom: 25px;*/
-    /*margin: 0px;*/
-	}
+.intiatedListViewState #ProjectList h4, .intiatedListViewState #ProjectList p {
+	transition: transform 1s;
+	transform: scaleY(0.90);
+}
+
+.intiatedListViewState #ProjectList .active h4 {
+ 	font-weight: bold;
+ 	transform: scaleY(1.0);
+}
+
+.intiatedListViewState #ProjectList .active p {
+	transform: scaleY(1.0);
+}
 
 
 
@@ -254,7 +283,7 @@ h1 {
     background: black;
 }
 
-.listViewStatus .slideImageOpacityOverlay {
+.intiatedListViewState .slideImageOpacityOverlay, .detailsViewState .slideImageOpacityOverlay {
     
     opacity: 0.5;
     

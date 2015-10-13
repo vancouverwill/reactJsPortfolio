@@ -18,8 +18,8 @@ var Container = React.createClass({
               };
             },
             updateCurrentProject: function(projectName) {
-              if (this.isAnimating ===   true) return false;
-              if (this.state.showListView ===  false) return false;
+              if (this.isAnimating ===   true) return;
+              if (this.state.showListView ===  false) return;
 
               this.isAnimating = true;
               for (var i = 0; i < this.state.projects.length; i++) {
@@ -112,7 +112,7 @@ var Container = React.createClass({
               }
             },
             clickLeftIndividualProjectCarousel: function(e) {
-              if (this.isAnimating ===   true) return false;
+              if (this.isAnimating ===   true) return;
               this.isAnimating = true;
 
               console.log("clickLeftIndividualProjectCarousel")
@@ -133,7 +133,8 @@ var Container = React.createClass({
               }, this.animationDuration);
             },
             clickRightIndividualProjectCarousel: function(e) {
-              if (this.isAnimating ===   true) return false;
+              console.log("clickRightIndividualProjectCarousel 1")
+              if (this.isAnimating ===   true) return;
               this.isAnimating = true;
 
               console.log("clickRightIndividualProjectCarousel")
@@ -183,60 +184,34 @@ var Container = React.createClass({
               }
 
               
+              if (this.currentProjectIndex == -1) {
+                 var overallState = "unIntiatedListViewState"
+                 // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"}
+              }
+              else if (this.state.showListView == true) {
 
-              if (this.state.showListView == true) {
-                var overallState = "intiatedListView"
 
-                // var listViewStyles = {"width" : "100%", "height" : "100%"};
-
-                // var detailsViewStyles = {"bottom" : "-100%"};
-                // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "height" : "0px"};
-                var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"};
-
-                // var projectDetailsView = '';
-                // 
-                //   var listViewStatusClasses = cx({
-                //   // 'listViewStatus': true,
-                //   'projectListView' : true,
-                //   'backgroundView': true
-                // });
-
+                var overallState = "intiatedListViewState"
+                // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"}
                 var projectListOpacity = {"opacity" : "1"};
               } else { // show individual project in detail
-
-                var overallState = "detailsView"
-
-                // var listViewStyles = {"left" : "-100%"};
-                // var listViewStyles = {"width" : "70%", "height" : "300px", "left" : "15%"};
-                // var listViewStyles = {"transform" : "scale(0.7, 0.7)"};
-                // var detailsViewStyles = {"bottom" : "00%"};
-                // var detailsViewStyles = {"bottom" : "00%"};
-                // var detailsViewStyles = {"opacity" : "1", "top" : "70%", "height" : "auto"};
-                var detailsViewStyles = {"opacity" : "1", "top" : "70%", "transform" : "scale(1,1)"};
-
+                var overallState = "detailsViewState"
+                // var detailsViewStyles = {"opacity" : "1", "top" : "70%", "transform" : "scale(1,1)"};
                 var projectListOpacity = {"opacity" : "0"}
-
-                // var listViewStatusClasses = cx({
-                //   // 'listViewStatus': false,
-                //   'projectListView' : true,
-                //   'backgroundView': true
-                // });
-
-
               }
 
-              var projectDetailsView = <div className='projectDetailsView backgroundView' style={detailsViewStyles}>
+              var projectDetailsView = <div className='projectDetailsView backgroundView' >
                       <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
                     </div>;
 
               // if (this.state.items.length <= 0) {
               if (this.currentProjectIndex == -1) {
                 listColor = {"color" :  "black"}
-                introContainerOpacity = {"opacity" : 1}
+                // introContainerOpacity = {"opacity" : 1}
               }
               else {
                 listColor = {"color" :  "white"}
-                introContainerOpacity = {"opacity" : 0}
+                // introContainerOpacity = {"opacity" : 0}
               }
 
               // var items = this.state.items.map(function(item, i) {
@@ -269,7 +244,7 @@ var Container = React.createClass({
                   </div>
                   <div className="projectListView backgroundView">
                     <h1 style={listColor} > Will Melbourne</h1>
-                    <div className="introTextContainer" style={introContainerOpacity}>
+                    <div className="introTextContainer" >
                       <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada<i className="fa fa-arrow-down" onClick={this.chooseProjectOne}></i></p>
                     </div>
                     <div id="portfolioProjectAnimationContainer" className={classes}>
