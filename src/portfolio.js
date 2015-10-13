@@ -54,7 +54,6 @@ var Container = React.createClass({
               }
               else {
                 // no project means reset
-                // this.goingDown = true;
                 this.animationDirection = "down"
                 this.currentProjectIndex = -1;
                 this.setState({"animatedProject" : null});
@@ -62,8 +61,6 @@ var Container = React.createClass({
                 this.setState({"animatedImageUrlIndex" : null});
                 // this.setState({"currentProject" : null});
               }
-
-              // this.setState({"items" : newItems});
 
               var self = this;
               this.timeout = setTimeout(function(){
@@ -158,7 +155,6 @@ var Container = React.createClass({
             },
             render: function() {
               
-
               var temp = React;
               var cx = React.addons.classSet;
               // var classes = cx({
@@ -189,7 +185,9 @@ var Container = React.createClass({
               
 
               if (this.state.showListView == true) {
-                var listViewStyles = {"width" : "100%", "height" : "100%"};
+                var overallState = "intiatedListView"
+
+                // var listViewStyles = {"width" : "100%", "height" : "100%"};
 
                 // var detailsViewStyles = {"bottom" : "-100%"};
                 // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "height" : "0px"};
@@ -197,17 +195,20 @@ var Container = React.createClass({
 
                 // var projectDetailsView = '';
                 // 
-                  var listViewStatusClasses = cx({
-                  'listViewStatus': true,
-                  'projectListView' : true,
-                  'backgroundView': true
-                });
+                //   var listViewStatusClasses = cx({
+                //   // 'listViewStatus': true,
+                //   'projectListView' : true,
+                //   'backgroundView': true
+                // });
 
                 var projectListOpacity = {"opacity" : "1"};
-              } else {
+              } else { // show individual project in detail
+
+                var overallState = "detailsView"
+
                 // var listViewStyles = {"left" : "-100%"};
                 // var listViewStyles = {"width" : "70%", "height" : "300px", "left" : "15%"};
-                var listViewStyles = {"transform" : "scale(0.7,0.7)"};
+                // var listViewStyles = {"transform" : "scale(0.7, 0.7)"};
                 // var detailsViewStyles = {"bottom" : "00%"};
                 // var detailsViewStyles = {"bottom" : "00%"};
                 // var detailsViewStyles = {"opacity" : "1", "top" : "70%", "height" : "auto"};
@@ -215,11 +216,11 @@ var Container = React.createClass({
 
                 var projectListOpacity = {"opacity" : "0"}
 
-                var listViewStatusClasses = cx({
-                  'listViewStatus': false,
-                  'projectListView' : true,
-                  'backgroundView': true
-                });
+                // var listViewStatusClasses = cx({
+                //   // 'listViewStatus': false,
+                //   'projectListView' : true,
+                //   'backgroundView': true
+                // });
 
 
               }
@@ -258,7 +259,7 @@ var Container = React.createClass({
                 }
 
               return (
-                <div id="mainView">
+                <div id="mainView" className={overallState}>
                     <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
                   <div id="leftArrow">
                     <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
@@ -266,7 +267,7 @@ var Container = React.createClass({
                   <div id="rightArrow">
                     <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
                   </div>
-                  <div className={listViewStatusClasses} style={listViewStyles}>
+                  <div className="projectListView backgroundView">
                     <h1 style={listColor} > Will Melbourne</h1>
                     <div className="introTextContainer" style={introContainerOpacity}>
                       <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada<i className="fa fa-arrow-down" onClick={this.chooseProjectOne}></i></p>
