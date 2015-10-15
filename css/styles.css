@@ -336,37 +336,37 @@ position: absolute;
 /*********/
 
 .movingUp .portfolioProjectAnimation-enter {
-	top:-100%;
+	top:100%;
 }
 
 .movingUp .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
-  transform: translateY(100%);
+  transform: translateY(-100%);
 }
 
 .movingUp .portfolioProjectAnimation-leave {
 }
 
 .movingUp .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
-  	transform: translateY(100%);
+  	transform: translateY(-100%);
 }
 
 
 /*********/
 
 .movingDown .portfolioProjectAnimation-enter {
-  top:100%;
+  top:-100%;
 }
 
 .movingDown .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
-  transform: translateY(-100%);
+  transform: translateY(+100%);
 }
 
 .movingDown .portfolioProjectAnimation-leave {
-	top:0%;
+	/*top:0%;*/
 }
 
 .movingDown .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
- 	transform: translateY(-100%);
+ 	transform: translateY(+100%);
 }
 
 /*********/
