@@ -4,13 +4,15 @@
   "description": "Code from the React portfolio.",
   "main": "server.js",
   "dependencies": {
-    "react": "^0.12.2",
-    "react-dom": "^0.14.0",
+    "classnames": "*",
+    "react": "^0.14.0",
+    "react-addons-css-transition-group": "*",
+    "react-dom": "*",
     "react-preload": "^0.2.2",
-    "react-tools": "*",
-    "requirejs": "*"
-  },
+    "react-tools": "*"
+    },
   "devDependencies": {
-    "babelify": "^6.3.0"
+    "babelify": "^6.3.0",
+    "watchify": "^3.4.0"
   }
 }

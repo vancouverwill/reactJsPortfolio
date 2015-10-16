@@ -1,6 +1,14 @@
-var React = require('react/addons');
+// var React = require('react/addons');
+var React = require('react');
+var classNames = require('classnames');
+var ReactDOM = require('react-dom')
+// var Preload = require('react-preload').Preload; 
 
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
+
+
+
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 var Container = React.createClass({
             isAnimating : false,
@@ -86,7 +94,7 @@ var Container = React.createClass({
               this.updateCurrentProject(-1);
             },
             componentDidMount: function() {
-              elem = this.getDOMNode();
+              var elem = this.getDOMNode();
               elem.addEventListener('wheel', this.handleWheel);
             },
             handleWheel: function(event) {
@@ -157,30 +165,23 @@ var Container = React.createClass({
               }, this.animationDuration);
             },
             render: function() {
-              
-              var temp = React;
-              var cx = React.addons.classSet;
-              // var classes = cx({
-              //   'movingDown': this.goingDown
-              // });
-
               if (this.animationDirection == "up") {
-                var classes = cx({
+                var classes = classNames({
                 'movingUp': true
                 });
               }
               else if (this.animationDirection == "down") {
-                var classes = cx({
+                var classes = classNames({
                 'movingDown': true
                 });
               }
               else if (this.animationDirection == "left") {
-                var classes = cx({
+                var classes = classNames({
                 'movingLeft': true
                 });
               }
               else if (this.animationDirection == "right") {
-                var classes = cx({
+                var classes = classNames({
                 'movingRight': true
                 });
               }
@@ -238,7 +239,8 @@ var Container = React.createClass({
                 var loadingIndicator = (<div>Loading...</div>)
                 var images = [];
 
-                /* var Preload = require('react-preload').Preload; */
+                // var Preload = require('react-preload').Preload; 
+
 
                 /* <Preload
                 loadingIndicator={loadingIndicator}
@@ -274,7 +276,7 @@ var Container = React.createClass({
                           <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada<i className="fa fa-arrow-down" onClick={this.chooseProjectOne}></i></p>
                         </div>
                         <div id="portfolioProjectAnimationContainer" className={classes}>
-                          <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation">
+                          <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={5000} transitionLeaveTimeout={3000}>
                             {animateProject}                      
                           </ReactCSSTransitionGroup>
                           
@@ -302,7 +304,7 @@ var Container = React.createClass({
 
               return (
                 <div key={this.props.name} className="portfolioSlide"  >
-                    <ReactCSSTransitionGroup transitionName="projectImagesAnimation">
+                    <ReactCSSTransitionGroup transitionName="projectImagesAnimation" transitionEnterTimeout={5000} transitionLeaveTimeout={3000}>
                       <div className="slideImage" style={backgroundStyles} ></div>
                     </ReactCSSTransitionGroup>
                     
@@ -367,9 +369,9 @@ var Container = React.createClass({
               this.props.handleProjectDetailsShow();
             },
             render: function() {
-              var temp = React;
-              var cx = React.addons.classSet;
-              var classes = cx({
+              // var temp = React;
+              // var cx = React.addons.classSet;
+              var classes = classNames({
                 'active': this.props.active,
                 'project-title' : true
               });
@@ -412,9 +414,7 @@ var Container = React.createClass({
                     }
 
                     if (this.props.currentProject.name == project.name) {
-                      var temp = React;
-                      var cx = React.addons.classSet;
-                      var classes = cx({
+                      var classes = classNames({
                         'active': true,
                         'opacityShow' : true,
                         'opacityTransition' : true,
@@ -422,9 +422,7 @@ var Container = React.createClass({
                       });
                     }
                     else {
-                      var temp = React;
-                      var cx = React.addons.classSet;
-                      var classes = cx({
+                      var classes = classNames({
                         'active': false,
                         'opacityHide' : true,
                         'opacityTransition' : true,
@@ -449,7 +447,7 @@ var Container = React.createClass({
          });
 
 
-        React.render(
+        ReactDOM.render(
           <Container />,
         document.getElementById('container')
       );
