@@ -1,3 +1,5 @@
+var React = require('react/addons');
+
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 var Container = React.createClass({
@@ -206,11 +208,11 @@ var Container = React.createClass({
 
               // if (this.state.items.length <= 0) {
               if (this.currentProjectIndex == -1) {
-                listColor = {"color" :  "black"}
+                var listColor = {"color" :  "black"}
                 // introContainerOpacity = {"opacity" : 1}
               }
               else {
-                listColor = {"color" :  "white"}
+                var listColor = {"color" :  "white"}
                 // introContainerOpacity = {"opacity" : 0}
               }
 
@@ -233,32 +235,57 @@ var Container = React.createClass({
                   var animateProject = null
                 }
 
+                var loadingIndicator = (<div>Loading...</div>)
+                var images = [];
+
+                /* var Preload = require('react-preload').Preload; */
+
+                /* <Preload
+                loadingIndicator={loadingIndicator}
+                images={images}
+                autoResolveDelay={3000}
+                onError={this._handleImageLoadError}
+                onSuccess={this._handleImageLoadSuccess}
+                resolveOnError={true}
+                mountChildren={true}
+                >
+                  { */
+
+                    /* 
+
+                    }
+                </Preload> 
+
+                */
+
               return (
-                <div id="mainView" className={overallState}>
-                    <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
-                  <div id="leftArrow">
-                    <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
-                  </div>
-                  <div id="rightArrow">
-                    <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
-                  </div>
-                  <div className="projectListView backgroundView">
-                    <h1 style={listColor} > Will Melbourne</h1>
-                    <div className="introTextContainer" >
-                      <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada<i className="fa fa-arrow-down" onClick={this.chooseProjectOne}></i></p>
-                    </div>
-                    <div id="portfolioProjectAnimationContainer" className={classes}>
-                      <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation">
-                        {animateProject}                      
-                      </ReactCSSTransitionGroup>
-                      
-                    </div>
+                
+                    <div id="mainView" className={overallState}>
+                        <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
+                      <div id="leftArrow">
+                        <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
+                      </div>
+                      <div id="rightArrow">
+                        <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
+                      </div>
+                      <div className="projectListView backgroundView">
+                        <h1 style={listColor} > Will Melbourne</h1>
+                        <div className="introTextContainer" >
+                          <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada<i className="fa fa-arrow-down" onClick={this.chooseProjectOne}></i></p>
+                        </div>
+                        <div id="portfolioProjectAnimationContainer" className={classes}>
+                          <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation">
+                            {animateProject}                      
+                          </ReactCSSTransitionGroup>
+                          
+                        </div>
 
-                  </div>
-                  <ProjectList projects={this.state.projects} projectListOpacity={projectListOpacity} listColor={listColor} clickCurrentProject={this.updateCurrentProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
+                      </div>
+                      <ProjectList projects={this.state.projects} projectListOpacity={projectListOpacity} listColor={listColor} clickCurrentProject={this.updateCurrentProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
 
-                  {projectDetailsView}
-                </div>
+                      {projectDetailsView}
+                    </div>
+                    
               );
             }
         });

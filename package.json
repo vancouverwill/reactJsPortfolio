@@ -4,8 +4,13 @@
   "description": "Code from the React portfolio.",
   "main": "server.js",
   "dependencies": {
-    "react" : "^0.12.2",
-    "react-tools" : "*",
-    "requirejs" : "*"
+    "react": "^0.12.2",
+    "react-dom": "^0.14.0",
+    "react-preload": "^0.2.2",
+    "react-tools": "*",
+    "requirejs": "*"
+  },
+  "devDependencies": {
+    "babelify": "^6.3.0"
   }
 }
