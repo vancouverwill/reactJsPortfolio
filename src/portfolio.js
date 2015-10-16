@@ -94,7 +94,7 @@ var Container = React.createClass({
               this.updateCurrentProject(-1);
             },
             componentDidMount: function() {
-              var elem = this.getDOMNode();
+              var elem = ReactDOM.findDOMNode(this) ;
               elem.addEventListener('wheel', this.handleWheel);
             },
             handleWheel: function(event) {
