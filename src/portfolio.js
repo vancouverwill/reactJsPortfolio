@@ -2,7 +2,7 @@
 var React = require('react');
 var classNames = require('classnames');
 var ReactDOM = require('react-dom')
-// var Preload = require('react-preload').Preload; 
+var Preload = require('react-preload').Preload; 
 
 
 
