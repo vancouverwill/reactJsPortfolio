@@ -87,7 +87,7 @@ var Container = React.createClass({
               this.updateCurrentProject(-1);
             },
             componentDidMount: function() {
-              elem = this.getDOMNode();
+              var elem = this.getDOMNode();
               elem.addEventListener('wheel', this.handleWheel);
             },
             handleWheel: function(event) {
@@ -230,12 +230,12 @@ var Container = React.createClass({
 
               // if (this.state.items.length <= 0) {
               if (this.currentProjectIndex == -1) {
-                listColor = {"color" :  "black"}
-                introContainerOpacity = {"opacity" : 1}
+                var listColor = {"color" :  "black"}
+                var introContainerOpacity = {"opacity" : 1}
               }
               else {
-                listColor = {"color" :  "white"}
-                introContainerOpacity = {"opacity" : 0}
+                var listColor = {"color" :  "white"}
+                var introContainerOpacity = {"opacity" : 0}
               }
 
               // var items = this.state.items.map(function(item, i) {
