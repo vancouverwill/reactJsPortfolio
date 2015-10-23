@@ -306,7 +306,7 @@ position: absolute;
   /*transform: matrix(1, 0, 0, 1, 0, 0);*/
   /*transition: opacity 2.0s ease-in, top 1.0s ease-in;*/
   /*transition: top 2.0s ease-in-out .001s, transform 2.0s ease-in-out .001s;*/
-  transition: transform 1.0s ease-in-out .000s;
+  transition: transform 1.0s ease-in-out 0.000s;
   /*transform: scaleY(0px);*/
   /*transform: translate(50%,0);*/
 }
@@ -326,7 +326,7 @@ position: absolute;
 	/*top:00%;*/
 	/*transition: opacity 2.0s ease-in, top 2.0s ease-in;*/
 	/*transition: top 2.0s ease-in-out, transform 2.0s ease-in-out; */
-	transition: transform 1.0s ease-in-out .000s;
+	transition: transform 1.0s ease-in-out 0.000s;
 }
 
 .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
