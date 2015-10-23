@@ -276,7 +276,7 @@ var Container = React.createClass({
                           <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada<i className="fa fa-arrow-down" onClick={this.chooseProjectOne}></i></p>
                         </div>
                         <div id="portfolioProjectAnimationContainer" className={classes}>
-                          <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={5000} transitionLeaveTimeout={3000}>
+                          <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
                             {animateProject}                      
                           </ReactCSSTransitionGroup>
                           
