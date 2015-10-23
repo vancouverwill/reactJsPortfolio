@@ -1,4 +1,8 @@
-var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
+var React = require('react');
+var classNames = require('classnames');
+var ReactDOM = require('react-dom')
+
 
 var Container = React.createClass({
             isAnimating : false,
@@ -94,7 +98,7 @@ var Container = React.createClass({
               this.updateCurrentProject(-1);
             },
             componentDidMount: function() {
-              var elem = this.getDOMNode();
+              var elem = ReactDOM.findDOMNode(this);
               elem.addEventListener('wheel', this.handleWheel);
             },
             handleWheel: function(event) {
@@ -170,27 +174,24 @@ var Container = React.createClass({
               this.setNotAnimating();
             },
             render: function() {
-              
-              var temp = React;
-              var cx = React.addons.classSet;
 
               if (this.animationDirection == "movingUp") {
-                var classes = cx({
+                var classes = classNames({
                 'movingUp': true
                 });
               }
               else if (this.animationDirection == "movingDown") {
-                var classes = cx({
+                var classes = classNames({
                 'movingDown': true
                 });
               }
               else if (this.animationDirection == "movingLeft") {
-                var classes = cx({
+                var classes = classNames({
                 'movingLeft': true
                 });
               }
               else if (this.animationDirection == "movingRight") {
-                var classes = cx({
+                var classes = classNames({
                 'movingRight': true
                 });
               }
@@ -205,7 +206,7 @@ var Container = React.createClass({
                   listColor = {"color" :  "black"}
                   // introContainerOpacity = {"opacity" : 1}
 
-                  var overallStatusClasses = cx({
+                  var overallStatusClasses = classNames({
                   'homeView_active': true,
                   'animating_active' : this.state.showIsAnimating
                 });
@@ -214,7 +215,7 @@ var Container = React.createClass({
                   listColor = {"color" :  "white"};
                   // introContainerOpacity = {"opacity" : 0};
 
-                  var overallStatusClasses = cx({
+                  var overallStatusClasses = classNames({
                     'ProjectListView_active': true,
                     'animating_active' : this.state.showIsAnimating
                   });
@@ -227,7 +228,7 @@ var Container = React.createClass({
                 var detailsViewStyles = {"opacity" : "1", "top" : "70%", "transform" : "scale(1,1)"};
                 var projectListOpacity = {"opacity" : "0"}
 
-                var overallStatusClasses = cx({
+                var overallStatusClasses = classNames({
                   'ProjectDetailsView_active': true,
                   'animating_active' : this.state.showIsAnimating
                 });
@@ -284,7 +285,7 @@ var Container = React.createClass({
                       <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne}></i></p>
                     </div>
                     <div id="portfolioProjectAnimationContainer" className={classes}>
-                      <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation">
+                      <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={5000} transitionLeaveTimeout={3000}>
                         {animateProject}                      
                       </ReactCSSTransitionGroup>
                       
@@ -376,9 +377,7 @@ var Container = React.createClass({
               this.props.handleProjectDetailsShow();
             },
             render: function() {
-              var temp = React;
-              var cx = React.addons.classSet;
-              var classes = cx({
+              var classes = classNames({
                 'active': this.props.active,
                 'project-title' : true
               });
@@ -421,9 +420,7 @@ var Container = React.createClass({
                     }
 
                     if (this.props.currentProject.name == project.name) {
-                      var temp = React;
-                      var cx = React.addons.classSet;
-                      var classes = cx({
+                      var classes = classNames({
                         'active': true,
                         'opacityShow' : true,
                         'opacityTransition' : true,
@@ -431,9 +428,7 @@ var Container = React.createClass({
                       });
                     }
                     else {
-                      var temp = React;
-                      var cx = React.addons.classSet;
-                      var classes = cx({
+                      var classes = classNames({
                         'active': false,
                         'opacityHide' : true,
                         'opacityTransition' : true,
@@ -458,7 +453,7 @@ var Container = React.createClass({
          });
 
 
-        React.render(
+        ReactDOM.render(
           <Container />,
         document.getElementById('container')
       );
