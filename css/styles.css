@@ -3,7 +3,6 @@ body {
 }
 
 #container {
-    /*position: relative;*/
     background: white;
 }
 
@@ -40,7 +39,6 @@ h1 {
     width: 100%;
 }
 
-/***  start tidyUpCSSOnAirplane  ***/
 
 .introText {
 	transition: opacity 0.5s;
@@ -52,9 +50,6 @@ h1 {
 .ProjectListView_active .introText, .ProjectDetailsView_active .introText {
 	opacity: 0;
 }
-
-
-/***  end tidyUpCSSOnAirplane  ***/
 
 
 .introText {
@@ -75,13 +70,9 @@ h1 {
 }
 
 
-
-
 .projectDetailsView {
 	overflow: hidden;
 	position: absolute;
-	/*top:70%;*/
-	/*transition: opacity 2s, transform 2s, top 2s;*/
 	transition: transform 2s ease-in-out, opacity 2s, top 2s;
 	z-index: 30;
 	height: auto;
@@ -110,14 +101,14 @@ h1 {
 }
 
 .projectListView {
-		transition: transform 2s ease-in-out, opacity 2s, top 2s;
-		left: 0px;
-		position: absolute;
-		top: 0px;
-		overflow: hidden;
-	    transform-origin: top;
-	    width : 100%; 
-		height : 100%;
+	transition: transform 2s ease-in-out, opacity 2s, top 2s;
+	left: 0px;
+	position: absolute;
+	top: 0px;
+	overflow: hidden;
+    transform-origin: top;
+    width : 100%; 
+	height : 100%;
 }
 
 .ProjectListView_active .projectListView {
@@ -155,7 +146,6 @@ h1 {
 }
 
 
-
 #ProjectView {
 	width: 50%;
 	float: left;
@@ -163,12 +153,10 @@ h1 {
 
 .project-title {
 	cursor: pointer;
-	/*border-bottom: solid 1px gray;*/
-	/*padding-top: 10px;*/
     padding-bottom: 10px;
-    /*color: white;*/
     margin-bottom: 0px;
     margin-top: 0px;
+    transition: opacity 1s ease-out;
 }
 
 .spacingDivBorder {
@@ -184,7 +172,6 @@ h1 {
 }
 
 .active.project-title + .project-title .spacingDivBorder {
-	/*background-color: orange;*/
 	transform: translateY(+15px);
 }	
 
@@ -198,7 +185,6 @@ h1 {
 }
 .active .arrowSeeProjectDetails {
 	display: block;
-	/*padding-top: 25px;*/
 }
 
 #ProjectList  h4 {
@@ -222,6 +208,13 @@ h1 {
 	transform: scaleY(1.0);
 }
 
+.animating_active .project-title {
+	opacity: 0.7;
+}
+
+.animating_active .active.project-title {
+	opacity: 1;
+}
 
 
 #ProjectViews_container__p {
@@ -232,17 +225,13 @@ h1 {
 
 
 #ProjectView__p {
-	  background-size: 20%;
+  background-size: 20%;
   border: red solid;
-
-  /*left: 50%;*/
   height: 20%;
-  /*top: 0px;*/
 }
 
 #ProjectView__p.active{
-
-	 border: black solid;
+	border: black solid;
 }
 
 .opacityShow {
@@ -286,7 +275,6 @@ h1 {
 }
 
 
-
 .slideImage {
 	height: 100vh;
     min-height: 300px;
@@ -298,6 +286,7 @@ h1 {
     transition: none;
 }
 
+
 .slideImageOpacityOverlay { 
 	opacity: 0;
 	transition: opacity 2s ease-in-out;
@@ -308,14 +297,8 @@ h1 {
     background: black;
 }
 
-/*<<<<<<< HEAD
-.ProjectListView_active .slideImageOpacityOverlay {
-=======*/
 .ProjectListView_active .slideImageOpacityOverlay, .ProjectDetailsView_active .slideImageOpacityOverlay {
-/*>>>>>>> tidyUpCSSOnAirplane*/
-    
     opacity: 0.5;
-    
 }
 
 .pointer {
@@ -344,30 +327,13 @@ h1 {
 }
 
 .portfolioProjectAnimation-enter {
-position: absolute;
-<<<<<<< HEAD
-  /*opacity: 0.01;*/
-  top:-100%;
-  /*transform: scaleY(0.5);*/
-  /*transform: matrix(1, 0, 0, 1, 0, 0);*/
-  /*transition: opacity 2.0s ease-in, top 1.0s ease-in;*/
-  /*transition: top 2.0s ease-in-out .001s, transform 2.0s ease-in-out .001s;*/
-  transition: transform 1.0s ease-in-out 0.000s;
-  /*transform: scaleY(0px);*/
-  /*transform: translate(50%,0);*/
-=======
-  
-  transition: transform 1.0s ease-in-out .000s;
->>>>>>> tidyUpCSSOnAirplane
+	position: absolute;
+	transition: transform 1.0s ease-in-out 0.000s;
 }
 
 .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
   opacity: 1;
 }
-
-
-
-
 
 .portfolioProjectAnimation-leave {
 	position: absolute;
@@ -407,7 +373,6 @@ position: absolute;
 }
 
 .movingDown .portfolioProjectAnimation-leave {
-	/*top:0%;*/
 }
 
 .movingDown .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
@@ -425,12 +390,9 @@ position: absolute;
   transform: translateX(-100%);
 }
 
-
-
 .movingLeft .portfolioProjectAnimation-leave {
 	top:0%;
 	left:0%;
-	/*transition: transform 2.0s ease-in-out .000s;*/
 }
 
 .movingLeft .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
@@ -442,19 +404,14 @@ position: absolute;
 .movingRight .portfolioProjectAnimation-enter {
 	top:0%;	
   right:100%;
-  /*transition: transform 2.0s ease-in-out .000s;*/
 }
 
 .movingRight .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
   transform: translateX(100%);
 }
 
-
-
 .movingRight .portfolioProjectAnimation-leave {
 	top:0%;
-	/*left:0%;*/
-	/*transition: transform 2.0s ease-in-out .000s;*/
 }
 
 .movingRight .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
