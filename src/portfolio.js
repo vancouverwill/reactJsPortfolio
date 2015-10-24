@@ -6,7 +6,6 @@ var ReactDOM = require('react-dom')
 var Container = React.createClass({
             isAnimating : false,
             currentProjectIndex : -1,
-            // goingDown : false,
             animationDirection : "movingUp",
             animationDuration : 2500,
             // currentState: "home",
@@ -16,8 +15,6 @@ var Container = React.createClass({
                 projects: projects,
                 showListView: true,
                 currentProject : projects[0],
-                // previousProject : null,
-                // animating : false,
                 showIsAnimating : false,
                 items : []
               };
@@ -30,13 +27,10 @@ var Container = React.createClass({
               for (var i = 0; i < this.state.projects.length; i++) {
                 if (this.state.projects[i].name == projectName) {
                   if (i < this.currentProjectIndex) {
-                    // this.goingDown = true;
                     this.animationDirection = "movingDown"
                   } else {
-                    // this.goingDown = false;
                     this.animationDirection = "movingUp"
                   }
-                  // this.setState({"previousProject" : this.state.currentProject});
                   this.setState({"currentProject" : this.state.projects[i]});
                   this.currentProjectIndex = i;
                   this.state.projects[i].active = true;
@@ -189,16 +183,9 @@ var Container = React.createClass({
                 });
               }
 
-// <<<<<<< HEAD
               if (this.state.showListView == true) {
-                // var listViewStyles = {"width" : "100%", "height" : "100%"};
-
-                // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"};
-                // var projectListOpacity = {"opacity" : "1"};
-
                 if (this.currentProjectIndex == -1) {
                   listColor = {"color" :  "black"}
-                  // introContainerOpacity = {"opacity" : 1}
 
                   var overallStatusClasses = classNames({
                   'intialView_active': true,
@@ -207,7 +194,6 @@ var Container = React.createClass({
                 }
                 else {
                   listColor = {"color" :  "white"};
-                  // introContainerOpacity = {"opacity" : 0};
 
                   var overallStatusClasses = classNames({
                     'ProjectListView_active': true,
@@ -217,11 +203,7 @@ var Container = React.createClass({
 
                 
               } else {
-                // var listViewStyles = {"transform" : "scale(0.7,0.7)"};
-                
-                // var detailsViewStyles = {"opacity" : "1", "top" : "70%", "transform" : "scale(1,1)"};
-                // var projectListOpacity = {"opacity" : "0"}
-
+              
                 var overallStatusClasses = classNames({
                   'ProjectDetailsView_active': true,
                   'animating_active' : this.state.showIsAnimating
@@ -233,36 +215,11 @@ var Container = React.createClass({
               var projectDetailsView = <div className='projectDetailsView'>
                                             <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
                                         </div>;
-// =======
-              
-              // if (this.currentProjectIndex == -1) {
-              //    var overallState = "unIntiatedListViewState"
-              //    // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"}
-              // }
-              // if (this.state.showListView == true) {
-
-
-              //   // var overallState = "intiatedListViewState"
-              //   // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"}
-              //   var projectListOpacity = {"opacity" : "1"};
-              // } else { // show individual project in detail
-              //   var overallState = "detailsViewState"
-              //   // var detailsViewStyles = {"opacity" : "1", "top" : "70%", "transform" : "scale(1,1)"};
-              //   var projectListOpacity = {"opacity" : "0"}
-              // }
-
-              // var projectDetailsView = <div className='projectDetailsView' >
-// >>>>>>> tidyUpCSSOnAirplane
-                      
-
-              // if (this.state.items.length <= 0) {
               if (this.currentProjectIndex == -1) {
                 var listColor = {"color" :  "black"}
-                // var introContainerOpacity = {"opacity" : 1}    /// ??? need this
               }
               else {
                 var listColor = {"color" :  "white"}
-                // var introContainerOpacity = {"opacity" : 0}    /// ??? need this
               }
 
 
@@ -278,7 +235,6 @@ var Container = React.createClass({
                   var imageUrl = "url('images/" + this.state.animatedImageUrl + "')";
                   var backgroundStyles = {"backgroundImage" : imageUrl}
 
-                // var animateProject = <Project key={this.state.animatedProject.name} name={this.state.animatedProject.name} description={this.state.animatedProject.description} images={this.state.animatedProject.images}></Project>
                   var animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  ><div className="slideImage" style={backgroundStyles} ></div><div className="slideImageOpacityOverlay" ></div></div>
                 }
                 else {
@@ -287,27 +243,6 @@ var Container = React.createClass({
 
                 var loadingIndicator = (<div>Loading...</div>)
                 var images = [];
-
-                // var Preload = require('react-preload').Preload; 
-
-
-                /* <Preload
-                loadingIndicator={loadingIndicator}
-                images={images}
-                autoResolveDelay={3000}
-                onError={this._handleImageLoadError}
-                onSuccess={this._handleImageLoadSuccess}
-                resolveOnError={true}
-                mountChildren={true}
-                >
-                  { */
-
-                    /* 
-
-                    }
-                </Preload> 
-
-                */
 
               return (
                 <div id="mainView" className={overallStatusClasses}>
@@ -354,8 +289,6 @@ var Container = React.createClass({
                     <ReactCSSTransitionGroup transitionName="projectImagesAnimation" transitionEnterTimeout={5000} transitionLeaveTimeout={3000}>
                       <div className="slideImage" style={backgroundStyles} ></div>
                     </ReactCSSTransitionGroup>
-                    
-                    
                 </div>
                 )
             }
@@ -367,8 +300,6 @@ var Container = React.createClass({
               this.props.handleProjectListShow();
             },
             render: function() {
-
-
               return (
                 <div key={this.props.currentProject.name} className="ProjectDetailsContent">
                   <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
@@ -393,17 +324,17 @@ var Container = React.createClass({
               this.props.handleProjectDetailsShow();
             },
             render: function() {
-                var loop = this.props.projects.map(function (e) {
-                      return (
-                            <ProjectName key={e.name} name={e.name} fontColor={e.fontColor} shortDescription={e.shortDescription} active={e.active} handleProjectShow={this.handleProjectShow} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
-                        );
-                    }, this);
-                return (
-                    <div id="ProjectList">
-                      <div id="ProjectListMenu" style={this.props.listColor} >
-                        {loop}
-                        </div>
-                    </div>
+              var loop = this.props.projects.map(function (e) {
+                    return (
+                          <ProjectName key={e.name} name={e.name} fontColor={e.fontColor} shortDescription={e.shortDescription} active={e.active} handleProjectShow={this.handleProjectShow} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
+                      );
+                  }, this);
+              return (
+                  <div id="ProjectList">
+                    <div id="ProjectListMenu" style={this.props.listColor} >
+                      {loop}
+                      </div>
+                  </div>
             );
             }
          });
@@ -423,11 +354,9 @@ var Container = React.createClass({
 
               if (this.props.active == true) {
                 var fontColor = {"color" : this.props.fontColor};
-                // var spacingDivBorder = {"transform" : "translateY(-15px)"}
               }
               else {
                 var fontColor = {};
-                // var spacingDivBorder = {"transform" : "translateY(0px)"}
               }
 
               return (
