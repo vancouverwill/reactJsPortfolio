@@ -38,9 +38,23 @@ h1 {
 	text-align: center;
     top: 70px;
     width: 100%;
-    
 }
 
+/***  start tidyUpCSSOnAirplane  ***/
+
+.introText {
+	transition: opacity 0.5s;
+    opacity: 1;
+}
+
+
+
+.ProjectListView_active .introText, .ProjectDetailsView_active .introText {
+	opacity: 0;
+}
+
+
+/***  end tidyUpCSSOnAirplane  ***/
 
 
 .introText {
@@ -52,7 +66,7 @@ h1 {
     transition: opacity 0.5s ease-out;
 }
 
-.homeView_active .introText {
+.intialView_active .introText {
 	opacity: 1;
 	transition: opacity 0.5s ease-out 1s;
 }
@@ -60,10 +74,8 @@ h1 {
 	cursor: pointer;
 }
 
-.backgroundView {
-	/*margin: auto;*/
-	
-}
+
+
 
 .projectDetailsView {
 	overflow: hidden;
@@ -74,14 +86,27 @@ h1 {
 	z-index: 30;
 	height: auto;
 	transform-origin: bottom;
-
 	width:100%;
 	height: 100%;
+	opacity : 0; 
+	top : 100%; 
+	transform : scale(0.0,0.0);
 }
+
+.ProjectDetailsView_active .projectDetailsView {
+	opacity : 1; 
+	top : 70%; 
+	transform : scale(1,1);
+}
+
 
 .ProjectDetailsContent {
     padding-top: 40px;
 	text-align: center;
+}
+
+.ProjectListView_active {
+
 }
 
 .projectListView {
@@ -90,10 +115,17 @@ h1 {
 		position: absolute;
 		top: 0px;
 		overflow: hidden;
-		    transform-origin: top;
+	    transform-origin: top;
+	    width : 100%; 
+		height : 100%;
+}
 
-		    width:100%;
-	height: 100%;
+.ProjectListView_active .projectListView {
+	
+}
+
+.ProjectDetailsView_active .projectListView {
+	transform : scale(0.7, 0.7);
 }
 
 #ProjectList
@@ -107,8 +139,12 @@ h1 {
     transition: opacity 1s, transform 2s ease-out;
 }
 
-.homeView_active #ProjectList {	
-transform: translateY(80%); 
+.intialView_active #ProjectList {	
+	transform: translateY(80%); 
+}
+
+.ProjectDetailsView_active #ProjectList {
+	opacity: 0;
 }
 
 #ProjectListMenu
@@ -169,16 +205,22 @@ transform: translateY(80%);
 	margin: 0px;
 	padding-top: 25px;
     padding-bottom: 5px;
-	/*transition: padding-top 0s, padding-bottom 0s;*/
+	
 }
 
-#ProjectList .active h4 {
-	/*color: black;*/
-	 font-weight: bold;
-	 /*padding-top: 25px;*/
-    /*padding-bottom: 25px;*/
-    /*margin: 0px;*/
-	}
+.ProjectListView_active #ProjectList h4, .ProjectListView_active #ProjectList p {
+	transition: transform 1s;
+	transform: scaleY(0.90);
+}
+
+.ProjectListView_active #ProjectList .active h4 {
+ 	font-weight: bold;
+ 	transform: scaleY(1.0);
+}
+
+.ProjectListView_active #ProjectList .active p {
+	transform: scaleY(1.0);
+}
 
 
 
@@ -221,7 +263,6 @@ transform: translateY(80%);
 
 
 .portfolioSlide {
-	/*border: solid orange 1px;*/
 	top: 0%;
   	position: absolute;
 	  width: 100%;
@@ -267,7 +308,11 @@ transform: translateY(80%);
     background: black;
 }
 
+/*<<<<<<< HEAD
 .ProjectListView_active .slideImageOpacityOverlay {
+=======*/
+.ProjectListView_active .slideImageOpacityOverlay, .ProjectDetailsView_active .slideImageOpacityOverlay {
+/*>>>>>>> tidyUpCSSOnAirplane*/
     
     opacity: 0.5;
     
@@ -300,6 +345,7 @@ transform: translateY(80%);
 
 .portfolioProjectAnimation-enter {
 position: absolute;
+<<<<<<< HEAD
   /*opacity: 0.01;*/
   top:-100%;
   /*transform: scaleY(0.5);*/
@@ -309,65 +355,70 @@ position: absolute;
   transition: transform 1.0s ease-in-out 0.000s;
   /*transform: scaleY(0px);*/
   /*transform: translate(50%,0);*/
+=======
+  
+  transition: transform 1.0s ease-in-out .000s;
+>>>>>>> tidyUpCSSOnAirplane
 }
 
 .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
   opacity: 1;
-  /*top:00%;*/
-  transform: translateY(100%);
-
 }
+
+
 
 
 
 .portfolioProjectAnimation-leave {
 	position: absolute;
 	opacity: 1;
-	/*top:00%;*/
-	/*transition: opacity 2.0s ease-in, top 2.0s ease-in;*/
-	/*transition: top 2.0s ease-in-out, transform 2.0s ease-in-out; */
 	transition: transform 1.0s ease-in-out 0.000s;
 }
 
 .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
- 	/*top:100%;*/
-  	/*opacity: 0.01;*/
-  	transform: translateY(100%);
 }
 
+/*********/
 
-.projectImagesAnimation {
-
+.movingUp .portfolioProjectAnimation-enter {
+	top:100%;
 }
 
-
-
-.movingDown .portfolioProjectAnimation-enter {
-  top:100%;
-}
-
-.movingDown .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+.movingUp .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
   transform: translateY(-100%);
 }
 
+.movingUp .portfolioProjectAnimation-leave {
+}
 
+.movingUp .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+  	transform: translateY(-100%);
+}
+
+
+/*********/
+
+.movingDown .portfolioProjectAnimation-enter {
+  top:-100%;
+}
+
+.movingDown .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  transform: translateY(+100%);
+}
 
 .movingDown .portfolioProjectAnimation-leave {
-	top:0%;
+	/*top:0%;*/
 }
 
 .movingDown .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
- 	transform: translateY(-100%);
+ 	transform: translateY(+100%);
 }
 
-
-
-
+/*********/
 
 .movingLeft .portfolioProjectAnimation-enter {
 	top:0%;	
-  left:100%;
-  /*transition: transform 2.0s ease-in-out .000s;*/
+	left:100%;
 }
 
 .movingLeft .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {

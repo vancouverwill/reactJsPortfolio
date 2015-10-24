@@ -3,7 +3,6 @@ var React = require('react');
 var classNames = require('classnames');
 var ReactDOM = require('react-dom')
 
-
 var Container = React.createClass({
             isAnimating : false,
             currentProjectIndex : -1,
@@ -70,12 +69,6 @@ var Container = React.createClass({
               }
 
               // this.setState({"items" : newItems});
-
-              // var self = this;
-              // this.timeout = setTimeout(function(){
-              //   self.isAnimating = false;
-              // }, this.animationDuration);
-
               this.setNotAnimating();
             },
             handleProjectDetailsShow:function() {
@@ -196,18 +189,19 @@ var Container = React.createClass({
                 });
               }
 
+// <<<<<<< HEAD
               if (this.state.showListView == true) {
-                var listViewStyles = {"width" : "100%", "height" : "100%"};
+                // var listViewStyles = {"width" : "100%", "height" : "100%"};
 
-                var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"};
-                var projectListOpacity = {"opacity" : "1"};
+                // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"};
+                // var projectListOpacity = {"opacity" : "1"};
 
                 if (this.currentProjectIndex == -1) {
                   listColor = {"color" :  "black"}
                   // introContainerOpacity = {"opacity" : 1}
 
                   var overallStatusClasses = classNames({
-                  'homeView_active': true,
+                  'intialView_active': true,
                   'animating_active' : this.state.showIsAnimating
                 });
                 }
@@ -223,10 +217,10 @@ var Container = React.createClass({
 
                 
               } else {
-                var listViewStyles = {"transform" : "scale(0.7,0.7)"};
+                // var listViewStyles = {"transform" : "scale(0.7,0.7)"};
                 
-                var detailsViewStyles = {"opacity" : "1", "top" : "70%", "transform" : "scale(1,1)"};
-                var projectListOpacity = {"opacity" : "0"}
+                // var detailsViewStyles = {"opacity" : "1", "top" : "70%", "transform" : "scale(1,1)"};
+                // var projectListOpacity = {"opacity" : "0"}
 
                 var overallStatusClasses = classNames({
                   'ProjectDetailsView_active': true,
@@ -236,18 +230,39 @@ var Container = React.createClass({
 
               }
 
-              var projectDetailsView = <div className='projectDetailsView' style={detailsViewStyles}>
-                      <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
-                    </div>;
+              var projectDetailsView = <div className='projectDetailsView'>
+                                            <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
+                                        </div>;
+// =======
+              
+              // if (this.currentProjectIndex == -1) {
+              //    var overallState = "unIntiatedListViewState"
+              //    // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"}
+              // }
+              // if (this.state.showListView == true) {
+
+
+              //   // var overallState = "intiatedListViewState"
+              //   // var detailsViewStyles = {"opacity" : "0", "top" : "100%", "transform" : "scale(0.0,0.0)"}
+              //   var projectListOpacity = {"opacity" : "1"};
+              // } else { // show individual project in detail
+              //   var overallState = "detailsViewState"
+              //   // var detailsViewStyles = {"opacity" : "1", "top" : "70%", "transform" : "scale(1,1)"};
+              //   var projectListOpacity = {"opacity" : "0"}
+              // }
+
+              // var projectDetailsView = <div className='projectDetailsView' >
+// >>>>>>> tidyUpCSSOnAirplane
+                      
 
               // if (this.state.items.length <= 0) {
               if (this.currentProjectIndex == -1) {
                 var listColor = {"color" :  "black"}
-                var introContainerOpacity = {"opacity" : 1}
+                // var introContainerOpacity = {"opacity" : 1}    /// ??? need this
               }
               else {
                 var listColor = {"color" :  "white"}
-                var introContainerOpacity = {"opacity" : 0}
+                // var introContainerOpacity = {"opacity" : 0}    /// ??? need this
               }
 
 
@@ -270,6 +285,30 @@ var Container = React.createClass({
                   var animateProject = null
                 }
 
+                var loadingIndicator = (<div>Loading...</div>)
+                var images = [];
+
+                // var Preload = require('react-preload').Preload; 
+
+
+                /* <Preload
+                loadingIndicator={loadingIndicator}
+                images={images}
+                autoResolveDelay={3000}
+                onError={this._handleImageLoadError}
+                onSuccess={this._handleImageLoadSuccess}
+                resolveOnError={true}
+                mountChildren={true}
+                >
+                  { */
+
+                    /* 
+
+                    }
+                </Preload> 
+
+                */
+
               return (
                 <div id="mainView" className={overallStatusClasses}>
                     <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
@@ -279,7 +318,7 @@ var Container = React.createClass({
                   <div id="rightArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
                     <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
                   </div>
-                  <div className="projectListView" style={listViewStyles}>
+                  <div className="projectListView">
                     <h1 style={listColor} > Will Melbourne</h1>
                     <div className="introTextContainer" >
                       <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne}></i></p>
@@ -290,12 +329,12 @@ var Container = React.createClass({
                       </ReactCSSTransitionGroup>
                       
                     </div>
-                                      <ProjectList projects={this.state.projects} projectListOpacity={projectListOpacity} listColor={listColor} clickCurrentProject={this.updateCurrentProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
-
+                    <ProjectList projects={this.state.projects} listColor={listColor} clickCurrentProject={this.updateCurrentProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
+                    {projectDetailsView}
                   </div>
-
-                  {projectDetailsView}
                 </div>
+
+                    
               );
             }
         });
@@ -312,7 +351,7 @@ var Container = React.createClass({
 
               return (
                 <div key={this.props.name} className="portfolioSlide"  >
-                    <ReactCSSTransitionGroup transitionName="projectImagesAnimation">
+                    <ReactCSSTransitionGroup transitionName="projectImagesAnimation" transitionEnterTimeout={5000} transitionLeaveTimeout={3000}>
                       <div className="slideImage" style={backgroundStyles} ></div>
                     </ReactCSSTransitionGroup>
                     
@@ -360,7 +399,7 @@ var Container = React.createClass({
                         );
                     }, this);
                 return (
-                    <div id="ProjectList" style={this.props.projectListOpacity}>
+                    <div id="ProjectList">
                       <div id="ProjectListMenu" style={this.props.listColor} >
                         {loop}
                         </div>
