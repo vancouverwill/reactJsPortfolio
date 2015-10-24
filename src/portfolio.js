@@ -330,8 +330,8 @@ var Container = React.createClass({
                       
                     </div>
                     <ProjectList projects={this.state.projects} listColor={listColor} clickCurrentProject={this.updateCurrentProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
-                    {projectDetailsView}
                   </div>
+                  {projectDetailsView}
                 </div>
 
                     
