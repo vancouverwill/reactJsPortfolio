@@ -7,7 +7,7 @@ var Container = React.createClass({
             isAnimating : false,
             currentProjectIndex : -1,
             animationDirection : "movingUp",
-            animationDuration : 2500,
+            animationDuration : 1100,
             // currentState: "home",
             getInitialState: function() {
               return {
