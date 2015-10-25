@@ -3,8 +3,12 @@ $scriptInvokedFromCli =
     isset($_SERVER['argv'][0]) && $_SERVER['argv'][0] === 'server.php';
 
 if($scriptInvokedFromCli) {
-    echo 'starting server on port 5000' . PHP_EOL;
-    exec('php -S 127.0.0.1:5000 -t ./ server.php');
+    $port = getenv('PORT');
+    if (empty($port)) {
+        $port = "5000";
+    }
+    echo 'starting server on port '. $port . PHP_EOL;
+    exec('php -S 127.0.0.1:'. $port . ' -t ./ server.php');
 } else {
     return routeRequest();
 }
@@ -12,13 +16,16 @@ if($scriptInvokedFromCli) {
 function routeRequest()
 {
 
+    $uri = $_SERVER['REQUEST_URI'];
+    $projects = file_get_contents('projects.json');
 
-
-    switch($_SERVER["REQUEST_URI"]) {
-        case '/':
-            echo file_get_contents('./index.html');
-            break;
-     	default:
-            return false;
-        }
+    if ($uri == '/') {
+        echo file_get_contents('./index.html');
+    } elseif (preg_match('/\/api\/projects(\?.*)?/', $uri)) {
+        header('Content-Type: application/json');
+        header('Cache-Control: no-cache');
+        echo $projects;
+    } else {
+        return false;
+    }        
 }
