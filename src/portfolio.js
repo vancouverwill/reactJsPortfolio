@@ -8,7 +8,6 @@ var Container = React.createClass({
             currentProjectIndex : -1,
             animationDirection : "movingUp",
             animationDuration : 1100,
-            // currentState: "home",
             getInitialState: function() {
               return {
                 title: "Portfolio Site",
@@ -41,28 +40,20 @@ var Container = React.createClass({
               }
               this.setState(projects);
 
-              // var newItems = this.state.items;
-
-              // newItems.splice(0, 1);
-
               if (currentProject !== undefined) {
-                // newItems = this.state.items.concat(currentProject);
                 this.setState({"animatedProject" : currentProject});
                 this.setState({"animatedImageUrl" : currentProject.images[0]});
                 this.setState({"animatedImageUrlIndex" : 0});
               }
               else {
                 // no project means reset
-                // this.goingDown = true;
                 this.animationDirection = "movingDown"
                 this.currentProjectIndex = -1;
                 this.setState({"animatedProject" : null});
                 this.setState({"animatedImageUrl" : null});
                 this.setState({"animatedImageUrlIndex" : null});
-                // this.setState({"currentProject" : null});
               }
 
-              // this.setState({"items" : newItems});
               this.setNotAnimating();
             },
             handleProjectDetailsShow:function() {
@@ -79,8 +70,6 @@ var Container = React.createClass({
               if (this.state.showListView == false) {
                 this.handleProjectListShow();
               }
-
-              // this.currentState = "home";
               
               this.updateCurrentProject(-1);
             },
@@ -221,15 +210,6 @@ var Container = React.createClass({
               else {
                 var listColor = {"color" :  "white"}
               }
-
-
-              // var items = this.state.items.map(function(item, i) {
-              //   return (
-              //     <Project key={item.name} name={item.name} description={item.description} images={item.images}></Project>
-              //   );
-              // }.bind(this));
-              // 
-              // animatedProject
 
                 if (this.state.animatedImageUrl != null) {
                   var imageUrl = "url('images/" + this.state.animatedImageUrl + "')";
