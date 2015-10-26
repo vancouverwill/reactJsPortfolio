@@ -1,7 +1,8 @@
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var React = require('react');
 var classNames = require('classnames');
-var ReactDOM = require('react-dom')
+var ReactDOM = require('react-dom');
+var Jquery = require('jquery');
 
 var Container = React.createClass({
             isAnimating : false,
@@ -12,12 +13,29 @@ var Container = React.createClass({
             getInitialState: function() {
               return {
                 title: "Portfolio Site",
-                projects: projects,
+                // projects: projects,
                 showListView: true,
-                currentProject : projects[0],
+                // currentProject : projects[0],
                 showIsAnimating : false,
                 items : []
               };
+            },
+            componentWillMount : function() {
+               this.loadCommentsFromServer();
+              // setInterval(this.loadCommentsFromServer, this.props.pollInterval);
+            },
+            loadCommentsFromServer: function() {
+              Jquery.ajax({
+                url: this.props.url,
+                dataType: 'json',
+                success: function(data) {
+                  this.setState({projects: data});
+                  this.setState({currentProject: data[0]});
+                }.bind(this),
+                error: function(xhr, status, err) {
+                  console.error(this.props.url, status, err.toString());
+                }.bind(this)
+              });
             },
             updateCurrentProject: function(projectName) {
               if (this.isAnimating ===   true) return;
@@ -39,7 +57,7 @@ var Container = React.createClass({
                   this.state.projects[i].active = false;
                 }
               }
-              this.setState(projects);
+              // this.setState(projects);
 
               // var newItems = this.state.items;
 
@@ -99,7 +117,7 @@ var Container = React.createClass({
               this.moveUp();
             },
             moveUp: function() {
-                if (this.currentProjectIndex < (projects.length - 1)) {
+                if (this.currentProjectIndex < (this.state.projects.length - 1)) {
                   this.updateCurrentProject(this.state.projects[this.currentProjectIndex + 1].name)
                 }
             },
@@ -212,9 +230,15 @@ var Container = React.createClass({
 
               }
 
-              var projectDetailsView = <div className='projectDetailsView'>
+              if (this.state.currentProject !== undefined) {
+                var projectDetailsView = <div className='projectDetailsView'>
                                             <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
                                         </div>;
+              }
+                else {
+                  var projectDetailsView = '';
+
+                } 
               if (this.currentProjectIndex == -1) {
                 var listColor = {"color" :  "black"}
               }
@@ -244,32 +268,38 @@ var Container = React.createClass({
                 var loadingIndicator = (<div>Loading...</div>)
                 var images = [];
 
-              return (
-                <div id="mainView" className={overallStatusClasses}>
-                    <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
-                  <div id="leftArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
-                    <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
-                  </div>
-                  <div id="rightArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
-                    <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
-                  </div>
-                  <div className="projectListView">
-                    <h1 style={listColor} > Will Melbourne</h1>
-                    <div className="introTextContainer" >
-                      <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne}></i></p>
-                    </div>
-                    <div id="portfolioProjectAnimationContainer" className={classes}>
-                      <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
-                        {animateProject}                      
-                      </ReactCSSTransitionGroup>
-                      
-                    </div>
-                    <ProjectList projects={this.state.projects} listColor={listColor} clickCurrentProject={this.updateCurrentProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
-                  </div>
-                  {projectDetailsView}
-                </div>
+                if (this.state.projects !== undefined) {
 
-                    
+                  var defaultView = <div id="mainView" className={overallStatusClasses}>
+                      <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
+                    <div id="leftArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
+                      <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
+                    </div>
+                    <div id="rightArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
+                      <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
+                    </div>
+                    <div className="projectListView">
+                      <h1 style={listColor} > Will Melbourne</h1>
+                      <div className="introTextContainer" >
+                        <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne}></i></p>
+                      </div>
+                      <div id="portfolioProjectAnimationContainer" className={classes}>
+                        <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
+                          {animateProject}                      
+                        </ReactCSSTransitionGroup>
+                        
+                      </div>
+                      <ProjectList projects={this.state.projects} listColor={listColor} clickCurrentProject={this.updateCurrentProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
+                    </div>
+                    {projectDetailsView}
+                  </div>
+
+                }  else {
+                  var defaultView = <h2>projects loading</h2>
+                }
+
+              return (
+                  <div>{defaultView}</div> 
               );
             }
         });
@@ -422,6 +452,6 @@ var Container = React.createClass({
 
 
         ReactDOM.render(
-          <Container />,
+          <Container url="/api/projects" />,
         document.getElementById('container')
       );

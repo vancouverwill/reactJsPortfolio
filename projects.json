@@ -1,4 +1,4 @@
- var projects = [
+[
  				{	"name" : "brazil", 
  					"color" : "blue", 
  					"fontColor" : "orange", 
@@ -27,5 +27,5 @@
 					"images" : ["japan1.jpg", "japan2.jpg", "japan3.jpg", "japan4.jpg"]
  				, "description" : "Japan is an island nation in the Pacific Ocean with high-rise-filled cities, imperial palaces, mountainous national parks and thousands of shrines and temples. Tokyo, the crowded capital, is known for its neon skyscrapers and pop culture. In contrast, Kyoto offers Buddhist temples, Shinto shrines, gardens and cherry blossoms. Sushi, the national dish, is served everywhere from casual pubs to gourmet restaurants."
  				, "shortDescription" : "the far east"
- 				},
- 				];
+ 				}
+ 				]
