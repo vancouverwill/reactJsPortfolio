@@ -19,7 +19,6 @@ var PageLoadingClass = React.createClass({
       url: this.props.url,
       dataType: 'json',
       success: function(apiProjects) {
-        // if using projects.json instead of reall api can just use this form, this.setState({projects: data});
 
         var projects = [];
               apiProjects.forEach(function(apiProject, i) {
@@ -37,7 +36,6 @@ var PageLoadingClass = React.createClass({
               });
 
         this.setState({projects: projects});
-        // this.setState({currentProject: data[0]});
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -50,6 +48,9 @@ var PageLoadingClass = React.createClass({
       var defaultView = <PortfolioContainer url={this.props.url} projects={this.state.projects} />
     }  else {
       var defaultView = <div className="text-center">
+                            <br />
+                            <br />
+                            <br />
                             <i className="fa fa-spinner fa-pulse fa-5x"></i>
                             <h2>projects loading</h2>
                           </div>
@@ -65,34 +66,15 @@ var PortfolioContainer = React.createClass({
             currentProjectIndex : -1,
             animationDirection : "movingUp",
             animationDuration : 1100,
-            // currentState: "home",
             getInitialState: function() {
               return {
                 title: "Portfolio Site",
-                // projects: projects,
                 showListView: true,
                 currentProject : this.props.projects[0],
                 showIsAnimating : false,
                 items : []
               };
             },
-            // componentWillMount : function() {
-            //    this.loadCommentsFromServer();
-            //   // setInterval(this.loadCommentsFromServer, this.props.pollInterval);
-            // },
-            // loadCommentsFromServer: function() {
-            //   Jquery.ajax({
-            //     url: this.props.url,
-            //     dataType: 'json',
-            //     success: function(data) {
-            //       this.setState({projects: data});
-            //       this.setState({currentProject: data[0]});
-            //     }.bind(this),
-            //     error: function(xhr, status, err) {
-            //       console.error(this.props.url, status, err.toString());
-            //     }.bind(this)
-            //   });
-            // },
             updateCurrentProject: function(projectName) {
               if (this.isAnimating ===   true) return;
               if (this.state.showListView ===  false) return;
@@ -525,8 +507,8 @@ var PortfolioContainer = React.createClass({
             }
          });
 
-  // var apiUrl = "/api/projects"
-  var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/posts"
+  var apiUrl = "/api/projects"
+  // var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/posts"
 
 
 
