@@ -18,8 +18,25 @@ var PageLoadingClass = React.createClass({
     Jquery.ajax({
       url: this.props.url,
       dataType: 'json',
-      success: function(data) {
-        this.setState({projects: data});
+      success: function(apiProjects) {
+        // if using projects.json instead of reall api can just use this form, this.setState({projects: data});
+
+        var projects = [];
+              apiProjects.forEach(function(apiProject, i) {
+                var project = {};
+                project.name = apiProject.title.rendered;
+                project.shortDescription = apiProject.project_short_description;
+                project.description = apiProject.content.rendered;
+                project.fontColor = apiProject.font_color;
+
+                project.images = [];
+                apiProject.gallery_set.forEach(function(galleryImage, i) {
+                  project.images.push(galleryImage.url)
+                });
+                projects.push(project);
+              });
+
+        this.setState({projects: projects});
         // this.setState({currentProject: data[0]});
       }.bind(this),
       error: function(xhr, status, err) {
@@ -295,7 +312,7 @@ var PortfolioContainer = React.createClass({
               // animatedProject
 
                 if (this.state.animatedImageUrl != null) {
-                  var imageUrl = "url('images/" + this.state.animatedImageUrl + "')";
+                  var imageUrl = "url('" + this.state.animatedImageUrl + "')";
                   var backgroundStyles = {"backgroundImage" : imageUrl}
 
                   var animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  ><div className="slideImage" style={backgroundStyles} ></div><div className="slideImageOpacityOverlay" ></div></div>
@@ -366,7 +383,7 @@ var PortfolioContainer = React.createClass({
         var Project = React.createClass({
             render: function() {
               if (this.props.images !== undefined && this.props.images[0]) {
-                      var imageUrl = "url('images/" + this.props.images[0] + "')";
+                      var imageUrl = "url('" + this.props.images[0] + "')";
                       var backgroundStyles = {"backgroundImage" : imageUrl}
                     }
 
@@ -471,7 +488,7 @@ var PortfolioContainer = React.createClass({
                   var projectsLoop = this.props.projects.map(function (project) {
 
                     if (project.images !== undefined && project.images[0]) {
-                      var imageUrl = "url('images/" + project.images[0] + "')";
+                      var imageUrl = "url('" + project.images[0] + "')";
                       var backgroundStyles = {"backgroundImage" : imageUrl}
                     }
 
@@ -508,8 +525,13 @@ var PortfolioContainer = React.createClass({
             }
          });
 
+  // var apiUrl = "/api/projects"
+  var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/posts"
+
+
+
 
         ReactDOM.render(
-          <PageLoadingClass url="/api/projects" />,
+          <PageLoadingClass url={apiUrl} />,
         document.getElementById('container')
       );

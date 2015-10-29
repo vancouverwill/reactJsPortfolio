@@ -27,13 +27,13 @@ while building we need to update the files in the src directory, run the below s
 
 this has now been updated to use babel instead
 
-`babel src --watch --out-dir build` and `browserify -t babelify  build/portfolio.js -o bundle.js` 
+`babel src --watch --out-dir build` 
 
-althought I need to figure out a way to watch this and not manually have to call it
+and 
 
-```
-watchify  -t babelify  build/portfolio.js -o bundle.js
-```
+`watchify  -t babelify  build/portfolio.js -o bundle.js` 
+
+
 
 finally run 
 
