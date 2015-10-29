@@ -410,7 +410,7 @@ var PortfolioContainer = React.createClass({
                   <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
                   <h2>{this.props.currentProject.name}</h2>
 
-                  <p>{this.props.currentProject.description}</p>
+                  <p dangerouslySetInnerHTML={{__html: this.props.currentProject.description}}></p>
                 </div>
                 )
             }
