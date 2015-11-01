@@ -5,12 +5,12 @@
   "main": "server.js",
   "dependencies": {
     "classnames": "*",
+    "jquery": "^2.1.4",
     "react": "^0.14.0",
     "react-addons-css-transition-group": "*",
     "react-dom": "*",
-    "react-preload": "^0.2.2",
     "react-tools": "*"
-    },
+  },
   "devDependencies": {
     "babelify": "^6.3.0",
     "watchify": "^3.4.0"
