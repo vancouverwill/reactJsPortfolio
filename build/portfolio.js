@@ -4,21 +4,169 @@ var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var React = require('react');
 var classNames = require('classnames');
 var ReactDOM = require('react-dom');
+var Jquery = require('jquery');
 
-var Container = React.createClass({
-  displayName: 'Container',
+var hash = {};
+var cache = [];
+
+function add(url) {
+  if (!hash[url]) {
+    hash[url] = new Image();
+    hash[url].src = url;
+
+    cache.push(hash[url]);
+  }
+  return hash[url];
+};
+
+function get(url) {
+  return add(url);
+};
+
+function imgLoad2(url) {
+
+  var image = get(url);
+
+  return new Promise(function (resolve, reject) {
+    var handleSuccess = function handleSuccess() {
+      resolve(image);
+    };
+
+    if (image.naturalWidth && image.naturalHeight) {
+      //Image is loaded, go ahead and change the state
+      handleSuccess();
+    } else {
+      image.addEventListener('load', handleSuccess, false);
+      image.addEventListener('error', reject, false);
+    }
+  });
+}
+
+function imgLoad(url) {
+  // Create new promise with the Promise() constructor;
+  // This has as its argument a function
+  // with two parameters, resolve and reject
+  return new Promise(function (resolve, reject) {
+    // Standard XHR to load an image
+    var request = new XMLHttpRequest();
+    request.open('GET', url);
+    request.responseType = 'blob';
+    // When the request loads, check whether it was successful
+    request.onload = function () {
+      if (request.status === 200) {
+        // If successful, resolve the promise by passing back the request response
+        resolve(request.response);
+      } else {
+        // If it fails, reject the promise with a error message
+        reject(Error('Image didn\'t load successfully; error code:' + request.statusText));
+      }
+    };
+    request.onerror = function () {
+      // Also deal with the case when the entire request fails to begin with
+      // This is probably a network error, so reject the promise with an appropriate message
+      reject(Error('There was a network error.'));
+    };
+    // Send the request
+    request.send();
+  });
+}
+
+function loadImages(urls) {
+  // var promises = urls.map(imgLoad2.bind(this));
+  var promises = urls.map(imgLoad2);
+  return Promise.all(promises);
+}
+
+var PageLoadingClass = React.createClass({
+  displayName: 'PageLoadingClass',
+
+  getInitialState: function getInitialState() {
+    return {
+      projects: undefined
+    };
+  },
+  componentWillMount: function componentWillMount() {
+    this.loadCommentsFromServer();
+  },
+  handleSuccess: function handleSuccess() {
+    console.log("handleSuccess");
+    this.setState({ ready: true });
+  },
+  handleError: function handleError() {
+    console.log("handleError");
+  },
+  loadCommentsFromServer: function loadCommentsFromServer() {
+    Jquery.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      success: (function (apiProjects) {
+
+        var projects = [];
+        var allImages = [];
+
+        apiProjects.forEach(function (apiProject, i) {
+          var project = {};
+          project.name = apiProject.title.rendered;
+          project.shortDescription = apiProject.project_short_description;
+          project.description = apiProject.content.rendered;
+          project.fontColor = apiProject.font_color;
+
+          project.images = [];
+          apiProject.gallery_set.forEach(function (galleryImage, i) {
+            project.images.push(galleryImage.url);
+            allImages.push(galleryImage.url);
+          });
+          projects.push(project);
+        });
+
+        this.setState({ projects: projects });
+
+        loadImages(allImages).then(this.handleSuccess, this.handleError);
+      }).bind(this),
+      error: (function (xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }).bind(this)
+    });
+  },
+  render: function render() {
+
+    if (this.state.ready !== undefined) {
+      var defaultView = React.createElement(PortfolioContainer, { url: this.props.url, projects: this.state.projects });
+    } else {
+      var defaultView = React.createElement(
+        'div',
+        { className: 'text-center' },
+        React.createElement('br', null),
+        React.createElement('br', null),
+        React.createElement('br', null),
+        React.createElement('i', { className: 'fa fa-spinner fa-pulse fa-5x' }),
+        React.createElement(
+          'h2',
+          null,
+          'projects loading'
+        )
+      );
+    }
+    return React.createElement(
+      'div',
+      null,
+      defaultView
+    );
+  }
+});
+
+var PortfolioContainer = React.createClass({
+  displayName: 'PortfolioContainer',
 
   isAnimating: false,
   currentProjectIndex: -1,
   animationDirection: "movingUp",
   animationDuration: 1100,
-  // currentState: "home",
   getInitialState: function getInitialState() {
     return {
       title: "Portfolio Site",
-      projects: projects,
       showListView: true,
-      currentProject: projects[0],
+      currentProject: this.props.projects[0],
       showIsAnimating: false,
       items: []
     };
@@ -28,44 +176,36 @@ var Container = React.createClass({
     if (this.state.showListView === false) return;
 
     this.setAnimating();
-    for (var i = 0; i < this.state.projects.length; i++) {
-      if (this.state.projects[i].name == projectName) {
+    for (var i = 0; i < this.props.projects.length; i++) {
+      if (this.props.projects[i].name == projectName) {
         if (i < this.currentProjectIndex) {
           this.animationDirection = "movingDown";
         } else {
           this.animationDirection = "movingUp";
         }
-        this.setState({ "currentProject": this.state.projects[i] });
+        this.setState({ "currentProject": this.props.projects[i] });
         this.currentProjectIndex = i;
-        this.state.projects[i].active = true;
-        var currentProject = this.state.projects[i];
+        this.props.projects[i].active = true;
+        var currentProject = this.props.projects[i];
       } else {
-        this.state.projects[i].active = false;
+        this.props.projects[i].active = false;
       }
     }
-    this.setState(projects);
-
-    // var newItems = this.state.items;
-
-    // newItems.splice(0, 1);
+    // this.setState(projects);
 
     if (currentProject !== undefined) {
-      // newItems = this.state.items.concat(currentProject);
       this.setState({ "animatedProject": currentProject });
       this.setState({ "animatedImageUrl": currentProject.images[0] });
       this.setState({ "animatedImageUrlIndex": 0 });
     } else {
       // no project means reset
-      // this.goingDown = true;
       this.animationDirection = "movingDown";
       this.currentProjectIndex = -1;
       this.setState({ "animatedProject": null });
       this.setState({ "animatedImageUrl": null });
       this.setState({ "animatedImageUrlIndex": null });
-      // this.setState({"currentProject" : null});
     }
 
-    // this.setState({"items" : newItems});
     this.setNotAnimating();
   },
   handleProjectDetailsShow: function handleProjectDetailsShow() {
@@ -82,8 +222,6 @@ var Container = React.createClass({
     if (this.state.showListView == false) {
       this.handleProjectListShow();
     }
-
-    // this.currentState = "home";
 
     this.updateCurrentProject(-1);
   },
@@ -102,13 +240,13 @@ var Container = React.createClass({
     this.moveUp();
   },
   moveUp: function moveUp() {
-    if (this.currentProjectIndex < projects.length - 1) {
-      this.updateCurrentProject(this.state.projects[this.currentProjectIndex + 1].name);
+    if (this.currentProjectIndex < this.props.projects.length - 1) {
+      this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name);
     }
   },
   moveDown: function moveDown() {
     if (this.currentProjectIndex > 0) {
-      this.updateCurrentProject(this.state.projects[this.currentProjectIndex - 1].name);
+      this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name);
     }
 
     if (this.currentProjectIndex == 0) {
@@ -207,27 +345,23 @@ var Container = React.createClass({
       });
     }
 
-    var projectDetailsView = React.createElement(
-      'div',
-      { className: 'projectDetailsView' },
-      React.createElement(ProjectDetails, { currentProject: this.state.currentProject, handleProjectListShow: this.handleProjectListShow })
-    );
+    if (this.state.currentProject !== undefined) {
+      var projectDetailsView = React.createElement(
+        'div',
+        { className: 'projectDetailsView' },
+        React.createElement(ProjectDetails, { currentProject: this.state.currentProject, handleProjectListShow: this.handleProjectListShow })
+      );
+    } else {
+      var projectDetailsView = '';
+    }
     if (this.currentProjectIndex == -1) {
       var listColor = { "color": "black" };
     } else {
       var listColor = { "color": "white" };
     }
 
-    // var items = this.state.items.map(function(item, i) {
-    //   return (
-    //     <Project key={item.name} name={item.name} description={item.description} images={item.images}></Project>
-    //   );
-    // }.bind(this));
-    //
-    // animatedProject
-
     if (this.state.animatedImageUrl != null) {
-      var imageUrl = "url('images/" + this.state.animatedImageUrl + "')";
+      var imageUrl = "url('" + this.state.animatedImageUrl + "')";
       var backgroundStyles = { "backgroundImage": imageUrl };
 
       var animateProject = React.createElement(
@@ -239,13 +373,6 @@ var Container = React.createClass({
     } else {
       var animateProject = null;
     }
-
-    var loadingIndicator = React.createElement(
-      'div',
-      null,
-      'Loading...'
-    );
-    var images = [];
 
     return React.createElement(
       'div',
@@ -292,7 +419,7 @@ var Container = React.createClass({
             animateProject
           )
         ),
-        React.createElement(ProjectList, { projects: this.state.projects, listColor: listColor, clickCurrentProject: this.updateCurrentProject, handleProjectDetailsShow: this.handleProjectDetailsShow })
+        React.createElement(ProjectList, { projects: this.props.projects, listColor: listColor, clickCurrentProject: this.updateCurrentProject, handleProjectDetailsShow: this.handleProjectDetailsShow })
       ),
       projectDetailsView
     );
@@ -304,7 +431,7 @@ var Project = React.createClass({
 
   render: function render() {
     if (this.props.images !== undefined && this.props.images[0]) {
-      var imageUrl = "url('images/" + this.props.images[0] + "')";
+      var imageUrl = "url('" + this.props.images[0] + "')";
       var backgroundStyles = { "backgroundImage": imageUrl };
     }
 
@@ -346,11 +473,7 @@ var ProjectDetails = React.createClass({
         null,
         this.props.currentProject.name
       ),
-      React.createElement(
-        'p',
-        null,
-        this.props.currentProject.description
-      )
+      React.createElement('p', { dangerouslySetInnerHTML: { __html: this.props.currentProject.description } })
     );
   }
 });
@@ -435,7 +558,7 @@ var ProjectViews = React.createClass({
     var projectsLoop = this.props.projects.map(function (project) {
 
       if (project.images !== undefined && project.images[0]) {
-        var imageUrl = "url('images/" + project.images[0] + "')";
+        var imageUrl = "url('" + project.images[0] + "')";
         var backgroundStyles = { "backgroundImage": imageUrl };
       }
 
@@ -487,4 +610,7 @@ var ProjectViews = React.createClass({
   }
 });
 
-ReactDOM.render(React.createElement(Container, null), document.getElementById('container'));
+// var apiUrl = "/api/projects"
+var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/posts";
+
+ReactDOM.render(React.createElement(PageLoadingClass, { url: apiUrl }), document.getElementById('container'));
