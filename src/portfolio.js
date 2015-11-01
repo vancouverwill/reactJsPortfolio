@@ -5,6 +5,83 @@ var ReactDOM = require('react-dom');
 var Jquery = require('jquery');
 
 
+var hash = {};
+var cache = [];
+
+function add(url) {
+    if (!hash[url]) {
+        hash[url] = new Image();
+        hash[url].src = url;
+
+        cache.push(hash[url]);
+    }
+    return hash[url];
+};
+
+function get(url) {
+    return add(url);
+};
+
+function imgLoad2(url) {
+
+  var image = get(url);
+
+
+    return new Promise(function (resolve, reject) {
+            var handleSuccess = function handleSuccess() {
+                resolve(image);
+            };
+
+            if (image.naturalWidth && image.naturalHeight) {
+                //Image is loaded, go ahead and change the state
+                handleSuccess();
+            } else {
+                image.addEventListener('load', handleSuccess, false);
+                image.addEventListener('error', reject, false);
+            }
+        });
+  }
+
+
+function imgLoad(url) {
+    // Create new promise with the Promise() constructor;
+    // This has as its argument a function
+    // with two parameters, resolve and reject
+    return new Promise(function(resolve, reject) {
+      // Standard XHR to load an image
+      var request = new XMLHttpRequest();
+      request.open('GET', url);
+      request.responseType = 'blob';
+      // When the request loads, check whether it was successful
+      request.onload = function() {
+        if (request.status === 200) {
+        // If successful, resolve the promise by passing back the request response
+          resolve(request.response);
+        } else {
+        // If it fails, reject the promise with a error message
+          reject(Error('Image didn\'t load successfully; error code:' + request.statusText));
+        }
+      };
+      request.onerror = function() {
+      // Also deal with the case when the entire request fails to begin with
+      // This is probably a network error, so reject the promise with an appropriate message
+          reject(Error('There was a network error.'));
+      };
+      // Send the request
+      request.send();
+    });
+  }
+
+  
+
+
+  function loadImages(urls) {
+      // var promises = urls.map(imgLoad2.bind(this));
+      var promises = urls.map(imgLoad2);
+      return Promise.all(promises);
+  }
+
+
 var PageLoadingClass = React.createClass({
   getInitialState: function() {
     return {
@@ -14,6 +91,13 @@ var PageLoadingClass = React.createClass({
   componentWillMount : function() {
      this.loadCommentsFromServer();
   },
+  handleSuccess : function() {
+    console.log("handleSuccess")
+    this.setState({ready: true});
+  },
+  handleError : function() {
+    console.log("handleError")
+  },
   loadCommentsFromServer: function() {
     Jquery.ajax({
       url: this.props.url,
@@ -21,21 +105,28 @@ var PageLoadingClass = React.createClass({
       success: function(apiProjects) {
 
         var projects = [];
-              apiProjects.forEach(function(apiProject, i) {
-                var project = {};
-                project.name = apiProject.title.rendered;
-                project.shortDescription = apiProject.project_short_description;
-                project.description = apiProject.content.rendered;
-                project.fontColor = apiProject.font_color;
+        var allImages = [];
 
-                project.images = [];
-                apiProject.gallery_set.forEach(function(galleryImage, i) {
-                  project.images.push(galleryImage.url)
-                });
-                projects.push(project);
-              });
+        apiProjects.forEach(function(apiProject, i) {
+          var project = {};
+          project.name = apiProject.title.rendered;
+          project.shortDescription = apiProject.project_short_description;
+          project.description = apiProject.content.rendered;
+          project.fontColor = apiProject.font_color;
+
+          project.images = [];
+          apiProject.gallery_set.forEach(function(galleryImage, i) {
+            project.images.push(galleryImage.url)
+            allImages.push(galleryImage.url)
+          });
+          projects.push(project);
+        });
 
         this.setState({projects: projects});
+
+        loadImages(allImages).then(this.handleSuccess, this.handleError)
+
+
       }.bind(this),
       error: function(xhr, status, err) {
         console.error(this.props.url, status, err.toString());
@@ -44,7 +135,7 @@ var PageLoadingClass = React.createClass({
   },
   render: function() {
 
-    if (this.state.projects !== undefined) {
+    if (this.state.ready !== undefined) {
       var defaultView = <PortfolioContainer url={this.props.url} projects={this.state.projects} />
     }  else {
       var defaultView = <div className="text-center">
@@ -303,36 +394,6 @@ var PortfolioContainer = React.createClass({
                   var animateProject = null
                 }
 
-                // var loadingIndicator = (<div>Loading...</div>)
-                // var images = [];
-
-
-                //   var defaultView = <div id="mainView" className={overallStatusClasses}>
-                //       <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
-                //     <div id="leftArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
-                //       <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
-                //     </div>
-                //     <div id="rightArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
-                //       <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
-                //     </div>
-                //     <div className="projectListView">
-                //       <h1 style={listColor} > Will Melbourne</h1>
-                //       <div className="introTextContainer" >
-                //         <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne}></i></p>
-                //       </div>
-                //       <div id="portfolioProjectAnimationContainer" className={classes}>
-                //         <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={1000} transitionLeaveTimeout={1000}>
-                //           {animateProject}                      
-                //         </ReactCSSTransitionGroup>
-                        
-                //       </div>
-                //       <ProjectList projects={this.props.projects} listColor={listColor} clickCurrentProject={this.updateCurrentProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
-                //     </div>
-                //     {projectDetailsView}
-                //   </div>
-
-                
-
               return (
                   <div id="mainView" className={overallStatusClasses}>
                       <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
@@ -507,8 +568,8 @@ var PortfolioContainer = React.createClass({
             }
          });
 
-  var apiUrl = "/api/projects"
-  // var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/posts"
+  // var apiUrl = "/api/projects"
+  var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/posts"
 
 
 

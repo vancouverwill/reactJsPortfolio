@@ -9,7 +9,6 @@
     "react": "^0.14.0",
     "react-addons-css-transition-group": "*",
     "react-dom": "*",
-    "react-preload": "^0.2.2",
     "react-tools": "*"
   },
   "devDependencies": {
