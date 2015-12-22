@@ -167,6 +167,14 @@ var PortfolioContainer = React.createClass({
         items : []
       };
     },
+    selctProject: function(projectName)   {
+      if (this.state.currentProject.name != projectName) {
+        this.updateCurrentProject(projectName);
+      }
+      else {
+        this.handleProjectDetailsShow();
+      }
+    },
     updateCurrentProject: function(projectName) {
       if (this.isAnimating ===   true) return;
       if (this.state.showListView ===  false) return;
@@ -399,7 +407,7 @@ var PortfolioContainer = React.createClass({
                 </ReactCSSTransitionGroup>
                 
               </div>
-              <ProjectList projects={this.props.projects} listColor={listColor} clickCurrentProject={this.updateCurrentProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
+              <ProjectList projects={this.props.projects} listColor={listColor} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
             </div>
             {projectDetailsView}
           </div>
@@ -450,8 +458,8 @@ var ProjectDetails = React.createClass({
         return {
         };
     },
-    handleProjectShow: function(projectName) {
-      this.props.clickCurrentProject(projectName);
+    selctProject: function(projectName) {
+      this.props.selctProject(projectName);
     },
     handleProjectDetailsShow: function() {
       this.props.handleProjectDetailsShow();
@@ -459,7 +467,7 @@ var ProjectDetails = React.createClass({
     render: function() {
       var loop = this.props.projects.map(function (e) {
             return (
-                  <ProjectName key={e.name} name={e.name} fontColor={e.fontColor} shortDescription={e.shortDescription} active={e.active} handleProjectShow={this.handleProjectShow} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
+                  <ProjectName key={e.name} name={e.name} fontColor={e.fontColor} shortDescription={e.shortDescription} active={e.active} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
               );
           }, this);
       return (
@@ -473,8 +481,8 @@ var ProjectDetails = React.createClass({
  });
 
  var ProjectName = React.createClass({
-    handleProjectShow: function() {
-      this.props.handleProjectShow(this.props.name);
+    selctProject: function() {
+      this.props.selctProject(this.props.name);
     },
     handleProjectDetailsShow: function() {
       this.props.handleProjectDetailsShow();
@@ -496,7 +504,7 @@ var ProjectDetails = React.createClass({
         <div className={classes}>
           <div className="spacingDivBorder"  ></div>
           
-          <h4  onClick={this.handleProjectShow} style={fontColor} >
+          <h4  onClick={this.selctProject} style={fontColor} >
             {this.props.name} {this.props.active}
             <i className="fa fa-arrow-right arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow} style={fontColor}></i>
           </h4>
