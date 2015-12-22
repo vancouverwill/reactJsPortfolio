@@ -399,7 +399,25 @@ var PortfolioContainer = React.createClass({
             <div className="projectListView">
               <h1 style={listColor} > Will Melbourne</h1>
               <div className="introTextContainer" >
-                <p className="introText">Will Melbourne is a software engineer working in Vancouver Canada <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne}></i></p>
+                <p className="introText">Will Melbourne is a software engineer working in the west coast of Canada and London, UK <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne}></i>
+                  <br/>
+                  <a href="https://ca.linkedin.com/in/willmelbourne" target="_blank">
+                    <span className="circleBorder">
+                      <i className="fa fa-linkedin fa-lg"></i>
+                    </span>
+                  </a>
+                  <a href="mailto:willmelbourne@gmail.com">
+                    <span className="circleBorder">
+                      <i className="fa fa-envelope fa-lg"></i>
+                    </span>
+                  </a>
+                  <a href="https://github.com/vancouverwill" target="_blank">
+                    <span className="circleBorder">
+                      <i className="fa fa-github-alt fa-lg"></i>
+                    </span>
+                  </a>
+                </p>
+                
               </div>
               <div id="portfolioProjectAnimationContainer" className={classes}>
                 <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={this.animationDuration} transitionLeaveTimeout={this.animationDuration}>
