@@ -17,11 +17,22 @@ body {
 
 .ProjectDetailsView_active #contactButton {
 	opacity: 0;
+	cursor: default;
 }
 
 .animating_active #contactButton{
 	opacity: 0.2;
 	cursor: default;
+}
+
+#closeProjectButton {
+	opacity: 0;
+	cursor: pointer;
+	transition: opacity 1s ease-out;
+}
+
+.ProjectDetailsView_active #closeProjectButton {
+	opacity: 1;
 }
 
 h1 {
@@ -321,7 +332,7 @@ h1 {
 
 .portfolioProjectAnimation-enter {
 	position: absolute;
-	transition: transform 1.0s ease-in-out 0.000s;
+	transition: transform 1.0s ease-in-out 0.200s;
 }
 
 .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
@@ -331,7 +342,7 @@ h1 {
 .portfolioProjectAnimation-leave {
 	position: absolute;
 	opacity: 1;
-	transition: transform 1.0s ease-in-out 0.000s;
+	transition: transform 1.0s ease-in-out 0.200s;
 }
 
 .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
