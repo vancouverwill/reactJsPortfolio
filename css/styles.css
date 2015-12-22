@@ -26,6 +26,8 @@ body {
 }
 
 #closeProjectButton {
+	margin: 20px;
+    color: lightgray;
 	opacity: 0;
 	cursor: pointer;
 	transition: opacity 1s ease-out;
@@ -186,7 +188,7 @@ h1 {
 	display: none;
 	float: right;
 }
-.active .arrowSeeProjectDetails {
+.active.project-title .arrowSeeProjectDetails {
 	display: block;
 }
 
