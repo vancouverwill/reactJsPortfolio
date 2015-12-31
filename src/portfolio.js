@@ -115,10 +115,13 @@ var PageLoadingClass = React.createClass({
           project.fontColor = apiProject.font_color;
 
           project.images = [];
-          apiProject.gallery_set.forEach(function(galleryImage, i) {
-            project.images.push(galleryImage.url)
-            allImages.push(galleryImage.url)
-          });
+
+          if (apiProject.gallery_set.length > 0) {
+            apiProject.gallery_set.forEach(function(galleryImage, i) {
+              project.images.push(galleryImage.url)
+              allImages.push(galleryImage.url)
+            });
+          }
           projects.push(project);
         });
 
