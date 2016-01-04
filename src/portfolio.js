@@ -113,7 +113,7 @@ var PageLoadingClass = React.createClass({
 
           project.images = [];
 
-          if (apiProject.gallery_set.length > 0) {
+          if (apiProject.gallery_set !== undefined && apiProject.gallery_set.length > 0) {
             apiProject.gallery_set.forEach(function(galleryImage, i) {
               project.images.push(galleryImage.url)
               allImages.push(galleryImage.url)
@@ -580,7 +580,7 @@ var ProjectDetails = React.createClass({
 // });
 
 // var apiUrl = "/api/projects"
-var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/posts"
+var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/projects"
 
 
 
