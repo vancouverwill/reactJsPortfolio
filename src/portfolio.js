@@ -22,10 +22,9 @@ function get(url) {
     return add(url);
 };
 
-function imgLoad2(url) {
+function imgRequestUrlLoad(url) {
 
   var image = get(url);
-
 
     return new Promise(function (resolve, reject) {
             var handleSuccess = function handleSuccess() {
@@ -72,12 +71,10 @@ function imgLoad(url) {
     });
   }
 
-  
-
 
   function loadImages(urls) {
-      // var promises = urls.map(imgLoad2.bind(this));
-      var promises = urls.map(imgLoad2);
+      // var promises = urls.map(imgRequestUrlLoad.bind(this));
+      var promises = urls.map(imgRequestUrlLoad);
       return Promise.all(promises);
   }
 
@@ -115,10 +112,13 @@ var PageLoadingClass = React.createClass({
           project.fontColor = apiProject.font_color;
 
           project.images = [];
-          apiProject.gallery_set.forEach(function(galleryImage, i) {
-            project.images.push(galleryImage.url)
-            allImages.push(galleryImage.url)
-          });
+
+          if (apiProject.gallery_set !== undefined && apiProject.gallery_set.length > 0) {
+            apiProject.gallery_set.forEach(function(galleryImage, i) {
+              project.images.push(galleryImage.url)
+              allImages.push(galleryImage.url)
+            });
+          }
           projects.push(project);
         });
 
@@ -580,7 +580,7 @@ var ProjectDetails = React.createClass({
 // });
 
 // var apiUrl = "/api/projects"
-var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/posts"
+var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/projects"
 
 
 

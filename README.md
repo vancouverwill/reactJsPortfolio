@@ -11,23 +11,16 @@ npm install -g react-tools
 
 npm install -g bower
 
+npm install -g babel-cli
+
 bower install fontawesome
-```
 
-if necessary 
-
-```
-npm install -g browserify
 npm install -g watchify
 ```
 
-while building we need to update the files in the src directory, run the below so that jsx monitors the src directory for changes
+while building we need to update the files in the src directory, run the below so babel the src directory for changes
 
-`jsx --watch --follow-requires src/ build/`
-
-this has now been updated to use babel instead
-
-`babel src --watch --out-dir build` 
+babel --presets react src --watch --out-dir build
 
 and 
 
