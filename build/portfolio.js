@@ -1,5 +1,3 @@
-'use strict';
-
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var React = require('react');
 var classNames = require('classnames');
@@ -23,7 +21,7 @@ function get(url) {
   return add(url);
 };
 
-function imgLoad2(url) {
+function imgRequestUrlLoad(url) {
 
   var image = get(url);
 
@@ -72,30 +70,30 @@ function imgLoad(url) {
 }
 
 function loadImages(urls) {
-  // var promises = urls.map(imgLoad2.bind(this));
-  var promises = urls.map(imgLoad2);
+  // var promises = urls.map(imgRequestUrlLoad.bind(this));
+  var promises = urls.map(imgRequestUrlLoad);
   return Promise.all(promises);
 }
 
 var PageLoadingClass = React.createClass({
   displayName: 'PageLoadingClass',
 
-  getInitialState: function getInitialState() {
+  getInitialState: function () {
     return {
       projects: undefined
     };
   },
-  componentWillMount: function componentWillMount() {
+  componentWillMount: function () {
     this.loadCommentsFromServer();
   },
-  handleSuccess: function handleSuccess() {
+  handleSuccess: function () {
     console.log("handleSuccess");
     this.setState({ ready: true });
   },
-  handleError: function handleError() {
+  handleError: function () {
     console.log("handleError");
   },
-  loadCommentsFromServer: function loadCommentsFromServer() {
+  loadCommentsFromServer: function () {
     Jquery.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -112,10 +110,13 @@ var PageLoadingClass = React.createClass({
           project.fontColor = apiProject.font_color;
 
           project.images = [];
-          apiProject.gallery_set.forEach(function (galleryImage, i) {
-            project.images.push(galleryImage.url);
-            allImages.push(galleryImage.url);
-          });
+
+          if (apiProject.gallery_set !== undefined && apiProject.gallery_set.length > 0) {
+            apiProject.gallery_set.forEach(function (galleryImage, i) {
+              project.images.push(galleryImage.url);
+              allImages.push(galleryImage.url);
+            });
+          }
           projects.push(project);
         });
 
@@ -128,7 +129,7 @@ var PageLoadingClass = React.createClass({
       }).bind(this)
     });
   },
-  render: function render() {
+  render: function () {
 
     if (this.state.ready !== undefined) {
       var defaultView = React.createElement(PortfolioContainer, { url: this.props.url, projects: this.state.projects });
@@ -162,7 +163,7 @@ var PortfolioContainer = React.createClass({
   currentProjectIndex: -1,
   animationDirection: "movingUp",
   animationDuration: 1200,
-  getInitialState: function getInitialState() {
+  getInitialState: function () {
     return {
       title: "Portfolio Site",
       showListView: true,
@@ -171,14 +172,14 @@ var PortfolioContainer = React.createClass({
       items: []
     };
   },
-  selctProject: function selctProject(projectName) {
+  selctProject: function (projectName) {
     if (this.state.currentProject.name != projectName) {
       this.updateCurrentProject(projectName);
     } else {
       this.handleProjectDetailsShow();
     }
   },
-  updateCurrentProject: function updateCurrentProject(projectName) {
+  updateCurrentProject: function (projectName) {
     if (this.isAnimating === true) return;
     if (this.state.showListView === false) return;
 
@@ -215,43 +216,43 @@ var PortfolioContainer = React.createClass({
 
     this.setNotAnimating();
   },
-  handleProjectDetailsShow: function handleProjectDetailsShow() {
+  handleProjectDetailsShow: function () {
     this.setAnimating();
     console.log("handleProjectDetailsShow");
     this.setState({ "showListView": false });
     this.setNotAnimating();
   },
-  handleProjectListShow: function handleProjectListShow() {
+  handleProjectListShow: function () {
     this.isAnimating = false;
     this.setState({ "showListView": true });
   },
-  showContactView: function showContactView() {
+  showContactView: function () {
     if (this.state.showListView == false) {
       this.handleProjectListShow();
     }
 
     this.updateCurrentProject(-1);
   },
-  componentDidMount: function componentDidMount() {
+  componentDidMount: function () {
     var elem = ReactDOM.findDOMNode(this);
     elem.addEventListener('wheel', this.handleWheel);
   },
-  handleWheel: function handleWheel(event) {
+  handleWheel: function (event) {
     if (this.isAnimating !== false) return;
 
     if (event.deltaY < 0) this.moveDown();
     if (event.deltaY > 0) this.moveUp();
   },
-  chooseProjectOne: function chooseProjectOne() {
+  chooseProjectOne: function () {
     console.log("chooseProjectOne");
     this.moveUp();
   },
-  moveUp: function moveUp() {
+  moveUp: function () {
     if (this.currentProjectIndex < this.props.projects.length - 1) {
       this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name);
     }
   },
-  moveDown: function moveDown() {
+  moveDown: function () {
     if (this.currentProjectIndex > 0) {
       this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name);
     }
@@ -260,11 +261,11 @@ var PortfolioContainer = React.createClass({
       this.updateCurrentProject('');
     }
   },
-  setAnimating: function setAnimating() {
+  setAnimating: function () {
     this.isAnimating = true;
     this.setState({ "showIsAnimating": true });
   },
-  setNotAnimating: function setNotAnimating() {
+  setNotAnimating: function () {
     var self = this;
 
     this.timeout = setTimeout(function () {
@@ -272,7 +273,7 @@ var PortfolioContainer = React.createClass({
       self.setState({ "showIsAnimating": false });
     }, this.animationDuration);
   },
-  clickLeftIndividualProjectCarousel: function clickLeftIndividualProjectCarousel(e) {
+  clickLeftIndividualProjectCarousel: function (e) {
     if (this.isAnimating === true) return;
     this.setAnimating();
 
@@ -290,7 +291,7 @@ var PortfolioContainer = React.createClass({
 
     this.setNotAnimating();
   },
-  clickRightIndividualProjectCarousel: function clickRightIndividualProjectCarousel(e) {
+  clickRightIndividualProjectCarousel: function (e) {
     if (this.isAnimating === true) return;
     this.setAnimating();
 
@@ -308,7 +309,7 @@ var PortfolioContainer = React.createClass({
 
     this.setNotAnimating();
   },
-  render: function render() {
+  render: function () {
 
     if (this.animationDirection == "movingUp") {
       var classes = classNames({
@@ -468,7 +469,7 @@ var PortfolioContainer = React.createClass({
 var Project = React.createClass({
   displayName: 'Project',
 
-  render: function render() {
+  render: function () {
     if (this.props.images !== undefined && this.props.images[0]) {
       var imageUrl = "url('" + this.props.images[0] + "')";
       var backgroundStyles = { "backgroundImage": imageUrl };
@@ -491,10 +492,10 @@ var Project = React.createClass({
 var ProjectDetails = React.createClass({
   displayName: 'ProjectDetails',
 
-  handleProjectListShow: function handleProjectListShow() {
+  handleProjectListShow: function () {
     this.props.handleProjectListShow();
   },
-  render: function render() {
+  render: function () {
     return React.createElement(
       'div',
       { key: this.props.currentProject.name, className: 'ProjectDetailsContent' },
@@ -520,16 +521,16 @@ var ProjectDetails = React.createClass({
 var ProjectList = React.createClass({
   displayName: 'ProjectList',
 
-  getInitialState: function getInitialState() {
+  getInitialState: function () {
     return {};
   },
-  selctProject: function selctProject(projectName) {
+  selctProject: function (projectName) {
     this.props.selctProject(projectName);
   },
-  handleProjectDetailsShow: function handleProjectDetailsShow() {
+  handleProjectDetailsShow: function () {
     this.props.handleProjectDetailsShow();
   },
-  render: function render() {
+  render: function () {
     var loop = this.props.projects.map(function (e) {
       return React.createElement(ProjectName, { key: e.name, name: e.name, fontColor: e.fontColor, shortDescription: e.shortDescription, active: e.active, selctProject: this.selctProject, handleProjectDetailsShow: this.handleProjectDetailsShow });
     }, this);
@@ -548,13 +549,13 @@ var ProjectList = React.createClass({
 var ProjectName = React.createClass({
   displayName: 'ProjectName',
 
-  selctProject: function selctProject() {
+  selctProject: function () {
     this.props.selctProject(this.props.name);
   },
-  handleProjectDetailsShow: function handleProjectDetailsShow() {
+  handleProjectDetailsShow: function () {
     this.props.handleProjectDetailsShow();
   },
-  render: function render() {
+  render: function () {
     var classes = classNames({
       'active': this.props.active,
       'project-title': true
@@ -634,6 +635,6 @@ var ProjectName = React.createClass({
 // });
 
 // var apiUrl = "/api/projects"
-var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/posts";
+var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/projects";
 
 ReactDOM.render(React.createElement(PageLoadingClass, { url: apiUrl }), document.getElementById('container'));
