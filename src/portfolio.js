@@ -22,10 +22,9 @@ function get(url) {
     return add(url);
 };
 
-function imgLoad2(url) {
+function imgRequestUrlLoad(url) {
 
   var image = get(url);
-
 
     return new Promise(function (resolve, reject) {
             var handleSuccess = function handleSuccess() {
@@ -72,12 +71,10 @@ function imgLoad(url) {
     });
   }
 
-  
-
 
   function loadImages(urls) {
-      // var promises = urls.map(imgLoad2.bind(this));
-      var promises = urls.map(imgLoad2);
+      // var promises = urls.map(imgRequestUrlLoad.bind(this));
+      var promises = urls.map(imgRequestUrlLoad);
       return Promise.all(promises);
   }
 
