@@ -38,7 +38,7 @@ body {
 }
 
 h1 {
-	position: absolute;
+	/*position: absolute;*/
     text-align: center;
 	z-index: 10;
 	width: 100%;
@@ -46,30 +46,48 @@ h1 {
 }
 
 .introTextContainer {
+	z-index: 20;
 	position: absolute;
 	text-align: center;
+	transition: opacity 0.5s ease-out;
     top: 70px;
     width: 100%;
 }
 
-.ProjectListView_active .introText, .ProjectDetailsView_active .introText {
+.ProjectListView_active .introTextContainer, .ProjectDetailsView_active .introTextContainer {
 	opacity: 0;
 }
 
 
 .introText {
-    z-index: 20;
+    /*z-index: 20;*/
     width:200px;
     position: relative;
     margin: auto;
-    opacity: 0;
-    transition: opacity 0.5s ease-out;
+    /*opacity: 0;
+    transition: opacity 0.5s ease-out;*/
 }
 
-.intialView_active .introText {
-	opacity: 1;
-	transition: opacity 0.5s ease-out 1s;
+.imageLoadingView_active .loadingState {
+    opacity: 1;
+    transform : scale(1.0,1.0);
 }
+
+.loadingState {
+	color: #999;
+	opacity: 0;
+	
+	margin-top: 40px;
+    position: relative;
+	transition: opacity 0.5s ease-out 0s, transform 0.5s;
+    transform : scale(0.0,0.0);
+}
+
+.imageLoadingView_active .introText, .intialView_active .introText {
+	opacity: 1;
+	/*transition: opacity 0.5s ease-out 1s;*/
+}
+
 .introText__arrow {
 	cursor: pointer;
 }
@@ -144,7 +162,7 @@ h1 {
     transition: opacity 1s, transform 2s ease-out;
 }
 
-.intialView_active #ProjectList {	
+.imageLoadingView_active #ProjectList, .intialView_active #ProjectList {	
 	transform: translateY(80%); 
 }
 
