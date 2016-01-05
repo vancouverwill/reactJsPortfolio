@@ -82,7 +82,8 @@ function imgLoad(url) {
 var PageLoadingClass = React.createClass({
   getInitialState: function() {
     return {
-      projects: undefined
+      projects: undefined,
+      ready: false
     }
   },
   componentWillMount : function() {
@@ -135,17 +136,17 @@ var PageLoadingClass = React.createClass({
   },
   render: function() {
 
-    if (this.state.ready !== undefined) {
-      var defaultView = <PortfolioContainer url={this.props.url} projects={this.state.projects} />
-    }  else {
-      var defaultView = <div className="text-center">
-                            <br />
-                            <br />
-                            <br />
-                            <i className="fa fa-spinner fa-pulse fa-5x"></i>
-                            <h2>projects loading</h2>
-                          </div>
-    }
+    // if (this.state.ready !== undefined) {
+      var defaultView = <PortfolioContainer url={this.props.url} projects={this.state.projects} imageReady={this.state.ready} />
+    // }  else {
+    //   var defaultView = <div className="text-center">
+    //                         <br />
+    //                         <br />
+    //                         <br />
+    //                         <i className="fa fa-spinner fa-pulse fa-5x"></i>
+    //                         <h2>projects loading</h2>
+    //                       </div>
+    // }
     return (
       <div>{defaultView}</div>
     )
@@ -162,7 +163,7 @@ var PortfolioContainer = React.createClass({
       return {
         title: "Portfolio Site",
         showListView: true,
-        currentProject : this.props.projects[0],
+        currentProject : undefined,
         showIsAnimating : false,
         items : []
       };
@@ -329,7 +330,12 @@ var PortfolioContainer = React.createClass({
         });
       }
 
-      if (this.state.showListView == true) {
+      if (this.props.imageReady == false ){
+        var overallStatusClasses = classNames({
+          'imageLoadingView_active': true,
+        });
+      }
+      else if (this.state.showListView == true) {
         if (this.currentProjectIndex == -1) {
           listColor = {"color" :  "black"}
 
@@ -346,8 +352,6 @@ var PortfolioContainer = React.createClass({
             'animating_active' : this.state.showIsAnimating
           });
         }
-
-        
       } else {
         var overallStatusClasses = classNames({
           'ProjectDetailsView_active': true,
@@ -360,10 +364,11 @@ var PortfolioContainer = React.createClass({
                                     <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
                                 </div>;
       }
-        else {
-          var projectDetailsView = '';
+      else {
+        var projectDetailsView = '';
 
-        } 
+      } 
+
       if (this.currentProjectIndex == -1) {
         var listColor = {"color" :  "black"}
       }
@@ -371,21 +376,22 @@ var PortfolioContainer = React.createClass({
         var listColor = {"color" :  "white"}
       }
 
-        if (this.state.animatedImageUrl != null) {
-          var imageUrl = "url('" + this.state.animatedImageUrl + "')";
-          var backgroundStyles = {"backgroundImage" : imageUrl}
+      if (this.state.animatedImageUrl != null) {
+        var imageUrl = "url('" + this.state.animatedImageUrl + "')";
+        var backgroundStyles = {"backgroundImage" : imageUrl}
 
-          var animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  >
-                                  <div className="slideImage" style={backgroundStyles} ></div>
-                                  <div className="slideImageOpacityOverlay" ></div>
-                                </div>
-        }
-        else {
-          var animateProject = null
-        }
+        var animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  >
+                                <div className="slideImage" style={backgroundStyles} ></div>
+                                <div className="slideImageOpacityOverlay" ></div>
+                              </div>
+      }
+      else {
+        var animateProject = null
+      }
 
       return ( 
           <div id="mainView" className={overallStatusClasses}>
+
             <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
             <div  id="closeProjectButton" onClick={this.handleProjectListShow} >
               <i className="fa fa-times fa-2x"></i>
@@ -397,8 +403,8 @@ var PortfolioContainer = React.createClass({
               <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
             </div>
             <div className="projectListView">
-              <h1 style={listColor} > Will Melbourne</h1>
               <div className="introTextContainer" >
+                <h1 style={listColor} > Will Melbourne</h1>
                 <p className="introText">Will Melbourne is a software engineer working in the west coast of Canada and London, UK <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne}></i>
                   <br/>
                   <a href="https://ca.linkedin.com/in/willmelbourne" target="_blank">
@@ -417,7 +423,10 @@ var PortfolioContainer = React.createClass({
                     </span>
                   </a>
                 </p>
-                
+                <div className="text-center loadingState">
+                  <i className="fa fa-spinner fa-pulse fa-5x"></i>
+                  <h3>projects loading</h3>
+                </div>
               </div>
               <div id="portfolioProjectAnimationContainer" className={classes}>
                 <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={this.animationDuration} transitionLeaveTimeout={this.animationDuration}>
@@ -425,7 +434,7 @@ var PortfolioContainer = React.createClass({
                 </ReactCSSTransitionGroup>
                 
               </div>
-              <ProjectList projects={this.props.projects} listColor={listColor} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectList>
+              <ProjectList projects={this.props.projects} listColor={listColor} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} imageReady={this.props.imageReady}></ProjectList>
             </div>
             {projectDetailsView}
           </div>
@@ -483,11 +492,16 @@ var ProjectDetails = React.createClass({
       this.props.handleProjectDetailsShow();
     },
     render: function() {
-      var loop = this.props.projects.map(function (e) {
-            return (
-                  <ProjectName key={e.name} name={e.name} fontColor={e.fontColor} shortDescription={e.shortDescription} active={e.active} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
-              );
-          }, this);
+      if (this.props.projects !== undefined && this.props.imageReady == true) {
+        var loop = this.props.projects.map(function (e) {
+              return (
+                    <ProjectName key={e.name} name={e.name} fontColor={e.fontColor} shortDescription={e.shortDescription} active={e.active} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
+                );
+            }, this);
+      }
+      else {
+        var loop = ""
+      }
       return (
           <div id="ProjectList">
             <div id="ProjectListMenu" style={this.props.listColor} >
