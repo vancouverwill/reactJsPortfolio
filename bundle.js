@@ -81,7 +81,8 @@ var PageLoadingClass = React.createClass({
 
   getInitialState: function () {
     return {
-      projects: undefined
+      projects: undefined,
+      ready: false
     };
   },
   componentWillMount: function () {
@@ -132,11 +133,17 @@ var PageLoadingClass = React.createClass({
   },
   render: function () {
 
-    if (this.state.ready !== undefined) {
-      var defaultView = React.createElement(PortfolioContainer, { url: this.props.url, projects: this.state.projects });
-    } else {
-      var defaultView = React.createElement('div', { className: 'text-center' }, React.createElement('br', null), React.createElement('br', null), React.createElement('br', null), React.createElement('i', { className: 'fa fa-spinner fa-pulse fa-5x' }), React.createElement('h2', null, 'projects loading'));
-    }
+    // if (this.state.ready !== undefined) {
+    var defaultView = React.createElement(PortfolioContainer, { url: this.props.url, projects: this.state.projects, imageReady: this.state.ready });
+    // }  else {
+    //   var defaultView = <div className="text-center">
+    //                         <br />
+    //                         <br />
+    //                         <br />
+    //                         <i className="fa fa-spinner fa-pulse fa-5x"></i>
+    //                         <h2>projects loading</h2>
+    //                       </div>
+    // }
     return React.createElement('div', null, defaultView);
   }
 });
@@ -152,7 +159,7 @@ var PortfolioContainer = React.createClass({
     return {
       title: "Portfolio Site",
       showListView: true,
-      currentProject: this.props.projects[0],
+      currentProject: undefined,
       showIsAnimating: false,
       items: []
     };
@@ -314,7 +321,11 @@ var PortfolioContainer = React.createClass({
       });
     }
 
-    if (this.state.showListView == true) {
+    if (this.props.imageReady == false) {
+      var overallStatusClasses = classNames({
+        'imageLoadingView_active': true
+      });
+    } else if (this.state.showListView == true) {
       if (this.currentProjectIndex == -1) {
         listColor = { "color": "black" };
 
@@ -342,6 +353,7 @@ var PortfolioContainer = React.createClass({
     } else {
       var projectDetailsView = '';
     }
+
     if (this.currentProjectIndex == -1) {
       var listColor = { "color": "black" };
     } else {
@@ -357,7 +369,7 @@ var PortfolioContainer = React.createClass({
       var animateProject = null;
     }
 
-    return React.createElement('div', { id: 'mainView', className: overallStatusClasses }, React.createElement('button', { id: 'contactButton', type: 'button', className: 'btn btn-default', onClick: this.showContactView }, 'Contact'), React.createElement('div', { id: 'closeProjectButton', onClick: this.handleProjectListShow }, React.createElement('i', { className: 'fa fa-times fa-2x' })), React.createElement('div', { id: 'leftArrow__IndividualProjecCarousel', className: 'arrow__IndividualProjecCarousel' }, React.createElement('i', { className: 'fa fa-chevron-left', onClick: this.clickLeftIndividualProjectCarousel })), React.createElement('div', { id: 'rightArrow__IndividualProjecCarousel', className: 'arrow__IndividualProjecCarousel' }, React.createElement('i', { className: 'fa fa-chevron-right', onClick: this.clickRightIndividualProjectCarousel })), React.createElement('div', { className: 'projectListView' }, React.createElement('h1', { style: listColor }, ' Will Melbourne'), React.createElement('div', { className: 'introTextContainer' }, React.createElement('p', { className: 'introText' }, 'Will Melbourne is a software engineer working in the west coast of Canada and London, UK ', React.createElement('i', { className: 'fa fa-arrow-down introText__arrow', onClick: this.chooseProjectOne }), React.createElement('br', null), React.createElement('a', { href: 'https://ca.linkedin.com/in/willmelbourne', target: '_blank' }, React.createElement('span', { className: 'circleBorder' }, React.createElement('i', { className: 'fa fa-linkedin fa-lg' }))), React.createElement('a', { href: 'mailto:willmelbourne@gmail.com' }, React.createElement('span', { className: 'circleBorder' }, React.createElement('i', { className: 'fa fa-envelope fa-lg' }))), React.createElement('a', { href: 'https://github.com/vancouverwill', target: '_blank' }, React.createElement('span', { className: 'circleBorder' }, React.createElement('i', { className: 'fa fa-github-alt fa-lg' }))))), React.createElement('div', { id: 'portfolioProjectAnimationContainer', className: classes }, React.createElement(ReactCSSTransitionGroup, { transitionName: 'portfolioProjectAnimation', transitionEnterTimeout: this.animationDuration, transitionLeaveTimeout: this.animationDuration }, animateProject)), React.createElement(ProjectList, { projects: this.props.projects, listColor: listColor, selctProject: this.selctProject, handleProjectDetailsShow: this.handleProjectDetailsShow })), projectDetailsView);
+    return React.createElement('div', { id: 'mainView', className: overallStatusClasses }, React.createElement('button', { id: 'contactButton', type: 'button', className: 'btn btn-default', onClick: this.showContactView }, 'Contact'), React.createElement('div', { id: 'closeProjectButton', onClick: this.handleProjectListShow }, React.createElement('i', { className: 'fa fa-times fa-2x' })), React.createElement('div', { id: 'leftArrow__IndividualProjecCarousel', className: 'arrow__IndividualProjecCarousel' }, React.createElement('i', { className: 'fa fa-chevron-left', onClick: this.clickLeftIndividualProjectCarousel })), React.createElement('div', { id: 'rightArrow__IndividualProjecCarousel', className: 'arrow__IndividualProjecCarousel' }, React.createElement('i', { className: 'fa fa-chevron-right', onClick: this.clickRightIndividualProjectCarousel })), React.createElement('div', { className: 'projectListView' }, React.createElement('div', { className: 'introTextContainer' }, React.createElement('h1', { style: listColor }, ' Will Melbourne'), React.createElement('p', { className: 'introText' }, 'Will Melbourne is a software engineer working in the west coast of Canada and London, UK ', React.createElement('i', { className: 'fa fa-arrow-down introText__arrow', onClick: this.chooseProjectOne }), React.createElement('br', null), React.createElement('a', { href: 'https://ca.linkedin.com/in/willmelbourne', target: '_blank' }, React.createElement('span', { className: 'circleBorder' }, React.createElement('i', { className: 'fa fa-linkedin fa-lg' }))), React.createElement('a', { href: 'mailto:willmelbourne@gmail.com' }, React.createElement('span', { className: 'circleBorder' }, React.createElement('i', { className: 'fa fa-envelope fa-lg' }))), React.createElement('a', { href: 'https://github.com/vancouverwill', target: '_blank' }, React.createElement('span', { className: 'circleBorder' }, React.createElement('i', { className: 'fa fa-github-alt fa-lg' })))), React.createElement('div', { className: 'text-center loadingState' }, React.createElement('i', { className: 'fa fa-spinner fa-pulse fa-5x' }), React.createElement('h3', null, 'projects loading'))), React.createElement('div', { id: 'portfolioProjectAnimationContainer', className: classes }, React.createElement(ReactCSSTransitionGroup, { transitionName: 'portfolioProjectAnimation', transitionEnterTimeout: this.animationDuration, transitionLeaveTimeout: this.animationDuration }, animateProject)), React.createElement(ProjectList, { projects: this.props.projects, listColor: listColor, selctProject: this.selctProject, handleProjectDetailsShow: this.handleProjectDetailsShow, imageReady: this.props.imageReady })), projectDetailsView);
   }
 });
 
@@ -400,9 +412,13 @@ var ProjectList = React.createClass({
     this.props.handleProjectDetailsShow();
   },
   render: function () {
-    var loop = this.props.projects.map(function (e) {
-      return React.createElement(ProjectName, { key: e.name, name: e.name, fontColor: e.fontColor, shortDescription: e.shortDescription, active: e.active, selctProject: this.selctProject, handleProjectDetailsShow: this.handleProjectDetailsShow });
-    }, this);
+    if (this.props.projects !== undefined && this.props.imageReady == true) {
+      var loop = this.props.projects.map(function (e) {
+        return React.createElement(ProjectName, { key: e.name, name: e.name, fontColor: e.fontColor, shortDescription: e.shortDescription, active: e.active, selctProject: this.selctProject, handleProjectDetailsShow: this.handleProjectDetailsShow });
+      }, this);
+    } else {
+      var loop = "";
+    }
     return React.createElement('div', { id: 'ProjectList' }, React.createElement('div', { id: 'ProjectListMenu', style: this.props.listColor }, loop));
   }
 });
