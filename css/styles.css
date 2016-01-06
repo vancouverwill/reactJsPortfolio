@@ -56,6 +56,7 @@ h1 {
 
 .ProjectListView_active .introTextContainer, .ProjectDetailsView_active .introTextContainer {
 	opacity: 0;
+	z-index: 0;
 }
 
 
@@ -163,7 +164,7 @@ h1 {
 }
 
 .imageLoadingView_active #ProjectList, .intialView_active #ProjectList {	
-	transform: translateY(80%); 
+	transform: translateY(40%); 
 }
 
 .ProjectDetailsView_active #ProjectList {
@@ -174,7 +175,6 @@ h1 {
 {
 	margin: auto;
 	transition: color 1s;
-	width: 300px;
 }
 
 
@@ -188,23 +188,31 @@ h1 {
     padding-bottom: 10px;
     margin-bottom: 0px;
     margin-top: 0px;
-    transition: opacity 1s ease-out;
+    transition: opacity 1s ease-out, transform 1s;
+}
+
+.active.project-title h4, .active.project-title p { 
+	font-size: 140%;
 }
 
 .spacingDivBorder {
-	background-color: gray;
+	/*background-color: gray;*/
 	height:1px;
 	transform: translateY(0px);
 	transition: transform 1s ease-in-out;
 	width: 100%;
 }
 
+.active.project-title {
+	transform: scale(1.3);
+}
+
 .active.project-title  .spacingDivBorder {
-	transform: translateY(-15px);
+	transform: translateY(-0px);
 }
 
 .active.project-title + .project-title .spacingDivBorder {
-	transform: translateY(+15px);
+	transform: translateY(+0px);
 }	
 
 .arrowSeeProjectDetails {
@@ -452,3 +460,24 @@ h1 {
 }
 
 
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+#ProjectListMenu {
+	width: 100%;
+}
+
+/* Small devices (tablets, 768px and up) */
+/*@media (min-width: @screen-sm-min) { */
+
+/*}*/
+
+/* Medium devices (desktops, 992px and up) */
+/*@media (min-width: @screen-md-min) { */
+@media (min-width: 900px) { 
+
+	#ProjectListMenu {
+		width: 300px;
+	}
+
+}
