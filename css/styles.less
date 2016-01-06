@@ -1,0 +1,485 @@
+@import "../bower_components/bootstrap/less/bootstrap.less";
+
+body {
+	background: white;
+}
+
+#container {
+    background: white;
+}
+
+#contactButton {
+	position: absolute;
+	left:25px;
+	top: 10px;
+	z-index:40;
+	opacity: 1;
+	transition: opacity 1s ease-out;
+}
+
+.ProjectDetailsView_active #contactButton {
+	opacity: 0;
+	cursor: default;
+}
+
+.animating_active #contactButton{
+	opacity: 0.2;
+	cursor: default;
+}
+
+#closeProjectButton {
+	margin: 20px;
+    color: lightgray;
+	opacity: 0;
+	cursor: pointer;
+	transition: opacity 1s ease-out;
+}
+
+.ProjectDetailsView_active #closeProjectButton {
+	opacity: 1;
+}
+
+h1 {
+	/*position: absolute;*/
+    text-align: center;
+	z-index: 10;
+	width: 100%;
+	transition: color 1s;
+}
+
+.introTextContainer {
+	z-index: 20;
+	position: absolute;
+	text-align: center;
+	transition: opacity 0.5s ease-out;
+    top: 70px;
+    width: 100%;
+}
+
+.ProjectListView_active .introTextContainer, .ProjectDetailsView_active .introTextContainer {
+	opacity: 0;
+	z-index: 0;
+}
+
+
+.introText {
+    /*z-index: 20;*/
+    width:200px;
+    position: relative;
+    margin: auto;
+    /*opacity: 0;
+    transition: opacity 0.5s ease-out;*/
+}
+
+.imageLoadingView_active .loadingState {
+    opacity: 1;
+    transform : scale(1.0,1.0);
+}
+
+.loadingState {
+	color: #999;
+	opacity: 0;
+	
+	margin-top: 40px;
+    position: relative;
+	transition: opacity 0.5s ease-out 0s, transform 0.5s;
+    transform : scale(0.0,0.0);
+}
+
+.imageLoadingView_active .introText, .intialView_active .introText {
+	opacity: 1;
+	/*transition: opacity 0.5s ease-out 1s;*/
+}
+
+.introText__arrow {
+	cursor: pointer;
+}
+
+.circleBorder {
+	border: 1px solid;
+	border-radius: 50%;
+	padding: 10px;
+    margin: 10px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+
+.projectDetailsView {
+	overflow: hidden;
+	position: absolute;
+	transition: transform 2s ease-in-out, opacity 2s, top 2s;
+	z-index: 30;
+	height: auto;
+	transform-origin: bottom;
+	width:100%;
+	height: 100%;
+	opacity : 0; 
+	top : 100%; 
+	transform : scale(0.0,0.0);
+}
+
+.ProjectDetailsView_active .projectDetailsView {
+	opacity : 1; 
+	top : 70%; 
+	transform : scale(1,1);
+}
+
+
+.ProjectDetailsContent {
+    padding-top: 40px;
+	text-align: center;
+}
+
+.ProjectListView_active {
+
+}
+
+.projectListView {
+	transition: transform 2s ease-in-out, opacity 2s, top 2s;
+	left: 0px;
+	position: absolute;
+	top: 0px;
+	overflow: hidden;
+    transform-origin: top;
+    width : 100%; 
+	height : 100%;
+}
+
+.ProjectListView_active .projectListView {
+	
+}
+
+.ProjectDetailsView_active .projectListView {
+	transform : scale(0.7, 0.7);
+}
+
+#ProjectList
+{
+	width: 100%;
+    position: absolute;
+    z-index: 10;
+    height: 70%;
+    overflow: scroll;
+    bottom: 0%;
+    transition: opacity 1s, transform 2s ease-out;
+}
+
+.imageLoadingView_active #ProjectList, .intialView_active #ProjectList {	
+	transform: translateY(40%); 
+}
+
+.ProjectDetailsView_active #ProjectList {
+	opacity: 0;
+}
+
+#ProjectListMenu
+{
+	margin: auto;
+	transition: color 1s;
+}
+
+
+#ProjectView {
+	width: 50%;
+	float: left;
+}
+
+.project-title {
+	cursor: pointer;
+    padding-bottom: 10px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    transition: opacity 1s ease-out, transform 1s;
+}
+
+.active.project-title h4, .active.project-title p { 
+	font-size: 140%;
+}
+
+.spacingDivBorder {
+	/*background-color: gray;*/
+	height:1px;
+	transform: translateY(0px);
+	transition: transform 1s ease-in-out;
+	width: 100%;
+}
+
+.active.project-title {
+	transform: scale(1.3);
+}
+
+.active.project-title  .spacingDivBorder {
+	transform: translateY(-0px);
+}
+
+.active.project-title + .project-title .spacingDivBorder {
+	transform: translateY(+0px);
+}	
+
+.arrowSeeProjectDetails {
+    cursor: pointer;
+    font-size: 20px;
+}
+.project-title .arrowSeeProjectDetails {
+	display: none;
+	float: right;
+}
+.active.project-title .arrowSeeProjectDetails {
+	display: block;
+}
+
+#ProjectList  h4 {
+	margin: 0px;
+	padding-top: 25px;
+    padding-bottom: 5px;
+	
+}
+
+.ProjectListView_active #ProjectList h4, .ProjectListView_active #ProjectList p {
+	transition: transform 1s;
+	transform: scaleY(0.90);
+}
+
+.ProjectListView_active #ProjectList .active h4 {
+ 	font-weight: bold;
+ 	transform: scaleY(1.0);
+}
+
+.ProjectListView_active #ProjectList .active p {
+	transform: scaleY(1.0);
+}
+
+.animating_active .project-title {
+	opacity: 0.7;
+	cursor: default;
+}
+
+.animating_active .active.project-title {
+	opacity: 1;
+}
+
+
+#ProjectViews_container__p {
+	position: absolute;
+	width: 50%;
+  	right: 0;
+}
+
+
+#ProjectView__p {
+  background-size: 20%;
+  border: red solid;
+  height: 20%;
+}
+
+#ProjectView__p.active{
+	border: black solid;
+}
+
+.opacityShow {
+	opacity : 1;
+}
+
+.opacityHide {
+	opacity : 0.4;
+}
+
+.opacityTransition {
+	transition: opacity 1s;
+}
+
+
+/** animations */
+
+
+
+.portfolioSlide {
+	top: 0%;
+  	position: absolute;
+	  width: 100%;
+	  height: 100%;
+	  background:white;
+
+}
+
+.portfolioSlideContainer {
+	/*position:relative;*/
+}
+
+#portfolioProjectAnimationContainer {
+	background-color: white;
+	position: absolute;
+	width: 100%;
+	border: none;
+	right: 0px;
+	height: 100%;
+	top: 0px;
+}
+
+
+.slideImage {
+	height: 100vh;
+    min-height: 300px;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: flex-end;
+    transition: none;
+}
+
+
+.slideImageOpacityOverlay { 
+	opacity: 0;
+	transition: opacity 1s ease-in-out;
+	width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    background: black;
+}
+
+.ProjectListView_active .slideImageOpacityOverlay, .ProjectDetailsView_active .slideImageOpacityOverlay {
+    opacity: 0.5;
+}
+
+.pointer {
+	cursor: pointer;
+}
+
+.arrow__IndividualProjecCarousel {
+	color: black;
+    cursor: pointer;
+    font-size: 5em;
+    position: absolute;
+}
+
+.animating_active .arrow__IndividualProjecCarousel {
+	opacity: 0.1;
+}
+
+#leftArrow__IndividualProjecCarousel {
+    left: 10%;
+    top: 15%;
+}
+
+#rightArrow__IndividualProjecCarousel {
+    right: 10%;
+    top: 15%;
+}
+
+.portfolioProjectAnimation-enter {
+	position: absolute;
+	transition: transform 1.0s ease-in-out 0.200s;
+}
+
+.portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  opacity: 1;
+}
+
+.portfolioProjectAnimation-leave {
+	position: absolute;
+	opacity: 1;
+	transition: transform 1.0s ease-in-out 0.200s;
+}
+
+.portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+}
+
+/*********/
+
+.movingUp .portfolioProjectAnimation-enter {
+	top:100%;
+}
+
+.movingUp .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  transform: translateY(-100%);
+}
+
+.movingUp .portfolioProjectAnimation-leave {
+}
+
+.movingUp .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+  	transform: translateY(-100%);
+}
+
+
+/*********/
+
+.movingDown .portfolioProjectAnimation-enter {
+  top:-100%;
+}
+
+.movingDown .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  transform: translateY(+100%);
+}
+
+.movingDown .portfolioProjectAnimation-leave {
+}
+
+.movingDown .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+ 	transform: translateY(+100%);
+}
+
+/*********/
+
+.movingLeft .portfolioProjectAnimation-enter {
+	top:0%;	
+	left:100%;
+}
+
+.movingLeft .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  transform: translateX(-100%);
+}
+
+.movingLeft .portfolioProjectAnimation-leave {
+	top:0%;
+	left:0%;
+}
+
+.movingLeft .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+ 	transform: translateX(-100%);
+}
+
+
+
+.movingRight .portfolioProjectAnimation-enter {
+	top:0%;	
+  right:100%;
+}
+
+.movingRight .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  transform: translateX(100%);
+}
+
+.movingRight .portfolioProjectAnimation-leave {
+	top:0%;
+}
+
+.movingRight .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+ 	transform: translateX(100%);
+}
+
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+#ProjectListMenu {
+	width: 100%;
+}
+
+/* Small devices (tablets, 768px and up) */
+/*@media (min-width: @screen-sm-min) { */
+
+/*}*/
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: @screen-md-min) { 
+/*@media (min-width: 900px) { */
+
+	#ProjectListMenu {
+		width: 300px;
+	}
+
+}

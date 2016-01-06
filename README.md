@@ -16,6 +16,8 @@ npm install -g babel-cli
 bower install fontawesome
 
 npm install -g watchify
+
+npm install -g less
 ```
 
 while building we need to update the files in the src directory, run the below so babel the src directory for changes
