@@ -345,9 +345,8 @@ h1 {
 }
 
 .arrow__IndividualProjecCarousel {
-	color: black;
     cursor: pointer;
-    font-size: 5em;
+    
     position: absolute;
 }
 
@@ -463,15 +462,25 @@ h1 {
 
 	#ProjectListMenu {
 		margin-left: 5%;
-		width: 100%;
+		width: 90%;
 	}
 
 	h4, .h4 {
 	    font-size: 8rem;
 	}
 
-	.active.project-title h4, .active.project-title p {
-		/*font-size: 140%;*/
+	.active.project-title {
+	    transform: translateX(15%);
+	}
+
+	.ProjectDetailsView_active .projectListView {
+	    transform: scale(1.0, 0.7);
+	}
+
+	.arrow__IndividualProjecCarousel {
+	    color: lightgrey;
+	    font-size: 10em;
+	    z-index: 20;
 	}
 
 
@@ -496,6 +505,15 @@ h1 {
 
 	.active.project-title h4, .active.project-title p {
 		/*font-size: 140%;*/
+	}
+
+	.ProjectDetailsView_active .projectListView {
+	    transform: scale(0.7, 0.7);
+	}
+
+	.arrow__IndividualProjecCarousel {
+	    color: black;
+	    font-size: 5em;
 	}
 
 }
