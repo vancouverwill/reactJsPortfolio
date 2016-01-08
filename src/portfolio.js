@@ -223,12 +223,39 @@ var PortfolioContainer = React.createClass({
     componentDidMount: function() {
       var elem = ReactDOM.findDOMNode(this);
       elem.addEventListener('wheel', this.handleWheel);
+      elem.addEventListener("touchmove", this.handleSwipe);
+      elem.addEventListener("touchstart", this.handleSwipeStart);
     },
     handleWheel: function(event) {
       if (this.isAnimating !== false) return;
 
       if (event.deltaY < 0) (this.moveDown())
       if (event.deltaY > 0) (this.moveUp())
+    },
+    handleSwipe: function(event) {
+      console.log("handleSwipe")
+      if (this.isAnimating !== false) return;
+      
+      // event.preventDefault();
+      var el = ReactDOM.findDOMNode(this);
+      var touches = event.changedTouches;
+
+      var scrollDirection
+
+      if (event.touches[0].screenY < this.startY) {
+        scrollDirection = +1; 
+        this.moveUp()
+      } else {
+        scrollDirection = -1;
+        this.moveDown()
+      }
+
+      this.setAnimating();
+    },
+    handleSwipeStart: function(event) {
+      console.log("handleSwipeStart")
+      // alert("handleSwipeStart")
+      this.startY = event.touches[0].screenY;
     },
     chooseProjectOne: function() {
       console.log("chooseProjectOne")
