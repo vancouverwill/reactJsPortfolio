@@ -135,20 +135,9 @@ var PageLoadingClass = React.createClass({
     });
   },
   render: function() {
-
-    // if (this.state.ready !== undefined) {
-      var defaultView = <PortfolioContainer url={this.props.url} projects={this.state.projects} imageReady={this.state.ready} />
-    // }  else {
-    //   var defaultView = <div className="text-center">
-    //                         <br />
-    //                         <br />
-    //                         <br />
-    //                         <i className="fa fa-spinner fa-pulse fa-5x"></i>
-    //                         <h2>projects loading</h2>
-    //                       </div>
-    // }
     return (
-      <div>{defaultView}</div>
+      <PortfolioContainer url={this.props.url} projects={this.state.projects} imageReady={this.state.ready} >
+      </PortfolioContainer>
     )
   }
 })
@@ -169,7 +158,7 @@ var PortfolioContainer = React.createClass({
       };
     },
     selctProject: function(projectName)   {
-      if (this.state.currentProject.name != projectName) {
+      if (this.state.currentProject === undefined || this.state.currentProject.name != projectName) {
         this.updateCurrentProject(projectName);
       }
       else {
@@ -359,15 +348,13 @@ var PortfolioContainer = React.createClass({
         });
       }
 
-      if (this.state.currentProject !== undefined) {
-        var projectDetailsView = <div className='projectDetailsView'>
-                                    <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
-                                </div>;
-      }
-      else {
-        var projectDetailsView = '';
+      // if (this.state.currentProject !== undefined) {
+        // var projectDetailsView = ;
+      // }
+      // else {
+      //   var projectDetailsView = '';
 
-      } 
+      // } 
 
       if (this.currentProjectIndex == -1) {
         var listColor = {"color" :  "black"}
@@ -402,6 +389,7 @@ var PortfolioContainer = React.createClass({
             <div id="rightArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
               <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
             </div>
+            <ProjectDetailsIntroView currentProject={this.state.currentProject}></ProjectDetailsIntroView>
             <div className="projectListView">
               <div className="introTextContainer" >
                 <h1 style={listColor} > Will Melbourne</h1>
@@ -436,7 +424,9 @@ var PortfolioContainer = React.createClass({
               </div>
               <ProjectList projects={this.props.projects} listColor={listColor} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} imageReady={this.props.imageReady}></ProjectList>
             </div>
-            {projectDetailsView}
+            <div className='ProjectDetailsMainView'>
+              <ProjectDetailsMainView currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetailsMainView>
+            </div>
           </div>
       );
     }
@@ -463,19 +453,45 @@ var Project = React.createClass({
  });
 
 
-var ProjectDetails = React.createClass({
+var ProjectDetailsIntroView = React.createClass({
+    render: function() {
+      if (this.props.currentProject === undefined) {
+        return (
+          <div className="ProjectDetailsIntroView"></div>
+        )
+      }
+      else {
+        return (
+          <div className="ProjectDetailsIntroView">
+            <h2>{this.props.currentProject.name}</h2>
+            <p>{this.props.currentProject.shortDescription}</p>
+          </div>
+        )
+      }
+    }
+});
+
+
+var ProjectDetailsMainView = React.createClass({
     handleProjectListShow: function() {
       this.props.handleProjectListShow();
     },
     render: function() {
-      return (
-        <div key={this.props.currentProject.name} className="ProjectDetailsContent">
-          <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
-          <h2>{this.props.currentProject.name}</h2>
-
-          <p dangerouslySetInnerHTML={{__html: this.props.currentProject.description}}></p>
-        </div>
+      if (this.props.currentProject === undefined) {
+        return (
+          <div></div>
         )
+      }
+      else {
+        return (
+          <div key={this.props.currentProject.name} className="ProjectDetailsContent">
+            <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
+            <h2>{this.props.currentProject.name}</h2>
+
+            <p dangerouslySetInnerHTML={{__html: this.props.currentProject.description}}></p>
+          </div>
+        )
+      }
     }
  });
 
