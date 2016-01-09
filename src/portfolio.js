@@ -442,10 +442,7 @@ var PortfolioContainer = React.createClass({
                     </span>
                   </a>
                 </p>
-                <div className="text-center loadingState">
-                  <i className="fa fa-spinner fa-pulse fa-5x"></i>
-                  <h3>projects loading</h3>
-                </div>
+                
               </div>
               <div id="portfolioProjectAnimationContainer" className={classes}>
                 <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={this.animationDuration} transitionLeaveTimeout={this.animationDuration}>
@@ -453,7 +450,7 @@ var PortfolioContainer = React.createClass({
                 </ReactCSSTransitionGroup>
                 
               </div>
-              <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
+              <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
             </div>
             <div className='ProjectDetailsMainView'>
               <ProjectDetailsMainView currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetailsMainView>
@@ -538,16 +535,17 @@ var ProjectDetailsMainView = React.createClass({
     handleProjectDetailsShow: function() {
       this.props.handleProjectDetailsShow();
     },
+    chooseProjectOne: function() {
+      this.props.chooseProjectOne();
+    },
     componentWillUpdate: function() {
  
         console.log("project list now has projects")
-        if (this.props.projects !== undefined && this.props.currentProjectIndex !== undefined) {
-
-          var projectCount = this.props.projects.length;
+        if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
 
           var projectTitleHeight = 120;
 
-          var verticalMovementInPixels = this.props.currentProjectIndex * projectTitleHeight;
+          var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
 
           this.verticalMovement = {transform: "translateY(-" + verticalMovementInPixels +  "px)"}
         }
@@ -568,6 +566,11 @@ var ProjectDetailsMainView = React.createClass({
       }
       return (
           <div id="ProjectList" style={this.verticalMovement} >
+            <p className="introExplainingText">scroll down to view some of the key projects! <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne} /></p>
+            <div className="text-center loadingState">
+              <i className="fa fa-spinner fa-pulse fa-5x"></i>
+              <h3>projects loading</h3>
+            </div>
             <div id="ProjectListMenu">
               {loop}
               </div>

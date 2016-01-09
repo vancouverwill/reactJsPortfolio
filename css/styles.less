@@ -55,12 +55,17 @@ h1 {
 	display: none;
 }
 
+.introExplainingText {
+	/*margin:auto;*/
+	text-align: center;
+}
+
 .introTextContainer {
 	z-index: 20;
 	position: absolute;
 	text-align: center;
 	transition: opacity 0.5s ease-out;
-    top: 70px;
+    /*top: 70px;*/
     width: 100%;
 }
 
@@ -94,6 +99,7 @@ h1 {
     position: relative;
 	transition: opacity 0.5s ease-out 0s, transform 0.5s;
     transform : scale(0.0,0.0);
+    height: 0px;
 }
 
 .imageLoadingView_active .introText, .intialView_active .introText {
@@ -191,9 +197,9 @@ h1 {
     transition: opacity 1s, transform 2s ease-out;
 }
 
-.imageLoadingView_active #ProjectList, .intialView_active #ProjectList {	
+/*.imageLoadingView_active #ProjectList, .intialView_active #ProjectList {	
 	transform: translateY(40%); 
-}
+}*/
 
 .ProjectDetailsView_active #ProjectList {
 	opacity: 0;
