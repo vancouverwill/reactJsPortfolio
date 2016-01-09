@@ -151,6 +151,7 @@ var PortfolioContainer = React.createClass({
     getInitialState: function() {
       return {
         title: "Portfolio Site",
+        showContactModal: false,
         showListView: true,
         currentProject : undefined,
         // currentProjectIndex : undefined,
@@ -214,12 +215,25 @@ var PortfolioContainer = React.createClass({
         this.isAnimating = false;
         this.setState({"showListView" : true});
     },
-    showContactView : function() {
-      if (this.state.showListView == false) {
-        this.handleProjectListShow();
-      }
+    hideContactView : function() {
+      // if (this.state.showListView == false) {
+      //   this.handleProjectListShow();
+      // }
       
-      this.updateCurrentProject(-1);
+      // this.updateCurrentProject(-1);
+      // 
+      this.setState({"showContactModal" : false});
+      // this.state. = true;
+    },
+    showContactView : function() {
+      // if (this.state.showListView == false) {
+      //   this.handleProjectListShow();
+      // }
+      
+      // this.updateCurrentProject(-1);
+      // 
+      this.setState({"showContactModal" : true});
+      // this.state. = true;
     },
     componentDidMount: function() {
       var elem = ReactDOM.findDOMNode(this);
@@ -354,6 +368,11 @@ var PortfolioContainer = React.createClass({
           'imageLoadingView_active': true,
         });
       }
+      else if (this.state.showContactModal == true) {
+        var overallStatusClasses = classNames({
+          'modalView_active': true
+        });
+      }
       else if (this.state.showListView == true) {
         if (this.currentProjectIndex == -1) {
           // listColor = {"color" :  "black"}
@@ -409,9 +428,16 @@ var PortfolioContainer = React.createClass({
 
       return ( 
           <div id="mainView" className={overallStatusClasses}>
-
-            <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
-            <div  id="closeProjectButton" onClick={this.handleProjectListShow} >
+            <div id="modalContactView" className="active">
+              <div className="closeButton modalCloseButton" onClick={this.hideContactView} >
+                <i className="fa fa-times fa-2x"></i>
+              </div>
+              <div className="modalContactViewText">
+                willmelbourne@gmail.com
+              </div>
+            </div>
+            <button id="contactButton" type="button" className=" btn btn-default" onClick={this.showContactView} >Contact</button>
+            <div  id="" className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
               <i className="fa fa-times fa-2x"></i>
             </div>
             <div id="leftArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">

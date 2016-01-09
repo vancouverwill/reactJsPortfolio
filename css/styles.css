@@ -5965,6 +5965,7 @@ body {
 #container {
   background: white;
 }
+/** contact button and modal */
 #contactButton {
   position: absolute;
   right: 25px;
@@ -5981,17 +5982,35 @@ body {
   opacity: 0.2;
   cursor: default;
 }
-#closeProjectButton {
-  margin: 20px;
-  color: lightgray;
-  opacity: 0;
-  cursor: pointer;
-  transition: opacity 1s ease-out;
-  z-index: 40;
+#modalContactView {
+  background: black;
+  color: white;
+  height: 0;
   position: absolute;
+  right: 50%;
+  top: 50%;
+  width: 0;
+  z-index: 40;
+  opacity: 0.2;
+  text-align: center;
+  transition: width 1s, height 1s, right 1s, top 1s;
 }
-.projectDetailsView_active #closeProjectButton {
+.modalView_active #modalContactView {
+  height: 100%;
+  opacity: 0.9;
+  width: 100%;
+  right: 0%;
+  top: 0%;
+}
+.modalView_active .modalContactViewText {
   opacity: 1;
+  top: 45%;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+.modalContactViewText {
+  opacity: 0;
 }
 h1 {
   /*position: absolute;*/
@@ -6056,6 +6075,22 @@ h1 {
   margin: 10px;
   margin-top: 10px;
   display: inline-block;
+}
+/* projectDetailsView */
+.closeButton {
+  margin: 20px;
+  color: lightgray;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 1s ease-out, transform 1s;
+  transform: translateX(-60px);
+  z-index: 40;
+  position: absolute;
+}
+.projectDetailsView_active .projectCloseButton,
+.modalView_active .modalCloseButton {
+  opacity: 1;
+  transform: translateX(0px);
 }
 .projectDetailsIntroView {
   overflow: hidden;
@@ -6373,8 +6408,12 @@ h4,
   font-size: 10em;
   z-index: 20;
 }
-.projectDetailsView_active #closeProjectButton {
+.projectDetailsView_active .closeButton {
   font-size: 6rem;
+}
+.projectTitle .arrowSeeProjectDetails {
+  font-size: 1em;
+  margin-right: 100px;
 }
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
@@ -6404,7 +6443,7 @@ h4,
     color: black;
     font-size: 5em;
   }
-  .projectDetailsView_active #closeProjectButton {
+  .projectDetailsView_active .closeButton {
     font-size: 3rem;
   }
 }
