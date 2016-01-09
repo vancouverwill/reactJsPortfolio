@@ -153,6 +153,7 @@ var PortfolioContainer = React.createClass({
         title: "Portfolio Site",
         showListView: true,
         currentProject : undefined,
+        // currentProjectIndex : undefined,
         showIsAnimating : false,
         items : []
       };
@@ -228,6 +229,8 @@ var PortfolioContainer = React.createClass({
     },
     handleWheel: function(event) {
       if (this.isAnimating !== false) return;
+
+      event.preventDefault();
 
       if (event.deltaY < 0) (this.moveDown())
       if (event.deltaY > 0) (this.moveUp())
@@ -353,7 +356,7 @@ var PortfolioContainer = React.createClass({
       }
       else if (this.state.showListView == true) {
         if (this.currentProjectIndex == -1) {
-          listColor = {"color" :  "black"}
+          // listColor = {"color" :  "black"}
 
           var overallStatusClasses = classNames({
           'intialView_active': true,
@@ -361,7 +364,7 @@ var PortfolioContainer = React.createClass({
         });
         }
         else {
-          listColor = {"color" :  "white"};
+          // listColor = {"color" :  "white"};
 
           var overallStatusClasses = classNames({
             'ProjectListView_active': true,
@@ -383,12 +386,12 @@ var PortfolioContainer = React.createClass({
 
       // } 
 
-      if (this.currentProjectIndex == -1) {
-        var listColor = {"color" :  "black"}
-      }
-      else {
-        var listColor = {"color" :  "white"}
-      }
+      // if (this.currentProjectIndex == -1) {
+      //   var listColor = {"color" :  "black"}
+      // }
+      // else {
+      //   var listColor = {"color" :  "white"}
+      // }
 
       if (this.state.animatedImageUrl != null) {
         var imageUrl = "url('" + this.state.animatedImageUrl + "')";
@@ -419,7 +422,7 @@ var PortfolioContainer = React.createClass({
             <ProjectDetailsIntroView currentProject={this.state.currentProject}></ProjectDetailsIntroView>
             <div className="projectListView">
               <div className="introTextContainer" >
-                <h1 style={listColor} > Will Melbourne</h1>
+                <h1> Will Melbourne</h1>
                 <p className="introText">Will Melbourne is a software engineer working in the west coast of Canada and London, UK <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne}></i>
                   <br/>
                   <a href="https://ca.linkedin.com/in/willmelbourne" target="_blank">
@@ -449,7 +452,7 @@ var PortfolioContainer = React.createClass({
                 </ReactCSSTransitionGroup>
                 
               </div>
-              <ProjectList projects={this.props.projects} listColor={listColor} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} imageReady={this.props.imageReady}></ProjectList>
+              <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
             </div>
             <div className='ProjectDetailsMainView'>
               <ProjectDetailsMainView currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetailsMainView>
@@ -534,6 +537,23 @@ var ProjectDetailsMainView = React.createClass({
     handleProjectDetailsShow: function() {
       this.props.handleProjectDetailsShow();
     },
+    componentWillUpdate: function() {
+ 
+        console.log("project list now has projects")
+        if (this.props.projects !== undefined && this.props.currentProjectIndex !== undefined) {
+
+          var projectCount = this.props.projects.length;
+
+          var projectTitleHeight = 120;
+
+          var verticalMovementInPixels = this.props.currentProjectIndex * projectTitleHeight;
+
+          this.verticalMovement = {transform: "translateY(-" + verticalMovementInPixels +  "px)"}
+        }
+        else {
+          this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"}
+        }
+    },
     render: function() {
       if (this.props.projects !== undefined && this.props.imageReady == true) {
         var loop = this.props.projects.map(function (e) {
@@ -546,8 +566,8 @@ var ProjectDetailsMainView = React.createClass({
         var loop = ""
       }
       return (
-          <div id="ProjectList">
-            <div id="ProjectListMenu" style={this.props.listColor} >
+          <div id="ProjectList" style={this.verticalMovement} >
+            <div id="ProjectListMenu">
               {loop}
               </div>
           </div>

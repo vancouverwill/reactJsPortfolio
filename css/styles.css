@@ -6102,9 +6102,9 @@ h1 {
   width: 100%;
   position: absolute;
   z-index: 30;
-  height: 70%;
-  overflow: scroll;
-  bottom: 0%;
+  /*height: 70%;*/
+  /*overflow: hidden;*/
+  /*bottom: 0%;*/
   transition: opacity 1s, transform 2s ease-out;
 }
 .imageLoadingView_active #ProjectList,
@@ -6116,6 +6116,14 @@ h1 {
 }
 #ProjectListMenu {
   /*transition: color 1s;*/
+  transition: transform 1s;
+  transform: translateY(0px);
+}
+.ProjectListView_active #ProjectListMenu {
+  color: white;
+}
+.intialView_active #ProjectListMenu {
+  color: black;
 }
 #ProjectView {
   width: 50%;
@@ -6123,6 +6131,7 @@ h1 {
 }
 .project-title {
   cursor: pointer;
+  height: 120px;
   padding-bottom: 10px;
   margin-bottom: 0px;
   margin-top: 0px;
