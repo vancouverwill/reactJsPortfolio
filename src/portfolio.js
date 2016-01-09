@@ -374,6 +374,7 @@ var PortfolioContainer = React.createClass({
       } else {
         var overallStatusClasses = classNames({
           'ProjectDetailsView_active': true,
+          'singleImageProject' : this.state.currentProject.images.length == 1 ? true : false,
           'animating_active' : this.state.showIsAnimating
         });
       }
