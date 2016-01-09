@@ -566,7 +566,7 @@ var ProjectDetailsMainView = React.createClass({
       }
       return (
           <div id="projectList" style={this.verticalMovement} >
-            <p className="introExplainingText">scroll down to view some of the key projects! <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne} /></p>
+            <p className="introExplainingText">scroll down to view some of the key projects <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne} /></p>
             <div className="text-center loadingState">
               <i className="fa fa-spinner fa-pulse fa-5x"></i>
               <h3>projects loading</h3>

@@ -5967,7 +5967,7 @@ body {
 }
 #contactButton {
   position: absolute;
-  left: 25px;
+  right: 25px;
   top: 10px;
   z-index: 40;
   opacity: 1;
@@ -6003,6 +6003,7 @@ h1 {
 }
 .introExplainingText {
   /*margin:auto;*/
+  padding-top: 15px;
   text-align: center;
 }
 .introTextContainer {
@@ -6280,7 +6281,7 @@ h1 {
 .projectDetailsView_active.singleImageProject .arrow__individualProjecCarousel {
   opacity: 0;
 }
-.animating_active .arrow__individualProjecCarousel {
+.projectDetailsView_active.animating_active .arrow__individualProjecCarousel {
   opacity: 0.1;
 }
 #leftArrow__individualProjecCarousel {
