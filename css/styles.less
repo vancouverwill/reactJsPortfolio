@@ -363,8 +363,13 @@ h1 {
 
 .arrow__IndividualProjecCarousel {
     cursor: pointer;
-    
+    opacity: 0;
     position: absolute;
+    transition: opacity 1s ease-in-out;
+}
+
+.ProjectDetailsView_active .arrow__IndividualProjecCarousel {
+	opacity: 1;
 }
 
 .animating_active .arrow__IndividualProjecCarousel {
@@ -479,7 +484,7 @@ h1 {
 
 	#ProjectListMenu {
 		margin-left: 5%;
-		width: 90%;
+		width: 85%;
 	}
 
 	h4, .h4 {
@@ -487,11 +492,11 @@ h1 {
 	}
 
 	.active.project-title {
-	    transform: translateX(15%);
+	    transform: translateX(8%);
 	}
 
 	.ProjectDetailsView_active .projectListView {
-	    transform: scale(1.0, 0.7);
+	    transform: scale(1.0, 0.7)  translateY(10%);
 	}
 
 	.arrow__IndividualProjecCarousel {
@@ -500,11 +505,17 @@ h1 {
 	    z-index: 20;
 	}
 
+	.ProjectDetailsView_active #closeProjectButton {
+    font-size: 6rem;
+}
+
 
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: @screen-sm-min) { 
-
+	.ProjectDetailsView_active .projectListView {
+	    transform: scale(1.0, 0.7)  translateY(20%);
+	}
 }
 
 /* Medium devices (desktops, 992px and up) */
