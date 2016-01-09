@@ -367,13 +367,13 @@ var PortfolioContainer = React.createClass({
           // listColor = {"color" :  "white"};
 
           var overallStatusClasses = classNames({
-            'ProjectListView_active': true,
+            'projectListView_active': true,
             'animating_active' : this.state.showIsAnimating
           });
         }
       } else {
         var overallStatusClasses = classNames({
-          'ProjectDetailsView_active': true,
+          'projectDetailsView_active': true,
           'singleImageProject' : this.state.currentProject.images.length == 1 ? true : false,
           'animating_active' : this.state.showIsAnimating
         });
@@ -414,10 +414,10 @@ var PortfolioContainer = React.createClass({
             <div  id="closeProjectButton" onClick={this.handleProjectListShow} >
               <i className="fa fa-times fa-2x"></i>
             </div>
-            <div id="leftArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
+            <div id="leftArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">
               <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
             </div>
-            <div id="rightArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
+            <div id="rightArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">
               <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
             </div>
             <ProjectDetailsIntroView currentProject={this.state.currentProject}></ProjectDetailsIntroView>
@@ -452,7 +452,7 @@ var PortfolioContainer = React.createClass({
               </div>
               <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
             </div>
-            <div className='ProjectDetailsMainView'>
+            <div className='projectDetailsMainView'>
               <ProjectDetailsMainView currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetailsMainView>
             </div>
           </div>
@@ -485,12 +485,12 @@ var ProjectDetailsIntroView = React.createClass({
     render: function() {
       if (this.props.currentProject === undefined) {
         return (
-          <div className="ProjectDetailsIntroView"></div>
+          <div className="projectDetailsIntroView"></div>
         )
       }
       else {
         return (
-          <div className="ProjectDetailsIntroView">
+          <div className="projectDetailsIntroView">
             <h2>{this.props.currentProject.name}</h2>
             <p>{this.props.currentProject.shortDescription}</p>
           </div>
@@ -512,7 +512,7 @@ var ProjectDetailsMainView = React.createClass({
       }
       else {
         return (
-          <div key={this.props.currentProject.name} className="ProjectDetailsContent">
+          <div key={this.props.currentProject.name} className="projectDetailsContent">
             <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
             <h2>{this.props.currentProject.name}</h2>
 
@@ -565,13 +565,13 @@ var ProjectDetailsMainView = React.createClass({
         var loop = ""
       }
       return (
-          <div id="ProjectList" style={this.verticalMovement} >
+          <div id="projectList" style={this.verticalMovement} >
             <p className="introExplainingText">scroll down to view some of the key projects! <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne} /></p>
             <div className="text-center loadingState">
               <i className="fa fa-spinner fa-pulse fa-5x"></i>
               <h3>projects loading</h3>
             </div>
-            <div id="ProjectListMenu">
+            <div id="projectListMenu">
               {loop}
               </div>
           </div>
@@ -589,7 +589,7 @@ var ProjectDetailsMainView = React.createClass({
     render: function() {
       var classes = classNames({
         'active': this.props.active,
-        'project-title' : true
+        'projectTitle' : true
       });
 
       if (this.props.active == true) {
