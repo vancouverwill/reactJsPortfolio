@@ -230,7 +230,7 @@ var PortfolioContainer = React.createClass({
     handleWheel: function(event) {
       if (this.isAnimating !== false) return;
 
-      event.preventDefault();
+      // event.preventDefault();
 
       if (event.deltaY < 0) (this.moveDown())
       if (event.deltaY > 0) (this.moveUp())
