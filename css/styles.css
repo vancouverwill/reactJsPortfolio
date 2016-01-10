@@ -6176,6 +6176,7 @@ h1 {
 .projectTitle {
   cursor: pointer;
   height: 120px;
+  overflow: hidden;
   padding-bottom: 10px;
   margin-bottom: 0px;
   margin-top: 0px;
@@ -6389,6 +6390,9 @@ h1 {
 }
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
+body {
+  font-size: 40px;
+}
 #projectListMenu {
   margin-left: 5%;
   width: 85%;
@@ -6399,6 +6403,10 @@ h4,
 }
 .active.projectTitle {
   transform: translateX(8%);
+}
+.projectTitle .arrowSeeProjectDetails {
+  font-size: 1em;
+  margin-right: 100px;
 }
 .projectDetailsView_active .projectListView {
   transform: scale(1, 0.7) translateY(10%);
@@ -6411,10 +6419,6 @@ h4,
 .projectDetailsView_active .closeButton {
   font-size: 6rem;
 }
-.projectTitle .arrowSeeProjectDetails {
-  font-size: 1em;
-  margin-right: 100px;
-}
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   .projectDetailsView_active .projectListView {
@@ -6423,7 +6427,9 @@ h4,
 }
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-  /*@media (min-width: 900px) { */
+  body {
+    font-size: 14px;
+  }
   #projectListMenu {
     margin: auto;
     width: 300px;
