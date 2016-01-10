@@ -135,20 +135,9 @@ var PageLoadingClass = React.createClass({
     });
   },
   render: function() {
-
-    // if (this.state.ready !== undefined) {
-      var defaultView = <PortfolioContainer url={this.props.url} projects={this.state.projects} imageReady={this.state.ready} />
-    // }  else {
-    //   var defaultView = <div className="text-center">
-    //                         <br />
-    //                         <br />
-    //                         <br />
-    //                         <i className="fa fa-spinner fa-pulse fa-5x"></i>
-    //                         <h2>projects loading</h2>
-    //                       </div>
-    // }
     return (
-      <div>{defaultView}</div>
+      <PortfolioContainer url={this.props.url} projects={this.state.projects} imageReady={this.state.ready} >
+      </PortfolioContainer>
     )
   }
 })
@@ -162,14 +151,16 @@ var PortfolioContainer = React.createClass({
     getInitialState: function() {
       return {
         title: "Portfolio Site",
+        showContactModal: false,
         showListView: true,
         currentProject : undefined,
+        // currentProjectIndex : undefined,
         showIsAnimating : false,
         items : []
       };
     },
     selctProject: function(projectName)   {
-      if (this.state.currentProject.name != projectName) {
+      if (this.state.currentProject === undefined || this.state.currentProject.name != projectName) {
         this.updateCurrentProject(projectName);
       }
       else {
@@ -224,22 +215,64 @@ var PortfolioContainer = React.createClass({
         this.isAnimating = false;
         this.setState({"showListView" : true});
     },
-    showContactView : function() {
-      if (this.state.showListView == false) {
-        this.handleProjectListShow();
-      }
+    hideContactView : function() {
+      // if (this.state.showListView == false) {
+      //   this.handleProjectListShow();
+      // }
       
-      this.updateCurrentProject(-1);
+      // this.updateCurrentProject(-1);
+      // 
+      this.setState({"showContactModal" : false});
+      // this.state. = true;
+    },
+    showContactView : function() {
+      // if (this.state.showListView == false) {
+      //   this.handleProjectListShow();
+      // }
+      
+      // this.updateCurrentProject(-1);
+      // 
+      this.setState({"showContactModal" : true});
+      // this.state. = true;
     },
     componentDidMount: function() {
       var elem = ReactDOM.findDOMNode(this);
       elem.addEventListener('wheel', this.handleWheel);
+      elem.addEventListener("touchmove", this.handleSwipe);
+      elem.addEventListener("touchstart", this.handleSwipeStart);
     },
     handleWheel: function(event) {
       if (this.isAnimating !== false) return;
 
+      // event.preventDefault();
+
       if (event.deltaY < 0) (this.moveDown())
       if (event.deltaY > 0) (this.moveUp())
+    },
+    handleSwipe: function(event) {
+      console.log("handleSwipe")
+      if (this.isAnimating !== false) return;
+      
+      // event.preventDefault();
+      var el = ReactDOM.findDOMNode(this);
+      var touches = event.changedTouches;
+
+      var scrollDirection
+
+      if (event.touches[0].screenY < this.startY) {
+        scrollDirection = +1; 
+        this.moveUp()
+      } else {
+        scrollDirection = -1;
+        this.moveDown()
+      }
+
+      this.setAnimating();
+    },
+    handleSwipeStart: function(event) {
+      console.log("handleSwipeStart")
+      // alert("handleSwipeStart")
+      this.startY = event.touches[0].screenY;
     },
     chooseProjectOne: function() {
       console.log("chooseProjectOne")
@@ -335,9 +368,14 @@ var PortfolioContainer = React.createClass({
           'imageLoadingView_active': true,
         });
       }
+      else if (this.state.showContactModal == true) {
+        var overallStatusClasses = classNames({
+          'modalView_active': true
+        });
+      }
       else if (this.state.showListView == true) {
         if (this.currentProjectIndex == -1) {
-          listColor = {"color" :  "black"}
+          // listColor = {"color" :  "black"}
 
           var overallStatusClasses = classNames({
           'intialView_active': true,
@@ -345,36 +383,35 @@ var PortfolioContainer = React.createClass({
         });
         }
         else {
-          listColor = {"color" :  "white"};
+          // listColor = {"color" :  "white"};
 
           var overallStatusClasses = classNames({
-            'ProjectListView_active': true,
+            'projectListView_active': true,
             'animating_active' : this.state.showIsAnimating
           });
         }
       } else {
         var overallStatusClasses = classNames({
-          'ProjectDetailsView_active': true,
+          'projectDetailsView_active': true,
+          'singleImageProject' : this.state.currentProject.images.length == 1 ? true : false,
           'animating_active' : this.state.showIsAnimating
         });
       }
 
-      if (this.state.currentProject !== undefined) {
-        var projectDetailsView = <div className='projectDetailsView'>
-                                    <ProjectDetails currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetails>
-                                </div>;
-      }
-      else {
-        var projectDetailsView = '';
+      // if (this.state.currentProject !== undefined) {
+        // var projectDetailsView = ;
+      // }
+      // else {
+      //   var projectDetailsView = '';
 
-      } 
+      // } 
 
-      if (this.currentProjectIndex == -1) {
-        var listColor = {"color" :  "black"}
-      }
-      else {
-        var listColor = {"color" :  "white"}
-      }
+      // if (this.currentProjectIndex == -1) {
+      //   var listColor = {"color" :  "black"}
+      // }
+      // else {
+      //   var listColor = {"color" :  "white"}
+      // }
 
       if (this.state.animatedImageUrl != null) {
         var imageUrl = "url('" + this.state.animatedImageUrl + "')";
@@ -391,20 +428,28 @@ var PortfolioContainer = React.createClass({
 
       return ( 
           <div id="mainView" className={overallStatusClasses}>
-
-            <button  id="contactButton" type="button" className="btn btn-default" onClick={this.showContactView} >Contact</button>
-            <div  id="closeProjectButton" onClick={this.handleProjectListShow} >
+            <div id="modalContactView" className="active">
+              <div className="closeButton modalCloseButton" onClick={this.hideContactView} >
+                <i className="fa fa-times fa-2x"></i>
+              </div>
+              <div className="modalContactViewText">
+                contact : willmelbourne@gmail.com
+              </div>
+            </div>
+            <button id="contactButton" type="button" className=" btn btn-default" onClick={this.showContactView} >Contact</button>
+            <div  id="" className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
               <i className="fa fa-times fa-2x"></i>
             </div>
-            <div id="leftArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
+            <div id="leftArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">
               <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
             </div>
-            <div id="rightArrow__IndividualProjecCarousel" className="arrow__IndividualProjecCarousel">
+            <div id="rightArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">
               <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
             </div>
+            <ProjectDetailsIntroView currentProject={this.state.currentProject}></ProjectDetailsIntroView>
             <div className="projectListView">
               <div className="introTextContainer" >
-                <h1 style={listColor} > Will Melbourne</h1>
+                <h1> Will Melbourne</h1>
                 <p className="introText">Will Melbourne is a software engineer working in the west coast of Canada and London, UK <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne}></i>
                   <br/>
                   <a href="https://ca.linkedin.com/in/willmelbourne" target="_blank">
@@ -423,10 +468,7 @@ var PortfolioContainer = React.createClass({
                     </span>
                   </a>
                 </p>
-                <div className="text-center loadingState">
-                  <i className="fa fa-spinner fa-pulse fa-5x"></i>
-                  <h3>projects loading</h3>
-                </div>
+                
               </div>
               <div id="portfolioProjectAnimationContainer" className={classes}>
                 <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={this.animationDuration} transitionLeaveTimeout={this.animationDuration}>
@@ -434,9 +476,11 @@ var PortfolioContainer = React.createClass({
                 </ReactCSSTransitionGroup>
                 
               </div>
-              <ProjectList projects={this.props.projects} listColor={listColor} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} imageReady={this.props.imageReady}></ProjectList>
+              <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
             </div>
-            {projectDetailsView}
+            <div className='projectDetailsMainView'>
+              <ProjectDetailsMainView currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetailsMainView>
+            </div>
           </div>
       );
     }
@@ -463,19 +507,45 @@ var Project = React.createClass({
  });
 
 
-var ProjectDetails = React.createClass({
+var ProjectDetailsIntroView = React.createClass({
+    render: function() {
+      if (this.props.currentProject === undefined) {
+        return (
+          <div className="projectDetailsIntroView"></div>
+        )
+      }
+      else {
+        return (
+          <div className="projectDetailsIntroView">
+            <h2>{this.props.currentProject.name}</h2>
+            <p>{this.props.currentProject.shortDescription}</p>
+          </div>
+        )
+      }
+    }
+});
+
+
+var ProjectDetailsMainView = React.createClass({
     handleProjectListShow: function() {
       this.props.handleProjectListShow();
     },
     render: function() {
-      return (
-        <div key={this.props.currentProject.name} className="ProjectDetailsContent">
-          <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
-          <h2>{this.props.currentProject.name}</h2>
-
-          <p dangerouslySetInnerHTML={{__html: this.props.currentProject.description}}></p>
-        </div>
+      if (this.props.currentProject === undefined) {
+        return (
+          <div></div>
         )
+      }
+      else {
+        return (
+          <div key={this.props.currentProject.name} className="projectDetailsContent">
+            <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
+            <h2>{this.props.currentProject.name}</h2>
+
+            <p dangerouslySetInnerHTML={{__html: this.props.currentProject.description}}></p>
+          </div>
+        )
+      }
     }
  });
 
@@ -491,6 +561,24 @@ var ProjectDetails = React.createClass({
     handleProjectDetailsShow: function() {
       this.props.handleProjectDetailsShow();
     },
+    chooseProjectOne: function() {
+      this.props.chooseProjectOne();
+    },
+    componentWillUpdate: function() {
+ 
+        console.log("project list now has projects")
+        if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
+
+          var projectTitleHeight = 120;
+
+          var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
+
+          this.verticalMovement = {transform: "translateY(-" + verticalMovementInPixels +  "px)"}
+        }
+        else {
+          this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"}
+        }
+    },
     render: function() {
       if (this.props.projects !== undefined && this.props.imageReady == true) {
         var loop = this.props.projects.map(function (e) {
@@ -503,8 +591,13 @@ var ProjectDetails = React.createClass({
         var loop = ""
       }
       return (
-          <div id="ProjectList">
-            <div id="ProjectListMenu" style={this.props.listColor} >
+          <div id="projectList" style={this.verticalMovement} >
+            <p className="introExplainingText">scroll down to view some of the key projects <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne} /></p>
+            <div className="text-center loadingState">
+              <i className="fa fa-spinner fa-pulse fa-5x"></i>
+              <h3>projects loading</h3>
+            </div>
+            <div id="projectListMenu">
               {loop}
               </div>
           </div>
@@ -522,7 +615,7 @@ var ProjectDetails = React.createClass({
     render: function() {
       var classes = classNames({
         'active': this.props.active,
-        'project-title' : true
+        'projectTitle' : true
       });
 
       if (this.props.active == true) {
