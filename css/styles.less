@@ -80,9 +80,10 @@ h1 {
 }
 
 .introExplainingText {
-	/*margin:auto;*/
 	padding-top: 15px;
 	text-align: center;
+	padding-left: 10%;
+    padding-right: 10%;
 }
 
 .introTextContainer {
@@ -197,7 +198,7 @@ h1 {
 
 .projectDetailsView_active .projectDetailsMainView {
 	opacity : 1; 
-	top : 70%; 
+	/*top : 70%; */
 	transform : scale(1,1);
 }
 
@@ -273,7 +274,7 @@ h1 {
 
 .projectTitle {
 	cursor: pointer;
-	height: 120px;
+	height: 7em;
 	overflow: hidden;
     padding-bottom: 10px;
     margin-bottom: 0px;
@@ -559,7 +560,11 @@ h1 {
 /* No media query since this is the default in Bootstrap */
 
 	body {
-		font-size: 40px;
+		font-size: 25px;
+	}
+
+	.introExplainingText {
+	    font-size: 2em;
 	}
 
 	#projectListMenu {
@@ -568,7 +573,7 @@ h1 {
 	}
 
 	h4, .h4 {
-	    font-size: 8rem;
+	    font-size: 4rem;
 	}
 
 	.active.projectTitle {
@@ -583,7 +588,7 @@ h1 {
 
 
 	.projectDetailsView_active .projectListView {
-	    transform: scale(1.0, 0.7)  translateY(10%);
+	    transform: scale(1.0, 0.6)  translateY(30%);
 	}
 
 	.arrow__individualProjecCarousel {
@@ -596,14 +601,44 @@ h1 {
     font-size: 6rem;
 	}
 
+
+	.projectDetailsIntroView {
+		padding-left: 10%;
+    	padding-right: 10%;
+	}
+
+
+ 	.projectDetailsView_active .projectDetailsMainView {
+ 		top: 80%;
+ 	}
+
 	
 
 
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: @screen-sm-min) { 
+
+	.introExplainingText {
+		font-size: 1.2em;
+	}
+
+	h4, .h4 {
+	    font-size: 4rem;
+	}
+
 	.projectDetailsView_active .projectListView {
-	    transform: scale(1.0, 0.7)  translateY(20%);
+	    transform: scale(1.0, 0.6)  translateY(20%);
+	}
+}
+
+@media (max-width: @screen-md-min) and (min-resolution: 2dppx) {
+	h4, .h4 {
+	    font-size: 8rem;
+	}
+
+	#contactButton {
+	    font-size: 4rem;
 	}
 }
 
@@ -614,9 +649,13 @@ h1 {
 		font-size: 14px;
 	}
 
+	.introExplainingText {
+		font-size: 1em;
+	}
+
 	#projectListMenu {
 		margin: auto;
-		width: 300px;
+		width: 450px;
 	}
 
 	h4, .h4 {
@@ -639,5 +678,9 @@ h1 {
 	.projectDetailsView_active .closeButton {
 	    font-size: 3rem;
 	}
+
+	/*.projectDetailsView_active .projectDetailsMainView {
+ 		top: 70%;
+ 	}*/
 
 }

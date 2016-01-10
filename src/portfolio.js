@@ -569,11 +569,14 @@ var ProjectDetailsMainView = React.createClass({
         console.log("project list now has projects")
         if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
 
+
           var projectTitleHeight = 120;
+          var projectTitleEmHeight = 7; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
 
           var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
+          var verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
 
-          this.verticalMovement = {transform: "translateY(-" + verticalMovementInPixels +  "px)"}
+          this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"}
         }
         else {
           this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"}
@@ -583,7 +586,7 @@ var ProjectDetailsMainView = React.createClass({
       if (this.props.projects !== undefined && this.props.imageReady == true) {
         var loop = this.props.projects.map(function (e) {
               return (
-                    <ProjectName key={e.name} name={e.name} fontColor={e.fontColor} shortDescription={e.shortDescription} active={e.active} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
+                    <ProjectName key={e.name} name={e.name} fontColor={e.fontColor} shortDescription={e.shortDescription} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
                 );
             }, this);
       }
@@ -630,10 +633,10 @@ var ProjectDetailsMainView = React.createClass({
           <div className="spacingDivBorder"  ></div>
           
           <h4  onClick={this.selctProject} style={fontColor} >
-            {this.props.name} {this.props.active}
+            {this.props.name}
             <i className="fa fa-arrow-right arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow} style={fontColor}></i>
           </h4>
-          <p>{this.props.shortDescription}</p>
+          <p dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
         </div>
         )
     }
