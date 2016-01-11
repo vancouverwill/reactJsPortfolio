@@ -5993,7 +5993,8 @@ body {
   z-index: 40;
   opacity: 0.2;
   text-align: center;
-  transition: width 1s, height 1s, right 1s, top 1s;
+  transition: width 1s, height 1s, right 1s, top 1s, transform 1s;
+  transform: scale(0);
 }
 .modalView_active #modalContactView {
   height: 100%;
@@ -6001,6 +6002,7 @@ body {
   width: 100%;
   right: 0%;
   top: 0%;
+  transform: scale(1);
 }
 .modalView_active .modalContactViewText {
   opacity: 1;
@@ -6012,6 +6014,13 @@ body {
 .modalContactViewText {
   opacity: 0;
 }
+/*#modalContactView a {
+	height: 0;
+}
+
+.modalView_active #modalContactView {
+	height: 100%;
+}*/
 /*h1 {
 	/*position: absolute;*/
 /*text-align: center;
