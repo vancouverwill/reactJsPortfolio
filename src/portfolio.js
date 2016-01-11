@@ -689,8 +689,8 @@ var ProjectDetailsMainView = React.createClass({
 //   }
 // });
 
-// var apiUrl = "/api/projects"
-var apiUrl = "http://api.portfolio.willmelbourne.com/wp-json/wp/v2/projects"
+
+
 
 
 
