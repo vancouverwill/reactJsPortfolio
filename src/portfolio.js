@@ -584,9 +584,9 @@ var ProjectDetailsMainView = React.createClass({
     },
     render: function() {
       if (this.props.projects !== undefined && this.props.imageReady == true) {
-        var loop = this.props.projects.map(function (e) {
+        var loop = this.props.projects.map(function (project) {
               return (
-                    <ProjectName key={e.name} name={e.name} fontColor={e.fontColor} shortDescription={e.shortDescription} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
+                    <ProjectName key={project.name} name={project.name} active={project.active} fontColor={project.fontColor} shortDescription={project.shortDescription} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
                 );
             }, this);
       }

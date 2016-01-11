@@ -6127,8 +6127,13 @@ h1 {
   transform: scale(1, 1);
 }
 .projectDetailsContent {
+  padding-left: 5%;
+  padding-right: 5%;
   padding-top: 40px;
   text-align: center;
+}
+.projectDetailsContent li {
+  text-align: left;
 }
 .projectListView {
   transition: transform 2s ease-in-out, opacity 2s, top 2s;
