@@ -375,16 +375,12 @@ var PortfolioContainer = React.createClass({
       }
       else if (this.state.showListView == true) {
         if (this.currentProjectIndex == -1) {
-          // listColor = {"color" :  "black"}
-
           var overallStatusClasses = classNames({
           'intialView_active': true,
           'animating_active' : this.state.showIsAnimating
         });
         }
         else {
-          // listColor = {"color" :  "white"};
-
           var overallStatusClasses = classNames({
             'projectListView_active': true,
             'animating_active' : this.state.showIsAnimating
@@ -397,21 +393,6 @@ var PortfolioContainer = React.createClass({
           'animating_active' : this.state.showIsAnimating
         });
       }
-
-      // if (this.state.currentProject !== undefined) {
-        // var projectDetailsView = ;
-      // }
-      // else {
-      //   var projectDetailsView = '';
-
-      // } 
-
-      // if (this.currentProjectIndex == -1) {
-      //   var listColor = {"color" :  "black"}
-      // }
-      // else {
-      //   var listColor = {"color" :  "white"}
-      // }
 
       if (this.state.animatedImageUrl != null) {
         var imageUrl = "url('" + this.state.animatedImageUrl + "')";
@@ -434,6 +415,21 @@ var PortfolioContainer = React.createClass({
               </div>
               <div className="modalContactViewText">
                 contact : willmelbourne@gmail.com
+                <a href="https://ca.linkedin.com/in/willmelbourne" target="_blank">
+                  <span className="circleBorder">
+                    <i className="fa fa-linkedin fa-lg"></i>
+                  </span>
+                </a>
+                <a href="mailto:willmelbourne@gmail.com">
+                  <span className="circleBorder">
+                    <i className="fa fa-envelope fa-lg"></i>
+                  </span>
+                </a>
+                <a href="https://github.com/vancouverwill" target="_blank">
+                  <span className="circleBorder">
+                    <i className="fa fa-github-alt fa-lg"></i>
+                  </span>
+                </a>
               </div>
             </div>
             <button id="contactButton" type="button" className=" btn btn-default" onClick={this.showContactView} >Contact</button>
@@ -448,28 +444,6 @@ var PortfolioContainer = React.createClass({
             </div>
             <ProjectDetailsIntroView currentProject={this.state.currentProject}></ProjectDetailsIntroView>
             <div className="projectListView">
-              <div className="introTextContainer" >
-                <h1> Will Melbourne</h1>
-                <p className="introText">Will Melbourne is a software engineer working in the west coast of Canada and London, UK <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne}></i>
-                  <br/>
-                  <a href="https://ca.linkedin.com/in/willmelbourne" target="_blank">
-                    <span className="circleBorder">
-                      <i className="fa fa-linkedin fa-lg"></i>
-                    </span>
-                  </a>
-                  <a href="mailto:willmelbourne@gmail.com">
-                    <span className="circleBorder">
-                      <i className="fa fa-envelope fa-lg"></i>
-                    </span>
-                  </a>
-                  <a href="https://github.com/vancouverwill" target="_blank">
-                    <span className="circleBorder">
-                      <i className="fa fa-github-alt fa-lg"></i>
-                    </span>
-                  </a>
-                </p>
-                
-              </div>
               <div id="portfolioProjectAnimationContainer" className={classes}>
                 <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={this.animationDuration} transitionLeaveTimeout={this.animationDuration}>
                   {animateProject}                      

@@ -23,10 +23,10 @@ body {
 	transition: opacity 1s ease-out;
 }
 
-.projectDetailsView_active #contactButton {
-	opacity: 0;
-	cursor: default;
-}
+/*.projectDetailsView_active #contactButton {*/
+	/*opacity: 0;*/
+	/*cursor: default;*/
+/*}*/
 
 .animating_active #contactButton{
 	opacity: 0.2;
@@ -69,15 +69,18 @@ body {
 }
 
 
-h1 {
+
+/*h1 {
 	/*position: absolute;*/
-    text-align: center;
+    /*text-align: center;
 	z-index: 10;
 	width: 100%;
 	transition: color 1s;
 
 	display: none;
-}
+}*/
+
+/*-------------- intro view and main projects navigation */
 
 .introExplainingText {
 	padding-top: 15px;
@@ -86,31 +89,31 @@ h1 {
     padding-right: 10%;
 }
 
-.introTextContainer {
+/*.introTextContainer {
 	z-index: 20;
 	position: absolute;
 	text-align: center;
 	transition: opacity 0.5s ease-out;
     /*top: 70px;*/
-    width: 100%;
-}
+  /*  width: 100%;
+}*/
 
-.projectListView_active .introTextContainer, .projectDetailsView_active .introTextContainer {
+/*.projectListView_active .introTextContainer, .projectDetailsView_active .introTextContainer {
 	opacity: 0;
 	z-index: 0;
-}
+}*/
 
 
-.introText {
+/*.introText {
     /*z-index: 20;*/
-    width:200px;
+    /*width:200px;
     position: relative;
-    margin: auto;
+    margin: auto;*/
     /*opacity: 0;
     transition: opacity 0.5s ease-out;*/
 
-    display: none;
-}
+   /* display: none;
+}*/
 
 .imageLoadingView_active .loadingState {
     opacity: 1;
@@ -146,7 +149,118 @@ h1 {
     display: inline-block;
 }
 
-/* projectDetailsView */
+#projectListMenu
+{
+    padding-top: 140px;
+	/*transition: color 1s;*/
+    transition: transform @projectListViewAnimations, color @projectListViewAnimations;
+    transform: translateY(0px);
+}
+
+.projectListView_active #projectListMenu {
+	color: white;
+}
+
+.intialView_active #projectListMenu {
+	color: black;
+}
+
+
+#ProjectView {
+	width: 50%;
+	float: left;
+}
+
+.projectTitle {
+	cursor: pointer;
+	height: 7em;
+	overflow: hidden;
+    padding-bottom: 10px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    transition: opacity @projectListViewAnimations, transform @projectListViewAnimations;
+}
+
+
+.projectListView {
+	transition: transform 2s ease-in-out, opacity 2s, top 2s;
+	left: 0px;
+	position: absolute;
+	top: 0px;
+	overflow: hidden;
+    transform-origin: top;
+    width : 100%; 
+	height : 100%;
+}
+
+.projectListView_active .projectListView {
+	
+}
+
+/*.projectDetailsView_active .projectListView {
+	transform : scale(0.7, 0.7);
+}*/
+
+#projectList
+{
+	width: 100%;
+    position: absolute;
+    z-index: 30;
+    /*height: 70%;*/
+    /*overflow: hidden;*/
+    /*bottom: 0%;*/
+    transition: opacity 1s, transform 2s ease-out;
+}
+
+.active.projectTitle {
+	transform: scale(1.3) translateX(25%);
+}
+
+
+.arrowSeeProjectDetails {
+    cursor: pointer;
+    font-size: 20px;
+}
+.projectTitle .arrowSeeProjectDetails {
+	display: none;
+	float: right;
+}
+.active.projectTitle .arrowSeeProjectDetails {
+	display: block;
+}
+
+#projectList  h4 {
+	margin: 0px;
+	padding-top: 25px;
+    padding-bottom: 5px;
+	
+}
+
+.projectListView_active #projectList h4, .projectListView_active #projectList p {
+	transition: transform 1s;
+	transform: scaleY(0.90);
+}
+
+.projectListView_active #projectList .active h4 {
+ 	font-weight: bold;
+ 	transform: scaleY(1.0);
+}
+
+.projectListView_active #projectList .active p {
+	transform: scaleY(1.0);
+}
+
+
+.animating_active .projectTitle {
+	opacity: 0.7;
+	cursor: default;
+}
+
+.animating_active .active.projectTitle {
+	opacity: 1;
+}
+
+/*---------------- single project details view */
 
 
 .closeButton {
@@ -159,6 +273,8 @@ h1 {
 	z-index: 40;
     position: absolute;
 }
+
+
 
 .projectDetailsView_active .projectCloseButton, .modalView_active  .modalCloseButton {
 	opacity: 1;
@@ -214,39 +330,9 @@ h1 {
 	text-align: left;
 }
 
-.projectListView_active {
 
-}
 
-.projectListView {
-	transition: transform 2s ease-in-out, opacity 2s, top 2s;
-	left: 0px;
-	position: absolute;
-	top: 0px;
-	overflow: hidden;
-    transform-origin: top;
-    width : 100%; 
-	height : 100%;
-}
 
-.projectListView_active .projectListView {
-	
-}
-
-/*.projectDetailsView_active .projectListView {
-	transform : scale(0.7, 0.7);
-}*/
-
-#projectList
-{
-	width: 100%;
-    position: absolute;
-    z-index: 30;
-    /*height: 70%;*/
-    /*overflow: hidden;*/
-    /*bottom: 0%;*/
-    transition: opacity 1s, transform 2s ease-out;
-}
 
 /*.imageLoadingView_active #projectList, .intialView_active #projectList {	
 	transform: translateY(40%); 
@@ -256,100 +342,30 @@ h1 {
 	opacity: 0;
 }
 
-#projectListMenu
-{
-    padding-top: 140px;
-	/*transition: color 1s;*/
-    transition: transform @projectListViewAnimations, color @projectListViewAnimations;
-    transform: translateY(0px);
-}
-
-.projectListView_active #projectListMenu {
-	color: white;
-}
-
-.intialView_active #projectListMenu {
-	color: black;
-}
 
 
-#ProjectView {
-	width: 50%;
-	float: left;
-}
 
-.projectTitle {
-	cursor: pointer;
-	height: 7em;
-	overflow: hidden;
-    padding-bottom: 10px;
-    margin-bottom: 0px;
-    margin-top: 0px;
-    transition: opacity @projectListViewAnimations, transform @projectListViewAnimations;
-}
-
-
-.spacingDivBorder {
+/*.spacingDivBorder {
 	/*background-color: gray;*/
-	height:1px;
+	/*height:1px;
 	transform: translateY(0px);
 	transition: transform 1s ease-in-out;
 	width: 100%;
-}
+}*/
 
-.active.projectTitle {
-	transform: scale(1.3) translateX(25%);
-}
 
-.active.projectTitle  .spacingDivBorder {
+
+/*.active.projectTitle  .spacingDivBorder {
 	transform: translateY(-0px);
 }
 
 .active.projectTitle + .projectTitle .spacingDivBorder {
 	transform: translateY(+0px);
-}	
+}*/	
 
-.arrowSeeProjectDetails {
-    cursor: pointer;
-    font-size: 20px;
-}
-.projectTitle .arrowSeeProjectDetails {
-	display: none;
-	float: right;
-}
-.active.projectTitle .arrowSeeProjectDetails {
-	display: block;
-}
 
-#projectList  h4 {
-	margin: 0px;
-	padding-top: 25px;
-    padding-bottom: 5px;
-	
-}
 
-.projectListView_active #projectList h4, .projectListView_active #projectList p {
-	transition: transform 1s;
-	transform: scaleY(0.90);
-}
 
-.projectListView_active #projectList .active h4 {
- 	font-weight: bold;
- 	transform: scaleY(1.0);
-}
-
-.projectListView_active #projectList .active p {
-	transform: scaleY(1.0);
-}
-
-.animating_active .projectTitle {
-	opacity: 0.7;
-	cursor: default;
-}
-
-.animating_active .active.projectTitle {
-	opacity: 1;
-}
 
 
 /*#ProjectViews_container__p {
@@ -369,7 +385,7 @@ h1 {
 	border: black solid;
 }
 */
-.opacityShow {
+/*.opacityShow {
 	opacity : 1;
 }
 
@@ -379,7 +395,7 @@ h1 {
 
 .opacityTransition {
 	transition: opacity 1s;
-}
+}*/
 
 
 /** animations */
