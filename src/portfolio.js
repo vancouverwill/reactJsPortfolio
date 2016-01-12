@@ -1,3 +1,5 @@
+/*global require*/
+
 var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
 var React = require("react");
 var classNames = require("classnames");
@@ -9,37 +11,37 @@ var hash = {};
 var cache = [];
 
 function add(url) {
-  if (!hash[url]) {
-      hash[url] = new Image();
-      hash[url].src = url;
+    if (!hash[url]) {
+        hash[url] = new Image();
+        hash[url].src = url;
 
-      cache.push(hash[url]);
-  }
-  return hash[url];
-};
+        cache.push(hash[url]);
+    }
+    return hash[url];
+}
 
 function get(url) {
     return add(url);
-};
+}
 
 function imgRequestUrlLoad(url) {
 
-  var image = get(url);
+    var image = get(url);
 
     return new Promise(function (resolve, reject) {
-            var handleSuccess = function handleSuccess() {
-                resolve(image);
-            };
+        var handleSuccess = function handleSuccess() {
+            resolve(image);
+        };
 
-            if (image.naturalWidth && image.naturalHeight) {
+        if (image.naturalWidth && image.naturalHeight) {
                 //Image is loaded, go ahead and change the state
-                handleSuccess();
-            } else {
-                image.addEventListener("load", handleSuccess, false);
-                image.addEventListener("error", reject, false);
-            }
-        });
-  }
+            handleSuccess();
+        } else {
+            image.addEventListener("load", handleSuccess, false);
+            image.addEventListener("error", reject, false);
+        }
+    });
+}
 
 
 function imgLoad(url) {
@@ -48,99 +50,97 @@ function imgLoad(url) {
     // with two parameters, resolve and reject
     return new Promise(function(resolve, reject) {
       // Standard XHR to load an image
-      var request = new XMLHttpRequest();
-      request.open("GET", url);
-      request.responseType = "blob";
+        var request = new XMLHttpRequest();
+        request.open("GET", url);
+        request.responseType = "blob";
       // When the request loads, check whether it was successful
-      request.onload = function() {
-        if (request.status === 200) {
+        request.onload = function() {
+            if (request.status === 200) {
         // If successful, resolve the promise by passing back the request response
-          resolve(request.response);
-        } else {
+                      resolve(request.response);
+                  } else {
         // If it fails, reject the promise with a error message
-          reject(Error("Image didn\'t load successfully; error code:" + request.statusText));
-        }
-      };
-      request.onerror = function() {
+                      reject(Error("Image didn\'t load successfully; error code:" + request.statusText));
+                  }
+        };
+        request.onerror = function() {
       // Also deal with the case when the entire request fails to begin with
       // This is probably a network error, so reject the promise with an appropriate message
-          reject(Error("There was a network error."));
-      };
+            reject(Error("There was a network error."));
+        };
       // Send the request
-      request.send();
+        request.send();
     });
-  }
+} 
 
 
-  function loadImages(urls) {
+function loadImages(urls) {
       // var promises = urls.map(imgRequestUrlLoad.bind(this));
-      var promises = urls.map(imgRequestUrlLoad);
-      return Promise.all(promises);
-  }
+    var promises = urls.map(imgRequestUrlLoad);
+    return Promise.all(promises);
+}
 
 
 var PageLoadingClass = React.createClass({
-  getInitialState: function() {
-    return {
-      projects: undefined,
-      ready: false
-    }
-  },
-  componentWillMount : function() {
-     this.loadCommentsFromServer();
-  },
-  handleSuccess : function() {
-    console.log("handleSuccess")
-    this.setState({ready: true});
-  },
-  handleError : function() {
-    console.log("handleError")
-  },
-  loadCommentsFromServer: function() {
-    Jquery.ajax({
-      url: this.props.url,
-      dataType: "json",
-      success: function(apiProjects) {
+    getInitialState: function() {
+        return {
+            projects: undefined,
+            ready: false
+        };
+    },
+    componentWillMount : function() {
+        this.loadCommentsFromServer();
+    },
+    handleSuccess : function() {
+        this.setState({ready: true});
+    },
+    handleError : function() {
+    },
+    loadCommentsFromServer: function() {
+        Jquery.ajax({
+            url: this.props.url,
+            dataType: "json",
+            success: function(apiProjects) {
 
-        var projects = [];
-        var allImages = [];
+                    var projects = [];
+                    var allImages = [];
 
-        apiProjects.forEach(function(apiProject, i) {
-          var project = {};
-          project.name = apiProject.title.rendered;
-          project.shortDescription = apiProject.project_short_description;
-          project.description = apiProject.content.rendered;
-          project.fontColor = apiProject.font_color;
+                    apiProjects.forEach(function(apiProject, i) {
+                      var project = {};
+                      project.name = apiProject.title.rendered;
+                      project.shortDescription = apiProject.project_short_description;
+                      project.description = apiProject.content.rendered;
+                      project.fontColor = apiProject.font_color;
 
-          project.images = [];
+                      project.images = [];
 
-          if (apiProject.gallery_set !== undefined && apiProject.gallery_set.length > 0) {
-            apiProject.gallery_set.forEach(function(galleryImage, i) {
-              project.images.push(galleryImage.url)
-              allImages.push(galleryImage.url)
-            });
-          }
-          projects.push(project);
+                      if (apiProject.gallery_set !== undefined && apiProject.gallery_set.length > 0) {
+                        apiProject.gallery_set.forEach(function(galleryImage) {
+                          project.images.push(galleryImage.url);
+                          allImages.push(galleryImage.url);
+                      });
+                    }
+                      projects.push(project);
+                  });
+
+                    this.setState({projects: projects});
+
+                    loadImages(allImages).then(this.handleSuccess, this.handleError);
+
+
+                }.bind(this),
+            error: function(xhr, status, err) {
+                    console.error(this.props.url, status, err.toString());
+                }.bind(this)
         });
-
-        this.setState({projects: projects});
-
-        loadImages(allImages).then(this.handleSuccess, this.handleError)
-
-
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  },
-  render: function() {
-    return (
+    },
+    render: function() {
+        return (
       <PortfolioContainer url={this.props.url} projects={this.state.projects} imageReady={this.state.ready} >
       </PortfolioContainer>
-    )
-  }
-})
+    );
+    }
+});
 
 
 var PortfolioContainer = React.createClass({
@@ -149,243 +149,241 @@ var PortfolioContainer = React.createClass({
     animationDirection : "movingUp",
     animationDuration : 1200,
     getInitialState: function() {
-      return {
-        title: "Portfolio Site",
-        showContactModal: false,
-        showListView: true,
-        currentProject : undefined,
+        return {
+            title: "Portfolio Site",
+            showContactModal: false,
+            showListView: true,
+            currentProject : undefined,
         // currentProjectIndex : undefined,
-        showIsAnimating : false,
-        items : []
-      };
+            showIsAnimating : false,
+            items : []
+        };
     },
     selctProject: function(projectName)   {
-      if (this.state.currentProject === undefined || this.state.currentProject.name != projectName) {
-        this.updateCurrentProject(projectName);
-      }
+        if (this.state.currentProject === undefined || this.state.currentProject.name != projectName) {
+            this.updateCurrentProject(projectName);
+        }
       else {
-        this.handleProjectDetailsShow();
-      }
+            this.handleProjectDetailsShow();
+        }
     },
     updateCurrentProject: function(projectName) {
-      if (this.isAnimating ===   true) return;
-      if (this.state.showListView ===  false) return;
+        if (this.isAnimating ===   true) return;
+        if (this.state.showListView ===  false) return;
 
-      this.setAnimating();
-      for (var i = 0; i < this.props.projects.length; i++) {
-        if (this.props.projects[i].name == projectName) {
-          if (i < this.currentProjectIndex) {
-            this.animationDirection = "movingDown"
-          } else {
-            this.animationDirection = "movingUp"
-          }
-          this.setState({"currentProject" : this.props.projects[i]});
-          this.currentProjectIndex = i;
-          this.props.projects[i].active = true;
-          var currentProject = this.props.projects[i]
-        } else {
-          this.props.projects[i].active = false;
+        this.setAnimating();
+        for (var i = 0; i < this.props.projects.length; i++) {
+            if (this.props.projects[i].name == projectName) {
+                      if (i < this.currentProjectIndex) {
+                        this.animationDirection = "movingDown";
+                    } else {
+                        this.animationDirection = "movingUp";
+                    }
+                      this.setState({"currentProject" : this.props.projects[i]});
+                      this.currentProjectIndex = i;
+                      this.props.projects[i].active = true;
+                      var currentProject = this.props.projects[i];
+                  } else {
+                      this.props.projects[i].active = false;
+                  }
         }
-      }
       // this.setState(projects);
 
-      if (currentProject !== undefined) {
-        this.setState({"animatedProject" : currentProject});
-        this.setState({"animatedImageUrl" : currentProject.images[0]});
-        this.setState({"animatedImageUrlIndex" : 0});
-      }
+        if (currentProject !== undefined) {
+            this.setState({"animatedProject" : currentProject});
+            this.setState({"animatedImageUrl" : currentProject.images[0]});
+            this.setState({"animatedImageUrlIndex" : 0});
+        }
       else {
         // no project means reset
-        this.animationDirection = "movingDown"
-        this.currentProjectIndex = -1;
-        this.setState({"animatedProject" : null});
-        this.setState({"animatedImageUrl" : null});
-        this.setState({"animatedImageUrlIndex" : null});
-      }
+            this.animationDirection = "movingDown";
+            this.currentProjectIndex = -1;
+            this.setState({"animatedProject" : null});
+            this.setState({"animatedImageUrl" : null});
+            this.setState({"animatedImageUrlIndex" : null});
+        }
 
-      this.setNotAnimating();
+        this.setNotAnimating();
     },
     handleProjectDetailsShow:function() {
-      this.setAnimating();
-      console.log("handleProjectDetailsShow")
-      this.setState({"showListView" : false});
-      this.setNotAnimating();
+        this.setAnimating();
+        this.setState({"showListView" : false});
+        this.setNotAnimating();
     },
     handleProjectListShow:function() {
         this.isAnimating = false;
         this.setState({"showListView" : true});
     },
     hideContactView : function() {
-      this.setState({"showContactModal" : false});
+        this.setState({"showContactModal" : false});
     },
     showContactView : function() {
-      this.setState({"showContactModal" : true});
+        this.setState({"showContactModal" : true});
     },
     componentDidMount: function() {
-      var elem = ReactDOM.findDOMNode(this);
-      elem.addEventListener("wheel", this.handleWheel);
-      elem.addEventListener("touchmove", this.handleSwipe);
-      elem.addEventListener("touchstart", this.handleSwipeStart);
+        var elem = ReactDOM.findDOMNode(this);
+        elem.addEventListener("wheel", this.handleWheel);
+        elem.addEventListener("touchmove", this.handleSwipe);
+        elem.addEventListener("touchstart", this.handleSwipeStart);
     },
     handleWheel: function(event) {
-      if (this.isAnimating !== false) return;
+        if (this.isAnimating !== false) return;
 
-      if (event.deltaY < 0) (this.moveDown());
-      if (event.deltaY > 0) (this.moveUp());
+        if (event.deltaY < 0) (this.moveDown());
+        if (event.deltaY > 0) (this.moveUp());
     },
     handleSwipe: function(event) {
-      // console.log("handleSwipe")
-      if (this.isAnimating !== false) return;
+        if (this.isAnimating !== false) return;
       
       // var el = ReactDOM.findDOMNode(this);
-      var touches = event.changedTouches;
+          // var touches = event.changedTouches;
 
-      if (event.touches[0].screenY < this.startY) {
-        this.moveUp();
-      } else {
-        this.moveDown();
-      }
+        if (event.touches[0].screenY < this.startY) {
+            this.moveUp();
+        } else {
+            this.moveDown();
+        }
 
-      this.setAnimating();
+        this.setAnimating();
     },
     handleSwipeStart: function(event) {
-      this.startY = event.touches[0].screenY;
+        this.startY = event.touches[0].screenY;
     },
     chooseProjectOne: function() {
-      this.moveUp();
+        this.moveUp();
     },
     moveUp: function() {
         if (this.currentProjectIndex < (this.props.projects.length - 1)) {
-          this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name);
+            this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name);
         }
     },
     moveDown: function(){
-      if (this.currentProjectIndex > 0) {
-        this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name);
-      }
+        if (this.currentProjectIndex > 0) {
+            this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name);
+        }
 
-      if (this.currentProjectIndex == 0) {
-        this.updateCurrentProject("");
-      }
+        if (this.currentProjectIndex == 0) {
+            this.updateCurrentProject("");
+        }
     },
     setAnimating: function() {
-      this.isAnimating = true;
-      this.setState({"showIsAnimating" : true});
+        this.isAnimating = true;
+        this.setState({"showIsAnimating" : true});
     },
     setNotAnimating: function() {
-      var self = this;
+        var self = this;
 
-      this.timeout = setTimeout(function(){
-        self.isAnimating = false;
-        self.setState({"showIsAnimating" : false});
-      }, this.animationDuration);
+        this.timeout = setTimeout(function(){
+            self.isAnimating = false;
+            self.setState({"showIsAnimating" : false});
+        }, this.animationDuration);
     },
     clickLeftIndividualProjectCarousel: function() {
-      if (this.isAnimating ===   true) return;
-      this.setAnimating();
+        if (this.isAnimating ===   true) return;
+        this.setAnimating();
 
-      this.animationDirection = "movingLeft";     
-      var newIndex;         
+        this.animationDirection = "movingLeft";     
+        var newIndex;         
 
-      if (this.state.animatedImageUrlIndex != 0) {
-        newIndex = this.state.animatedImageUrlIndex - 1;
-      } else {
-        newIndex = this.state.currentProject.images.length - 1; 
-      }
+        if (this.state.animatedImageUrlIndex != 0) {
+            newIndex = this.state.animatedImageUrlIndex - 1;
+        } else {
+            newIndex = this.state.currentProject.images.length - 1; 
+        }
 
-      this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
-      this.setState({"animatedImageUrlIndex" : newIndex});
+        this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
+        this.setState({"animatedImageUrlIndex" : newIndex});
 
-      this.setNotAnimating();
+        this.setNotAnimating();
     },
     clickRightIndividualProjectCarousel: function() {
-      if (this.isAnimating ===   true) return;
-      this.setAnimating();
+        if (this.isAnimating ===   true) return;
+        this.setAnimating();
 
-      this.animationDirection = "movingRight";
-      var newIndex;        
+        this.animationDirection = "movingRight";
+        var newIndex;        
 
-      if (this.state.animatedImageUrlIndex != this.state.currentProject.images.length - 1) {
-        newIndex = this.state.animatedImageUrlIndex + 1;
-      } else {
-        newIndex =  0;
-      }
+        if (this.state.animatedImageUrlIndex != this.state.currentProject.images.length - 1) {
+            newIndex = this.state.animatedImageUrlIndex + 1;
+        } else {
+            newIndex =  0;
+        }
 
-      this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
-      this.setState({"animatedImageUrlIndex" : newIndex});
+        this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
+        this.setState({"animatedImageUrlIndex" : newIndex});
 
-      this.setNotAnimating();
+        this.setNotAnimating();
     },
     render: function() {
 
-      var classes, animateProject, overallStatusClasses;
+        var classes, animateProject, overallStatusClasses;
 
-      if (this.animationDirection == "movingUp") {
-        classes = classNames({
-        "movingUp": true
-        });
-      }
+        if (this.animationDirection == "movingUp") {
+            classes = classNames({
+                      "movingUp": true
+                  });
+        }
       else if (this.animationDirection == "movingDown") {
-        classes = classNames({
-        "movingDown": true
-        });
+          classes = classNames({
+              "movingDown": true
+          });
       }
       else if (this.animationDirection == "movingLeft") {
-        classes = classNames({
-        "movingLeft": true
-        });
+          classes = classNames({
+              "movingLeft": true
+          });
       }
       else if (this.animationDirection == "movingRight") {
-        classes = classNames({
-        "movingRight": true
-        });
+          classes = classNames({
+              "movingRight": true
+          });
       }
 
-      if (this.props.imageReady == false ){
-        overallStatusClasses = classNames({
-          "imageLoadingView_active": true
-        });
-      }
+        if (this.props.imageReady == false ){
+            overallStatusClasses = classNames({
+                      "imageLoadingView_active": true
+                  });
+        }
       else if (this.state.showContactModal == true) {
-        overallStatusClasses = classNames({
-          "modalView_active": true
-        });
+          overallStatusClasses = classNames({
+              "modalView_active": true
+          });
       }
       else if (this.state.showListView == true) {
-        if (this.currentProjectIndex == -1) {
-          overallStatusClasses = classNames({
-          "intialView_active": true,
-          "animating_active" : this.state.showIsAnimating
-        });
-        }
+          if (this.currentProjectIndex == -1) {
+              overallStatusClasses = classNames({
+                  "intialView_active": true,
+                  "animating_active" : this.state.showIsAnimating
+              });
+          }
         else {
-          overallStatusClasses = classNames({
-            "projectListView_active": true,
-            "animating_active" : this.state.showIsAnimating
-          });
-        }
+              overallStatusClasses = classNames({
+                  "projectListView_active": true,
+                  "animating_active" : this.state.showIsAnimating
+              });
+          }
       } else {
-        overallStatusClasses = classNames({
-          "projectDetailsView_active": true,
-          "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false,
-          "animating_active" : this.state.showIsAnimating
-        });
+          overallStatusClasses = classNames({
+              "projectDetailsView_active": true,
+              "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false,
+              "animating_active" : this.state.showIsAnimating
+          });
       }
 
-      if (this.state.animatedImageUrl != null) {
-        var imageUrl = "url('" + this.state.animatedImageUrl + "')";
-        var backgroundStyles = {"backgroundImage" : imageUrl};
+        if (this.state.animatedImageUrl != null) {
+            var imageUrl = "url('" + this.state.animatedImageUrl + "')";
+            var backgroundStyles = {"backgroundImage" : imageUrl};
 
-        animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  >
+            animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  >
                                 <div className="slideImage" style={backgroundStyles} ></div>
                                 <div className="slideImageOpacityOverlay" ></div>
                               </div>;
-      }
+        }
       else {
-        animateProject = null;
-      }
+            animateProject = null;
+        }
 
-      return ( 
+        return ( 
           <div id="mainView" className={overallStatusClasses}>
             <div id="modalContactView" className="active">
               <div className="closeButton modalCloseButton" onClick={this.hideContactView} >
@@ -458,35 +456,35 @@ var PortfolioContainer = React.createClass({
 
 var ProjectDetailsIntroView = React.createClass({
     render: function() {
-      if (this.props.currentProject === undefined) {
-        return (
+        if (this.props.currentProject === undefined) {
+            return (
           <div className="projectDetailsIntroView"></div>
         );
-      }
+        }
       else {
-        return (
+            return (
           <div className="projectDetailsIntroView">
             <h2>{this.props.currentProject.name}</h2>
             <p>{this.props.currentProject.shortDescription}</p>
           </div>
         );
-      }
+        }
     }
 });
 
 
 var ProjectDetailsMainView = React.createClass({
     handleProjectListShow: function() {
-      this.props.handleProjectListShow();
+        this.props.handleProjectListShow();
     },
     render: function() {
-      if (this.props.currentProject === undefined) {
-        return (
+        if (this.props.currentProject === undefined) {
+            return (
           <div></div>
         );
-      }
+        }
       else {
-        return (
+            return (
           <div key={this.props.currentProject.name} className="projectDetailsContent">
             <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
             <h2>{this.props.currentProject.name}</h2>
@@ -494,56 +492,56 @@ var ProjectDetailsMainView = React.createClass({
             <p dangerouslySetInnerHTML={{__html: this.props.currentProject.description}}></p>
           </div>
         );
-      }
+        }
     }
- });
+});
 
 
- var ProjectList = React.createClass({
+var ProjectList = React.createClass({
     getInitialState: function() {
         return {
-        };
+         };
     },
     selctProject: function(projectName) {
-      this.props.selctProject(projectName);
+        this.props.selctProject(projectName);
     },
     handleProjectDetailsShow: function() {
-      this.props.handleProjectDetailsShow();
+        this.props.handleProjectDetailsShow();
     },
     chooseProjectOne: function() {
-      this.props.chooseProjectOne();
+        this.props.chooseProjectOne();
     },
     componentWillUpdate: function() {
  
         if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
 
 
-          var projectTitleHeight = 120;
-          var projectTitleEmHeight = 7; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
+              // var projectTitleHeight = 120;
+             var projectTitleEmHeight = 7; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
 
           // var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
-          var verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
+             var verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
 
-          this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
-        }
+             this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
+         }
         else {
-          this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"};
-        }
+             this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"};
+         }
     },
     render: function() {
-      var loop;
+        var loop;
 
-      if (this.props.projects !== undefined && this.props.imageReady == true) {
-        loop = this.props.projects.map(function (project) {
-              return (
+        if (this.props.projects !== undefined && this.props.imageReady == true) {
+             loop = this.props.projects.map(function (project) {
+                      return (
                     <ProjectName key={project.name} name={project.name} active={project.active} fontColor={project.fontColor} shortDescription={project.shortDescription} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
                 );
-            }, this);
-      }
+                  }, this);
+         }
       else {
-        loop = "";
-      }
-      return (
+             loop = "";
+         }
+        return (
           <div id="projectList" style={this.verticalMovement} >
             <p className="introExplainingText">scroll down to view some of the key projects <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne} /></p>
             <div className="text-center loadingState">
@@ -556,32 +554,32 @@ var ProjectDetailsMainView = React.createClass({
           </div>
     );
     }
- });
+});
 
 
- var ProjectName = React.createClass({
+var ProjectName = React.createClass({
     selctProject: function() {
-      this.props.selctProject(this.props.name);
+        this.props.selctProject(this.props.name);
     },
     handleProjectDetailsShow: function() {
-      this.props.handleProjectDetailsShow();
+        this.props.handleProjectDetailsShow();
     },
     render: function() {
-      var classes = classNames({
-        "active": this.props.active,
-        "projectTitle" : true
-      });
+        var classes = classNames({
+             "active": this.props.active,
+             "projectTitle" : true
+         });
 
-      var fontColor;
+        var fontColor;
 
-      if (this.props.active == true) {
-        fontColor = {"color" : this.props.fontColor};
-      }
+        if (this.props.active == true) {
+             fontColor = {"color" : this.props.fontColor};
+         }
       else {
-        fontColor = {};
-      }
+             fontColor = {};
+         }
 
-      return (
+        return (
         <div className={classes}>
           <div className="spacingDivBorder"  ></div>
           
@@ -593,7 +591,7 @@ var ProjectDetailsMainView = React.createClass({
         </div>
         );
     }
- });
+});
 
 
 
