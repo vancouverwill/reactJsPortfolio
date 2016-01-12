@@ -216,24 +216,10 @@ var PortfolioContainer = React.createClass({
         this.setState({"showListView" : true});
     },
     hideContactView : function() {
-      // if (this.state.showListView == false) {
-      //   this.handleProjectListShow();
-      // }
-      
-      // this.updateCurrentProject(-1);
-      // 
       this.setState({"showContactModal" : false});
-      // this.state. = true;
     },
     showContactView : function() {
-      // if (this.state.showListView == false) {
-      //   this.handleProjectListShow();
-      // }
-      
-      // this.updateCurrentProject(-1);
-      // 
       this.setState({"showContactModal" : true});
-      // this.state. = true;
     },
     componentDidMount: function() {
       var elem = ReactDOM.findDOMNode(this);
@@ -244,8 +230,6 @@ var PortfolioContainer = React.createClass({
     handleWheel: function(event) {
       if (this.isAnimating !== false) return;
 
-      // event.preventDefault();
-
       if (event.deltaY < 0) (this.moveDown())
       if (event.deltaY > 0) (this.moveUp())
     },
@@ -253,29 +237,21 @@ var PortfolioContainer = React.createClass({
       console.log("handleSwipe")
       if (this.isAnimating !== false) return;
       
-      // event.preventDefault();
       var el = ReactDOM.findDOMNode(this);
       var touches = event.changedTouches;
 
-      var scrollDirection
-
       if (event.touches[0].screenY < this.startY) {
-        scrollDirection = +1; 
         this.moveUp()
       } else {
-        scrollDirection = -1;
         this.moveDown()
       }
 
       this.setAnimating();
     },
     handleSwipeStart: function(event) {
-      console.log("handleSwipeStart")
-      // alert("handleSwipeStart")
       this.startY = event.touches[0].screenY;
     },
     chooseProjectOne: function() {
-      console.log("chooseProjectOne")
       this.moveUp();
     },
     moveUp: function() {
@@ -308,7 +284,6 @@ var PortfolioContainer = React.createClass({
       if (this.isAnimating ===   true) return;
       this.setAnimating();
 
-      console.log("clickLeftIndividualProjectCarousel")
       this.animationDirection = "movingLeft"              
 
       if (this.state.animatedImageUrlIndex != 0) {
@@ -326,7 +301,6 @@ var PortfolioContainer = React.createClass({
       if (this.isAnimating ===   true) return;
       this.setAnimating();
 
-      console.log("clickRightIndividualProjectCarousel")
       this.animationDirection = "movingRight"              
 
       if (this.state.animatedImageUrlIndex != this.state.currentProject.images.length - 1) {
@@ -582,6 +556,7 @@ var ProjectDetailsMainView = React.createClass({
     }
  });
 
+
  var ProjectName = React.createClass({
     selctProject: function() {
       this.props.selctProject(this.props.name);
@@ -615,57 +590,6 @@ var ProjectDetailsMainView = React.createClass({
         )
     }
  });
-
-
-// var ProjectViews = React.createClass({
-//   getInitialState: function() {
-//       return {
-//       };
-//   },
-//   render: function() {
-//         var projectsLoop = this.props.projects.map(function (project) {
-
-//           if (project.images !== undefined && project.images[0]) {
-//             var imageUrl = "url('" + project.images[0] + "')";
-//             var backgroundStyles = {"backgroundImage" : imageUrl}
-//           }
-
-//           if (this.props.currentProject.name == project.name) {
-//             var classes = classNames({
-//               'active': true,
-//               'opacityShow' : true,
-//               'opacityTransition' : true,
-//               'projectView' : true
-//             });
-//           }
-//           else {
-//             var classes = classNames({
-//               'active': false,
-//               'opacityHide' : true,
-//               'opacityTransition' : true,
-//               'projectView' : true
-//             });
-//           }
-
-//             return (
-//                   <div key={project.name} id="ProjectView__p" style={backgroundStyles} className={classes}>
-//                     <p>current project :{project.currentProject}</p>
-//                     <p>color {project.color} </p>
-//                     <p>image  {project}</p>
-//                   </div>
-//               );
-//           }, this);
-//     return (
-//       <div id="ProjectViews_container__p">
-//         {projectsLoop}
-//       </div>
-//     );
-//   }
-// });
-
-
-
-
 
 
 
