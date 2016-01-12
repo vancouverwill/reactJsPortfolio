@@ -7,6 +7,7 @@ var sourcemaps = require('gulp-sourcemaps');
 var rename     = require('gulp-rename');  
 var header     = require('gulp-header');  
 var pkg        = require('./package.json');
+var autoprefixer = require('gulp-autoprefixer');
 
 
 var watchify = require('watchify');
@@ -29,8 +30,10 @@ var banner = ['/**',
 /* Task to compile less */
 gulp.task('compile-less', function() {  
   gulp.src('./css/styles.less')
+    .pipe(sourcemaps.init())
     .pipe(less())
     .pipe(header(banner, {pkg: pkg}))
+    .pipe(sourcemaps.write("."))
     .pipe(gulp.dest('./css/'));
 });
 
@@ -48,7 +51,20 @@ gulp.task('babel', function() {
 /* Task to watch less changes */
 gulp.task('watch-less', function() {  
   gulp.watch('./css/*.less' , ['compile-less']);
+  gulp.watch('./css/styles.css' , ['autoprefixer']);
   gulp.watch('./src/*.js' , ['babel']);
+});
+
+
+gulp.task('autoprefixer', function () {
+    return gulp.src('css/styles.css')
+        .pipe(sourcemaps.init())
+        .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest('./dist/'));
 });
 
 
@@ -90,7 +106,7 @@ function bundle() {
     	gutil.log.bind(gutil, 'Browserify Error')
     	this.emit("end");
     })
-    .pipe(source('bundle.js'))
+    .pipe(source('./dist/bundle.js'))
     // optional, remove if you don't need to buffer file contents
     .pipe(buffer())
     // optional, remove if you dont want sourcemaps
