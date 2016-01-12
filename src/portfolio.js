@@ -75,7 +75,6 @@ function imgLoad(url) {
 
 
 function loadImages(urls) {
-      // var promises = urls.map(imgRequestUrlLoad.bind(this));
     var promises = urls.map(imgRequestUrlLoad);
     return Promise.all(promises);
 }
@@ -154,7 +153,6 @@ var PortfolioContainer = React.createClass({
             showContactModal: false,
             showListView: true,
             currentProject : undefined,
-        // currentProjectIndex : undefined,
             showIsAnimating : false,
             items : []
         };
@@ -187,7 +185,6 @@ var PortfolioContainer = React.createClass({
                       this.props.projects[i].active = false;
                   }
         }
-      // this.setState(projects);
 
         if (currentProject !== undefined) {
             this.setState({"animatedProject" : currentProject});
@@ -235,9 +232,6 @@ var PortfolioContainer = React.createClass({
     handleSwipe: function(event) {
         if (this.isAnimating !== false) return;
       
-      // var el = ReactDOM.findDOMNode(this);
-          // var touches = event.changedTouches;
-
         if (event.touches[0].screenY < this.startY) {
             this.moveUp();
         } else {
@@ -437,23 +431,6 @@ var PortfolioContainer = React.createClass({
 });
 
 
-// var Project = React.createClass({
-//     render: function() {
-//       if (this.props.images !== undefined && this.props.images[0]) {
-//               var imageUrl = "url('" + this.props.images[0] + "')";
-//               var backgroundStyles = {"backgroundImage" : imageUrl};
-//             }
-//       return (
-//         <div key={this.props.name} className="portfolioSlide"  >
-//             <ReactCSSTransitionGroup transitionName="projectImagesAnimation" transitionEnterTimeout={5000} transitionLeaveTimeout={3000}>
-//               <div className="slideImage" style={backgroundStyles} ></div>
-//             </ReactCSSTransitionGroup>
-//         </div>
-//         );
-//     }
-//  });
-
-
 var ProjectDetailsIntroView = React.createClass({
     render: function() {
         if (this.props.currentProject === undefined) {
@@ -514,7 +491,6 @@ var ProjectList = React.createClass({
     componentWillUpdate: function() {
  
         if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
-
 
               // var projectTitleHeight = 120;
              var projectTitleEmHeight = 7; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
