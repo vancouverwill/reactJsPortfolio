@@ -6113,6 +6113,7 @@ body {
   transition: opacity 1s ease-in-out 0.2s, transform 1s ease-in-out 0.2s;
 }
 .projectListView {
+  display: flex;
   transition: transform 2s ease-in-out, opacity 2s, top 2s;
   left: 0px;
   position: absolute;
@@ -6292,6 +6293,7 @@ body {
 #portfolioProjectAnimationContainer {
   background-color: white;
   position: absolute;
+  flex: auto;
   width: 100%;
   border: none;
   right: 0px;
@@ -6504,5 +6506,3 @@ h4,
  		top: 70%;
  	}*/
 }
-
-/*# sourceMappingURL=styles.css.map */
