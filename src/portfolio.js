@@ -1,21 +1,21 @@
-var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
-var React = require('react');
-var classNames = require('classnames');
-var ReactDOM = require('react-dom');
-var Jquery = require('jquery');
+var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
+var React = require("react");
+var classNames = require("classnames");
+var ReactDOM = require("react-dom");
+var Jquery = require("jquery");
 
 
 var hash = {};
 var cache = [];
 
 function add(url) {
-    if (!hash[url]) {
-        hash[url] = new Image();
-        hash[url].src = url;
+  if (!hash[url]) {
+      hash[url] = new Image();
+      hash[url].src = url;
 
-        cache.push(hash[url]);
-    }
-    return hash[url];
+      cache.push(hash[url]);
+  }
+  return hash[url];
 };
 
 function get(url) {
@@ -35,8 +35,8 @@ function imgRequestUrlLoad(url) {
                 //Image is loaded, go ahead and change the state
                 handleSuccess();
             } else {
-                image.addEventListener('load', handleSuccess, false);
-                image.addEventListener('error', reject, false);
+                image.addEventListener("load", handleSuccess, false);
+                image.addEventListener("error", reject, false);
             }
         });
   }
@@ -49,8 +49,8 @@ function imgLoad(url) {
     return new Promise(function(resolve, reject) {
       // Standard XHR to load an image
       var request = new XMLHttpRequest();
-      request.open('GET', url);
-      request.responseType = 'blob';
+      request.open("GET", url);
+      request.responseType = "blob";
       // When the request loads, check whether it was successful
       request.onload = function() {
         if (request.status === 200) {
@@ -58,13 +58,13 @@ function imgLoad(url) {
           resolve(request.response);
         } else {
         // If it fails, reject the promise with a error message
-          reject(Error('Image didn\'t load successfully; error code:' + request.statusText));
+          reject(Error("Image didn\'t load successfully; error code:" + request.statusText));
         }
       };
       request.onerror = function() {
       // Also deal with the case when the entire request fails to begin with
       // This is probably a network error, so reject the promise with an appropriate message
-          reject(Error('There was a network error.'));
+          reject(Error("There was a network error."));
       };
       // Send the request
       request.send();
@@ -99,7 +99,7 @@ var PageLoadingClass = React.createClass({
   loadCommentsFromServer: function() {
     Jquery.ajax({
       url: this.props.url,
-      dataType: 'json',
+      dataType: "json",
       success: function(apiProjects) {
 
         var projects = [];
@@ -223,27 +223,27 @@ var PortfolioContainer = React.createClass({
     },
     componentDidMount: function() {
       var elem = ReactDOM.findDOMNode(this);
-      elem.addEventListener('wheel', this.handleWheel);
+      elem.addEventListener("wheel", this.handleWheel);
       elem.addEventListener("touchmove", this.handleSwipe);
       elem.addEventListener("touchstart", this.handleSwipeStart);
     },
     handleWheel: function(event) {
       if (this.isAnimating !== false) return;
 
-      if (event.deltaY < 0) (this.moveDown())
-      if (event.deltaY > 0) (this.moveUp())
+      if (event.deltaY < 0) (this.moveDown());
+      if (event.deltaY > 0) (this.moveUp());
     },
     handleSwipe: function(event) {
-      console.log("handleSwipe")
+      // console.log("handleSwipe")
       if (this.isAnimating !== false) return;
       
-      var el = ReactDOM.findDOMNode(this);
+      // var el = ReactDOM.findDOMNode(this);
       var touches = event.changedTouches;
 
       if (event.touches[0].screenY < this.startY) {
-        this.moveUp()
+        this.moveUp();
       } else {
-        this.moveDown()
+        this.moveDown();
       }
 
       this.setAnimating();
@@ -256,16 +256,16 @@ var PortfolioContainer = React.createClass({
     },
     moveUp: function() {
         if (this.currentProjectIndex < (this.props.projects.length - 1)) {
-          this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name)
+          this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name);
         }
     },
     moveDown: function(){
       if (this.currentProjectIndex > 0) {
-        this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name)
+        this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name);
       }
 
       if (this.currentProjectIndex == 0) {
-        this.updateCurrentProject('')
+        this.updateCurrentProject("");
       }
     },
     setAnimating: function() {
@@ -280,16 +280,17 @@ var PortfolioContainer = React.createClass({
         self.setState({"showIsAnimating" : false});
       }, this.animationDuration);
     },
-    clickLeftIndividualProjectCarousel: function(e) {
+    clickLeftIndividualProjectCarousel: function() {
       if (this.isAnimating ===   true) return;
       this.setAnimating();
 
-      this.animationDirection = "movingLeft"              
+      this.animationDirection = "movingLeft";     
+      var newIndex;         
 
       if (this.state.animatedImageUrlIndex != 0) {
-        var newIndex = this.state.animatedImageUrlIndex - 1
+        newIndex = this.state.animatedImageUrlIndex - 1;
       } else {
-        var newIndex = this.state.currentProject.images.length - 1 
+        newIndex = this.state.currentProject.images.length - 1; 
       }
 
       this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
@@ -297,16 +298,17 @@ var PortfolioContainer = React.createClass({
 
       this.setNotAnimating();
     },
-    clickRightIndividualProjectCarousel: function(e) {
+    clickRightIndividualProjectCarousel: function() {
       if (this.isAnimating ===   true) return;
       this.setAnimating();
 
-      this.animationDirection = "movingRight"              
+      this.animationDirection = "movingRight";
+      var newIndex;        
 
       if (this.state.animatedImageUrlIndex != this.state.currentProject.images.length - 1) {
-        var newIndex = this.state.animatedImageUrlIndex + 1
+        newIndex = this.state.animatedImageUrlIndex + 1;
       } else {
-        var newIndex =  0
+        newIndex =  0;
       }
 
       this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
@@ -316,69 +318,71 @@ var PortfolioContainer = React.createClass({
     },
     render: function() {
 
+      var classes, animateProject, overallStatusClasses;
+
       if (this.animationDirection == "movingUp") {
-        var classes = classNames({
-        'movingUp': true
+        classes = classNames({
+        "movingUp": true
         });
       }
       else if (this.animationDirection == "movingDown") {
-        var classes = classNames({
-        'movingDown': true
+        classes = classNames({
+        "movingDown": true
         });
       }
       else if (this.animationDirection == "movingLeft") {
-        var classes = classNames({
-        'movingLeft': true
+        classes = classNames({
+        "movingLeft": true
         });
       }
       else if (this.animationDirection == "movingRight") {
-        var classes = classNames({
-        'movingRight': true
+        classes = classNames({
+        "movingRight": true
         });
       }
 
       if (this.props.imageReady == false ){
-        var overallStatusClasses = classNames({
-          'imageLoadingView_active': true,
+        overallStatusClasses = classNames({
+          "imageLoadingView_active": true
         });
       }
       else if (this.state.showContactModal == true) {
-        var overallStatusClasses = classNames({
-          'modalView_active': true
+        overallStatusClasses = classNames({
+          "modalView_active": true
         });
       }
       else if (this.state.showListView == true) {
         if (this.currentProjectIndex == -1) {
-          var overallStatusClasses = classNames({
-          'intialView_active': true,
-          'animating_active' : this.state.showIsAnimating
+          overallStatusClasses = classNames({
+          "intialView_active": true,
+          "animating_active" : this.state.showIsAnimating
         });
         }
         else {
-          var overallStatusClasses = classNames({
-            'projectListView_active': true,
-            'animating_active' : this.state.showIsAnimating
+          overallStatusClasses = classNames({
+            "projectListView_active": true,
+            "animating_active" : this.state.showIsAnimating
           });
         }
       } else {
-        var overallStatusClasses = classNames({
-          'projectDetailsView_active': true,
-          'singleImageProject' : this.state.currentProject.images.length == 1 ? true : false,
-          'animating_active' : this.state.showIsAnimating
+        overallStatusClasses = classNames({
+          "projectDetailsView_active": true,
+          "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false,
+          "animating_active" : this.state.showIsAnimating
         });
       }
 
       if (this.state.animatedImageUrl != null) {
         var imageUrl = "url('" + this.state.animatedImageUrl + "')";
-        var backgroundStyles = {"backgroundImage" : imageUrl}
+        var backgroundStyles = {"backgroundImage" : imageUrl};
 
-        var animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  >
+        animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  >
                                 <div className="slideImage" style={backgroundStyles} ></div>
                                 <div className="slideImageOpacityOverlay" ></div>
-                              </div>
+                              </div>;
       }
       else {
-        var animateProject = null
+        animateProject = null;
       }
 
       return ( 
@@ -407,7 +411,7 @@ var PortfolioContainer = React.createClass({
               </div>
             </div>
             <button id="contactButton" type="button" className=" btn btn-default" onClick={this.showContactView} >Contact</button>
-            <div  id="" className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
+            <div className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
               <i className="fa fa-times fa-2x"></i>
             </div>
             <div id="leftArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">
@@ -426,7 +430,7 @@ var PortfolioContainer = React.createClass({
               </div>
               <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
             </div>
-            <div className='projectDetailsMainView'>
+            <div className="projectDetailsMainView">
               <ProjectDetailsMainView currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetailsMainView>
             </div>
           </div>
@@ -435,24 +439,21 @@ var PortfolioContainer = React.createClass({
 });
 
 
-var Project = React.createClass({
-    render: function() {
-      if (this.props.images !== undefined && this.props.images[0]) {
-              var imageUrl = "url('" + this.props.images[0] + "')";
-              var backgroundStyles = {"backgroundImage" : imageUrl}
-            }
-
-            var leftParagrah =  {"position" : "absolute", "left": "-15%", "top": "10%"}
-
-      return (
-        <div key={this.props.name} className="portfolioSlide"  >
-            <ReactCSSTransitionGroup transitionName="projectImagesAnimation" transitionEnterTimeout={5000} transitionLeaveTimeout={3000}>
-              <div className="slideImage" style={backgroundStyles} ></div>
-            </ReactCSSTransitionGroup>
-        </div>
-        )
-    }
- });
+// var Project = React.createClass({
+//     render: function() {
+//       if (this.props.images !== undefined && this.props.images[0]) {
+//               var imageUrl = "url('" + this.props.images[0] + "')";
+//               var backgroundStyles = {"backgroundImage" : imageUrl};
+//             }
+//       return (
+//         <div key={this.props.name} className="portfolioSlide"  >
+//             <ReactCSSTransitionGroup transitionName="projectImagesAnimation" transitionEnterTimeout={5000} transitionLeaveTimeout={3000}>
+//               <div className="slideImage" style={backgroundStyles} ></div>
+//             </ReactCSSTransitionGroup>
+//         </div>
+//         );
+//     }
+//  });
 
 
 var ProjectDetailsIntroView = React.createClass({
@@ -460,7 +461,7 @@ var ProjectDetailsIntroView = React.createClass({
       if (this.props.currentProject === undefined) {
         return (
           <div className="projectDetailsIntroView"></div>
-        )
+        );
       }
       else {
         return (
@@ -468,7 +469,7 @@ var ProjectDetailsIntroView = React.createClass({
             <h2>{this.props.currentProject.name}</h2>
             <p>{this.props.currentProject.shortDescription}</p>
           </div>
-        )
+        );
       }
     }
 });
@@ -482,7 +483,7 @@ var ProjectDetailsMainView = React.createClass({
       if (this.props.currentProject === undefined) {
         return (
           <div></div>
-        )
+        );
       }
       else {
         return (
@@ -492,7 +493,7 @@ var ProjectDetailsMainView = React.createClass({
 
             <p dangerouslySetInnerHTML={{__html: this.props.currentProject.description}}></p>
           </div>
-        )
+        );
       }
     }
  });
@@ -514,32 +515,33 @@ var ProjectDetailsMainView = React.createClass({
     },
     componentWillUpdate: function() {
  
-        console.log("project list now has projects")
         if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
 
 
           var projectTitleHeight = 120;
           var projectTitleEmHeight = 7; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
 
-          var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
+          // var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
           var verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
 
-          this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"}
+          this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
         }
         else {
-          this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"}
+          this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"};
         }
     },
     render: function() {
+      var loop;
+
       if (this.props.projects !== undefined && this.props.imageReady == true) {
-        var loop = this.props.projects.map(function (project) {
+        loop = this.props.projects.map(function (project) {
               return (
                     <ProjectName key={project.name} name={project.name} active={project.active} fontColor={project.fontColor} shortDescription={project.shortDescription} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
                 );
             }, this);
       }
       else {
-        var loop = ""
+        loop = "";
       }
       return (
           <div id="projectList" style={this.verticalMovement} >
@@ -566,15 +568,17 @@ var ProjectDetailsMainView = React.createClass({
     },
     render: function() {
       var classes = classNames({
-        'active': this.props.active,
-        'projectTitle' : true
+        "active": this.props.active,
+        "projectTitle" : true
       });
 
+      var fontColor;
+
       if (this.props.active == true) {
-        var fontColor = {"color" : this.props.fontColor};
+        fontColor = {"color" : this.props.fontColor};
       }
       else {
-        var fontColor = {};
+        fontColor = {};
       }
 
       return (
@@ -587,7 +591,7 @@ var ProjectDetailsMainView = React.createClass({
           </h4>
           <p dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
         </div>
-        )
+        );
     }
  });
 
@@ -595,5 +599,5 @@ var ProjectDetailsMainView = React.createClass({
 
 ReactDOM.render(
   <PageLoadingClass url={apiUrl} />,
-  document.getElementById('container')
+  document.getElementById("container")
 );
