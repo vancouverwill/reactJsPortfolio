@@ -310,13 +310,13 @@ var PortfolioContainer = React.createClass({
     },
     render: function() {
 
-        var classes, animateProject, overallStatusClasses;
+      var classes, animateProject, overallStatusClasses;
 
-        if (this.animationDirection == "movingUp") {
-            classes = classNames({
-                      "movingUp": true
-                  });
-        }
+      if (this.animationDirection == "movingUp") {
+          classes = classNames({
+                    "movingUp": true
+                });
+      }
       else if (this.animationDirection == "movingDown") {
           classes = classNames({
               "movingDown": true
@@ -333,11 +333,16 @@ var PortfolioContainer = React.createClass({
           });
       }
 
-        if (this.props.imageReady == false ){
-            overallStatusClasses = classNames({
-                      "imageLoadingView_active": true
-                  });
-        }
+      var animatingStatusClass = classNames({
+              "animating_active" : this.state.showIsAnimating
+          });
+
+
+      if (this.props.imageReady == false ){
+          overallStatusClasses = classNames({
+                    "imageLoadingView_active": true
+                });
+      }
       else if (this.state.showContactModal == true) {
           overallStatusClasses = classNames({
               "modalView_active": true
@@ -346,21 +351,18 @@ var PortfolioContainer = React.createClass({
       else if (this.state.showListView == true) {
           if (this.currentProjectIndex == -1) {
               overallStatusClasses = classNames({
-                  "intialView_active": true,
-                  "animating_active" : this.state.showIsAnimating
+                  "intialView_active": true
               });
           }
         else {
               overallStatusClasses = classNames({
-                  "projectListView_active": true,
-                  "animating_active" : this.state.showIsAnimating
+                  "projectListView_active": true
               });
           }
       } else {
           overallStatusClasses = classNames({
               "projectDetailsView_active": true,
-              "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false,
-              "animating_active" : this.state.showIsAnimating
+              "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false
           });
       }
 
@@ -378,7 +380,7 @@ var PortfolioContainer = React.createClass({
         }
 
         return ( 
-          <div id="mainView" className={overallStatusClasses}>
+          <div id="mainView" className={overallStatusClasses}><div id="animatingStatus" className={animatingStatusClass}>
             <div id="modalContactView" className="active">
               <div className="closeButton modalCloseButton" onClick={this.hideContactView} >
                 <i className="fa fa-times fa-2x"></i>
@@ -425,7 +427,7 @@ var PortfolioContainer = React.createClass({
             <div className="projectDetailsMainView">
               <ProjectDetailsMainView currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetailsMainView>
             </div>
-          </div>
+          </div></div>
       );
     }
 });
@@ -556,9 +558,7 @@ var ProjectName = React.createClass({
          }
 
         return (
-        <div className={classes}>
-          <div className="spacingDivBorder"  ></div>
-          
+        <div className={classes}>          
           <h4  onClick={this.selctProject} style={fontColor} >
             {this.props.name}
             <i className="fa fa-arrow-right arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow} style={fontColor}></i>
