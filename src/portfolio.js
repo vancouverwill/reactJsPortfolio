@@ -12,10 +12,10 @@ var cache = [];
 
 function add(url) {
     if (!hash[url]) {
-        hash[url] = new Image();
-        hash[url].src = url;
+      hash[url] = new Image();
+      hash[url].src = url;
 
-        cache.push(hash[url]);
+      cache.push(hash[url]);
     }
     return hash[url];
 }
