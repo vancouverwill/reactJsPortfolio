@@ -400,7 +400,17 @@ var PortfolioContainer = React.createClass({
 });
 
 
-
+var ProjectAnimationContainer = React.createClass({
+    getInitialState: function() {
+        return {
+         };
+    },
+     render: function() {
+        return (
+        <div></div>
+      );
+    }
+  });
 
 
 var ProjectList = React.createClass({
@@ -443,9 +453,7 @@ var ProjectList = React.createClass({
                 );
                   }, this);
          }
-      else {
-             loop = "";
-         }
+
         return (
           <div id="projectList" style={this.verticalMovement} >
             <p className="introExplainingText">scroll down to view some of the key projects <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne} /></p>
