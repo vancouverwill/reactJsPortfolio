@@ -310,11 +310,7 @@ var PortfolioContainer = React.createClass({
     },
     render: function() {
 
-      var classes, animateProject, overallStatusClasses, classObject;
-
-      classObject = new Object();
-      classObject[this.animationDirection] = true;
-      classes = classNames(classObject); 
+      var animateProject, overallStatusClasses, classObject;
 
       var animatingStatusClass = classNames({
               "animating_active" : this.state.showIsAnimating
@@ -322,24 +318,16 @@ var PortfolioContainer = React.createClass({
 
 
       if (this.props.imageReady == false ){
-          overallStatusClasses = classNames({
-                    "imageLoadingView_active": true
-                });
+          overallStatusClasses = classNames({"imageLoadingView_active": true});
       }
       else if (this.state.showContactModal == true) {
-          overallStatusClasses = classNames({
-              "modalView_active": true
-          });
+          overallStatusClasses = classNames({"modalView_active": true});
       }
       else if (this.state.showListView == true && this.currentProjectIndex == -1) {
-          overallStatusClasses = classNames({
-              "intialView_active": true
-          });
+          overallStatusClasses = classNames({"intialView_active": true});
       }
       else if (this.state.showListView == true && this.currentProjectIndex != -1) {
-          overallStatusClasses = classNames({
-              "projectListView_active": true 
-          });
+          overallStatusClasses = classNames({"projectListView_active": true});
       }
       else {
           overallStatusClasses = classNames({
@@ -396,7 +384,7 @@ var PortfolioContainer = React.createClass({
           </div>
           <ProjectDetailsIntroView currentProject={this.state.currentProject}></ProjectDetailsIntroView>
           <div className="projectListView">
-            <div id="portfolioProjectAnimationContainer" className={classes}>
+            <div id="portfolioProjectAnimationContainer" className={this.animationDirection}>
               <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={this.animationDuration} transitionLeaveTimeout={this.animationDuration}>
                 {animateProject}                      
               </ReactCSSTransitionGroup>
