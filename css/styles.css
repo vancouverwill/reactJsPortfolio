@@ -5974,10 +5974,6 @@ body {
   opacity: 1;
   transition: opacity 1s ease-out;
 }
-/*.projectDetailsView_active #contactButton {*/
-/*opacity: 0;*/
-/*cursor: default;*/
-/*}*/
 .animating_active #contactButton {
   opacity: 0.2;
   cursor: default;
@@ -6014,22 +6010,6 @@ body {
 .modalContactViewText {
   opacity: 0;
 }
-/*#modalContactView a {
-	height: 0;
-}
-
-.modalView_active #modalContactView {
-	height: 100%;
-}*/
-/*h1 {
-	/*position: absolute;*/
-/*text-align: center;
-	z-index: 10;
-	width: 100%;
-	transition: color 1s;
-
-	display: none;
-}*/
 /*-------------- intro view and main projects navigation */
 .introExplainingText {
   padding-top: 15px;
@@ -6037,27 +6017,6 @@ body {
   padding-left: 10%;
   padding-right: 10%;
 }
-/*.introTextContainer {
-	z-index: 20;
-	position: absolute;
-	text-align: center;
-	transition: opacity 0.5s ease-out;
-    /*top: 70px;*/
-/*  width: 100%;
-}*/
-/*.projectListView_active .introTextContainer, .projectDetailsView_active .introTextContainer {
-	opacity: 0;
-	z-index: 0;
-}*/
-/*.introText {
-    /*z-index: 20;*/
-/*width:200px;
-    position: relative;
-    margin: auto;*/
-/*opacity: 0;
-    transition: opacity 0.5s ease-out;*/
-/* display: none;
-}*/
 .imageLoadingView_active .loadingState {
   opacity: 1;
   transform: scale(1, 1);
@@ -6074,7 +6033,6 @@ body {
 .imageLoadingView_active .introText,
 .intialView_active .introText {
   opacity: 1;
-  /*transition: opacity 0.5s ease-out 1s;*/
 }
 .introText__arrow {
   cursor: pointer;
@@ -6089,7 +6047,6 @@ body {
 }
 #projectListMenu {
   padding-top: 140px;
-  /*transition: color 1s;*/
   transition: transform 1s ease-in-out 0.2s, color 1s ease-in-out 0.2s;
   transform: translateY(0px);
 }
@@ -6105,7 +6062,7 @@ body {
 }
 .projectTitle {
   cursor: pointer;
-  height: 7em;
+  height: 8em;
   overflow: hidden;
   padding-bottom: 10px;
   margin-bottom: 0px;
@@ -6123,16 +6080,10 @@ body {
   width: 100%;
   height: 100%;
 }
-/*.projectDetailsView_active .projectListView {
-	transform : scale(0.7, 0.7);
-}*/
 #projectList {
   width: 100%;
   position: absolute;
   z-index: 30;
-  /*height: 70%;*/
-  /*overflow: hidden;*/
-  /*bottom: 0%;*/
   transition: opacity 1s, transform 2s ease-out;
 }
 .active.projectTitle {
@@ -6200,6 +6151,15 @@ body {
   transition: transform 2s ease-in-out, opacity 2s, top 2s;
   transform: scale(0, 0);
 }
+.projectDetailsIntroView h2 {
+  font-size: 2em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+.projectDetailsIntroView p {
+  font-size: 1em;
+  margin-bottom: 0.5em;
+}
 .projectDetailsView_active .projectDetailsIntroView {
   opacity: 1;
   transform: scale(1, 1);
@@ -6231,54 +6191,9 @@ body {
 .projectDetailsContent li {
   text-align: left;
 }
-/*.imageLoadingView_active #projectList, .intialView_active #projectList {	
-	transform: translateY(40%); 
-}*/
 .projectDetailsView_active #projectList {
   opacity: 0;
 }
-/*.spacingDivBorder {
-	/*background-color: gray;*/
-/*height:1px;
-	transform: translateY(0px);
-	transition: transform 1s ease-in-out;
-	width: 100%;
-}*/
-/*.active.projectTitle  .spacingDivBorder {
-	transform: translateY(-0px);
-}
-
-.active.projectTitle + .projectTitle .spacingDivBorder {
-	transform: translateY(+0px);
-}*/
-/*#ProjectViews_container__p {
-	position: absolute;
-	width: 50%;
-  	right: 0;
-}
-
-
-#ProjectView__p {
-  background-size: 20%;
-  border: red solid;
-  height: 20%;
-}
-
-#ProjectView__p.active{
-	border: black solid;
-}
-*/
-/*.opacityShow {
-	opacity : 1;
-}
-
-.opacityHide {
-	opacity : 0.4;
-}
-
-.opacityTransition {
-	transition: opacity 1s;
-}*/
 /** animations */
 .portfolioSlide {
   top: 0%;
@@ -6338,7 +6253,7 @@ body {
 .projectDetailsView_active.singleImageProject .arrow__individualProjecCarousel {
   opacity: 0;
 }
-.projectDetailsView_active.animating_active .arrow__individualProjecCarousel {
+.projectDetailsView_active .animating_active .arrow__individualProjecCarousel {
   opacity: 0.1;
 }
 #leftArrow__individualProjecCarousel {
@@ -6396,6 +6311,7 @@ body {
 .movingLeft .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
   transform: translateX(-100%);
 }
+/*********/
 .movingRight .portfolioProjectAnimation-enter {
   top: 0%;
   right: 100%;
@@ -6460,9 +6376,10 @@ h4,
     font-size: 4rem;
   }
   .projectDetailsView_active .projectListView {
-    transform: scale(1, 0.6) translateY(20%);
+    transform: scale(1, 0.6) translateY(16em);
   }
 }
+/* Small devices with retina display (tablets, 768px and up) */
 @media (max-width: 992px) and (min-resolution: 2dppx) {
   h4,
   .h4 {
@@ -6493,7 +6410,7 @@ h4,
     /*font-size: 140%;*/
   }
   .projectDetailsView_active .projectListView {
-    transform: scale(0.7, 0.6) translateY(30%);
+    transform: scale(0.7, 0.6) translateY(12em);
   }
   .arrow__individualProjecCarousel {
     color: black;
