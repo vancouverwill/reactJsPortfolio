@@ -310,28 +310,11 @@ var PortfolioContainer = React.createClass({
     },
     render: function() {
 
-      var classes, animateProject, overallStatusClasses;
+      var classes, animateProject, overallStatusClasses, classObject;
 
-      if (this.animationDirection == "movingUp") {
-          classes = classNames({
-                    "movingUp": true
-                });
-      }
-      else if (this.animationDirection == "movingDown") {
-          classes = classNames({
-              "movingDown": true
-          });
-      }
-      else if (this.animationDirection == "movingLeft") {
-          classes = classNames({
-              "movingLeft": true
-          });
-      }
-      else if (this.animationDirection == "movingRight") {
-          classes = classNames({
-              "movingRight": true
-          });
-      }
+      classObject = new Object();
+      classObject[this.animationDirection] = true;
+      classes = classNames(classObject); 
 
       var animatingStatusClass = classNames({
               "animating_active" : this.state.showIsAnimating
@@ -377,6 +360,7 @@ var PortfolioContainer = React.createClass({
 
       return ( 
         <div id="mainView" className={overallStatusClasses}><div id="animatingStatus" className={animatingStatusClass}>
+          <div id="testBlock"></div>
           <div id="modalContactView" className="active">
             <div className="closeButton modalCloseButton" onClick={this.hideContactView} >
               <i className="fa fa-times fa-2x"></i>
@@ -416,7 +400,6 @@ var PortfolioContainer = React.createClass({
               <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={this.animationDuration} transitionLeaveTimeout={this.animationDuration}>
                 {animateProject}                      
               </ReactCSSTransitionGroup>
-              
             </div>
             <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
           </div>
