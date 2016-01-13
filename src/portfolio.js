@@ -1,4 +1,4 @@
-/*global require*/
+/*global require, apiUrl*/
 
 var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
 var React = require("react");
@@ -104,7 +104,7 @@ var PageLoadingClass = React.createClass({
                     var projects = [];
                     var allImages = [];
 
-                    apiProjects.forEach(function(apiProject, i) {
+                    apiProjects.forEach(function(apiProject) {
                       var project = {};
                       project.name = apiProject.title.rendered;
                       project.shortDescription = apiProject.project_short_description;
@@ -310,12 +310,13 @@ var PortfolioContainer = React.createClass({
     },
     render: function() {
 
-      var animateProject, overallStatusClasses, classObject;
+     
 
       var animatingStatusClass = classNames({
               "animating_active" : this.state.showIsAnimating
           });
 
+      var overallStatusClasses;
 
       if (this.props.imageReady == false ){
           overallStatusClasses = classNames({"imageLoadingView_active": true});
@@ -336,81 +337,85 @@ var PortfolioContainer = React.createClass({
           });
       }
 
-      if (this.state.animatedImageUrl != null) {
-          var imageUrl = "url('" + this.state.animatedImageUrl + "')";
-          var backgroundStyles = {"backgroundImage" : imageUrl};
-
-          animateProject = <div key={this.state.animatedImageUrl} className="portfolioSlide"  >
-                              <div className="slideImage" style={backgroundStyles} ></div>
-                              <div className="slideImageOpacityOverlay" ></div>
-                            </div>;
-      }
+      
 
       return ( 
-        <div id="mainView" className={overallStatusClasses}><div id="animatingStatus" className={animatingStatusClass}>
-          <div id="testBlock"></div>
-          <div id="modalContactView" className="active">
-            <div className="closeButton modalCloseButton" onClick={this.hideContactView} >
+          <div id="mainView" className={overallStatusClasses}><div id="animatingStatus" className={animatingStatusClass}>
+            <div id="testBlock"></div>
+            <div id="modalContactView" className="active">
+              <div className="closeButton modalCloseButton" onClick={this.hideContactView} >
+                <i className="fa fa-times fa-2x"></i>
+              </div>
+              <div className="modalContactViewText">
+                contact : willmelbourne@gmail.com
+                <a href="https://ca.linkedin.com/in/willmelbourne" target="_blank">
+                  <span className="circleBorder">
+                    <i className="fa fa-linkedin fa-lg"></i>
+                  </span>
+                </a>
+                <a href="mailto:willmelbourne@gmail.com">
+                  <span className="circleBorder">
+                    <i className="fa fa-envelope fa-lg"></i>
+                  </span>
+                </a>
+                <a href="https://github.com/vancouverwill" target="_blank">
+                  <span className="circleBorder">
+                    <i className="fa fa-github-alt fa-lg"></i>
+                  </span>
+                </a>
+              </div>
+            </div>
+            <button id="contactButton" type="button" className=" btn btn-default" onClick={this.showContactView} >Contact</button>
+            <div className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
               <i className="fa fa-times fa-2x"></i>
             </div>
-            <div className="modalContactViewText">
-              contact : willmelbourne@gmail.com
-              <a href="https://ca.linkedin.com/in/willmelbourne" target="_blank">
-                <span className="circleBorder">
-                  <i className="fa fa-linkedin fa-lg"></i>
-                </span>
-              </a>
-              <a href="mailto:willmelbourne@gmail.com">
-                <span className="circleBorder">
-                  <i className="fa fa-envelope fa-lg"></i>
-                </span>
-              </a>
-              <a href="https://github.com/vancouverwill" target="_blank">
-                <span className="circleBorder">
-                  <i className="fa fa-github-alt fa-lg"></i>
-                </span>
-              </a>
+            <div id="leftArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">
+              <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
             </div>
-          </div>
-          <button id="contactButton" type="button" className=" btn btn-default" onClick={this.showContactView} >Contact</button>
-          <div className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
-            <i className="fa fa-times fa-2x"></i>
-          </div>
-          <div id="leftArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">
-            <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
-          </div>
-          <div id="rightArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">
-            <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
-          </div>
-          <ProjectDetailsIntroView currentProject={this.state.currentProject}></ProjectDetailsIntroView>
-          <div className="projectListView">
-            <div id="portfolioProjectAnimationContainer" className={this.animationDirection}>
-              <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={this.animationDuration} transitionLeaveTimeout={this.animationDuration}>
-                {animateProject}                      
-              </ReactCSSTransitionGroup>
+            <div id="rightArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">
+              <i className="fa fa-chevron-right" onClick={this.clickRightIndividualProjectCarousel}></i>
             </div>
-            <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
-          </div>
-          <div className="projectDetailsMainView">
-            <ProjectDetailsMainView currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetailsMainView>
-          </div>
-        </div></div>
+            <ProjectDetailsIntroView currentProject={this.state.currentProject}></ProjectDetailsIntroView>
+            <div className="projectListView">
+              <ProjectAnimationContainer animationDirection={this.animationDirection} animationDuration={this.animationDuration} animatedImageUrl={this.state.animatedImageUrl}></ProjectAnimationContainer>
+              <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
+            </div>
+            <div className="projectDetailsMainView">
+              <ProjectDetailsMainView currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetailsMainView>
+            </div>
+          </div></div>
       );
     }
 });
 
 
 var ProjectAnimationContainer = React.createClass({
-    getInitialState: function() {
-        return {
-         };
-    },
-     render: function() {
-        return (
-        <div></div>
-      );
-    }
-  });
+  getInitialState: function() {
+      return {
+       };
+  },
+   render: function() {
+      var animateProject;
+
+      if (this.props.animatedImageUrl != null) {
+        var imageUrl = "url('" + this.props.animatedImageUrl + "')";
+        var backgroundStyles = {"backgroundImage" : imageUrl};
+
+        animateProject = <div key={this.props.animatedImageUrl} className="portfolioSlide"  >
+                              <div className="slideImage" style={backgroundStyles} ></div>
+                              <div className="slideImageOpacityOverlay" ></div>
+                            </div>;
+      }
+
+      return (
+      <div id="portfolioProjectAnimationContainer" className={this.props.animationDirection}>
+            <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={this.props.animationDuration} transitionLeaveTimeout={this.props.animationDuration}>
+              {animateProject}                      
+            </ReactCSSTransitionGroup>
+          </div>
+    );
+  }
+});
 
 
 var ProjectList = React.createClass({
