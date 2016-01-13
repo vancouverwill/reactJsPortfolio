@@ -400,47 +400,7 @@ var PortfolioContainer = React.createClass({
 });
 
 
-var ProjectDetailsIntroView = React.createClass({
-    render: function() {
-        if (this.props.currentProject === undefined) {
-            return (
-          <div className="projectDetailsIntroView"></div>
-        );
-        }
-      else {
-            return (
-          <div className="projectDetailsIntroView">
-            <h2>{this.props.currentProject.name}</h2>
-            <p>{this.props.currentProject.shortDescription}</p>
-          </div>
-        );
-        }
-    }
-});
 
-
-var ProjectDetailsMainView = React.createClass({
-    handleProjectListShow: function() {
-        this.props.handleProjectListShow();
-    },
-    render: function() {
-        if (this.props.currentProject === undefined) {
-            return (
-          <div></div>
-        );
-        }
-      else {
-            return (
-          <div key={this.props.currentProject.name} className="projectDetailsContent">
-            <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
-            <h2>{this.props.currentProject.name}</h2>
-
-            <p dangerouslySetInnerHTML={{__html: this.props.currentProject.description}}></p>
-          </div>
-        );
-        }
-    }
-});
 
 
 var ProjectList = React.createClass({
@@ -533,6 +493,49 @@ var ProjectName = React.createClass({
           <p dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
         </div>
         );
+    }
+});
+
+
+var ProjectDetailsIntroView = React.createClass({
+    render: function() {
+        if (this.props.currentProject === undefined) {
+            return (
+          <div className="projectDetailsIntroView"></div>
+        );
+        }
+      else {
+            return (
+          <div className="projectDetailsIntroView">
+            <h2>{this.props.currentProject.name}</h2>
+            <p>{this.props.currentProject.shortDescription}</p>
+          </div>
+        );
+        }
+    }
+});
+
+
+var ProjectDetailsMainView = React.createClass({
+    handleProjectListShow: function() {
+        this.props.handleProjectListShow();
+    },
+    render: function() {
+        if (this.props.currentProject === undefined) {
+            return (
+          <div></div>
+        );
+        }
+      else {
+            return (
+          <div key={this.props.currentProject.name} className="projectDetailsContent">
+            <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
+            <h2>{this.props.currentProject.name}</h2>
+
+            <p dangerouslySetInnerHTML={{__html: this.props.currentProject.description}}></p>
+          </div>
+        );
+        }
     }
 });
 
