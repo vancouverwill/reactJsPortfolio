@@ -1,4 +1,4 @@
-/*global require*/
+/*global require, apiUrl*/
 
 var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
 var React = require("react");
@@ -101,7 +101,7 @@ var PageLoadingClass = React.createClass({
                 var projects = [];
                 var allImages = [];
 
-                apiProjects.forEach(function (apiProject, i) {
+                apiProjects.forEach(function (apiProject) {
                     var project = {};
                     project.name = apiProject.title.rendered;
                     project.shortDescription = apiProject.project_short_description;
@@ -301,49 +301,25 @@ var PortfolioContainer = React.createClass({
     },
     render: function () {
 
-        var classes, animateProject, overallStatusClasses, classObject;
-
-        classObject = new Object();
-        classObject[this.animationDirection] = true;
-        classes = classNames(classObject);
-
         var animatingStatusClass = classNames({
             "animating_active": this.state.showIsAnimating
         });
 
+        var overallStatusClasses;
+
         if (this.props.imageReady == false) {
-            overallStatusClasses = classNames({
-                "imageLoadingView_active": true
-            });
+            overallStatusClasses = classNames({ "imageLoadingView_active": true });
         } else if (this.state.showContactModal == true) {
-            overallStatusClasses = classNames({
-                "modalView_active": true
-            });
+            overallStatusClasses = classNames({ "modalView_active": true });
         } else if (this.state.showListView == true && this.currentProjectIndex == -1) {
-            overallStatusClasses = classNames({
-                "intialView_active": true
-            });
+            overallStatusClasses = classNames({ "intialView_active": true });
         } else if (this.state.showListView == true && this.currentProjectIndex != -1) {
-            overallStatusClasses = classNames({
-                "projectListView_active": true
-            });
+            overallStatusClasses = classNames({ "projectListView_active": true });
         } else {
             overallStatusClasses = classNames({
                 "projectDetailsView_active": true,
                 "singleImageProject": this.state.currentProject.images.length == 1 ? true : false
             });
-        }
-
-        if (this.state.animatedImageUrl != null) {
-            var imageUrl = "url('" + this.state.animatedImageUrl + "')";
-            var backgroundStyles = { "backgroundImage": imageUrl };
-
-            animateProject = React.createElement(
-                "div",
-                { key: this.state.animatedImageUrl, className: "portfolioSlide" },
-                React.createElement("div", { className: "slideImage", style: backgroundStyles }),
-                React.createElement("div", { className: "slideImageOpacityOverlay" })
-            );
         }
 
         return React.createElement(
@@ -418,15 +394,7 @@ var PortfolioContainer = React.createClass({
                 React.createElement(
                     "div",
                     { className: "projectListView" },
-                    React.createElement(
-                        "div",
-                        { id: "portfolioProjectAnimationContainer", className: classes },
-                        React.createElement(
-                            ReactCSSTransitionGroup,
-                            { transitionName: "portfolioProjectAnimation", transitionEnterTimeout: this.animationDuration, transitionLeaveTimeout: this.animationDuration },
-                            animateProject
-                        )
-                    ),
+                    React.createElement(ProjectAnimationContainer, { animationDirection: this.animationDirection, animationDuration: this.animationDuration, animatedImageUrl: this.state.animatedImageUrl }),
                     React.createElement(ProjectList, { projects: this.props.projects, selctProject: this.selctProject, handleProjectDetailsShow: this.handleProjectDetailsShow, chooseProjectOne: this.chooseProjectOne, imageReady: this.props.imageReady, currentProjectIndex: this.currentProjectIndex })
                 ),
                 React.createElement(
@@ -439,61 +407,36 @@ var PortfolioContainer = React.createClass({
     }
 });
 
-var ProjectDetailsIntroView = React.createClass({
-    displayName: "ProjectDetailsIntroView",
+var ProjectAnimationContainer = React.createClass({
+    displayName: "ProjectAnimationContainer",
 
-    render: function () {
-        if (this.props.currentProject === undefined) {
-            return React.createElement("div", { className: "projectDetailsIntroView" });
-        } else {
-            return React.createElement(
-                "div",
-                { className: "projectDetailsIntroView" },
-                React.createElement(
-                    "h2",
-                    null,
-                    this.props.currentProject.name
-                ),
-                React.createElement(
-                    "p",
-                    null,
-                    this.props.currentProject.shortDescription
-                )
-            );
-        }
-    }
-});
-
-var ProjectDetailsMainView = React.createClass({
-    displayName: "ProjectDetailsMainView",
-
-    handleProjectListShow: function () {
-        this.props.handleProjectListShow();
+    getInitialState: function () {
+        return {};
     },
     render: function () {
-        if (this.props.currentProject === undefined) {
-            return React.createElement("div", null);
-        } else {
-            return React.createElement(
+        var animateProject;
+
+        if (this.props.animatedImageUrl != null) {
+            var imageUrl = "url('" + this.props.animatedImageUrl + "')";
+            var backgroundStyles = { "backgroundImage": imageUrl };
+
+            animateProject = React.createElement(
                 "div",
-                { key: this.props.currentProject.name, className: "projectDetailsContent" },
-                React.createElement(
-                    "span",
-                    { className: "pointer" },
-                    React.createElement(
-                        "i",
-                        { className: "fa fa-arrow-up", onClick: this.handleProjectListShow },
-                        "Back to Projects"
-                    )
-                ),
-                React.createElement(
-                    "h2",
-                    null,
-                    this.props.currentProject.name
-                ),
-                React.createElement("p", { dangerouslySetInnerHTML: { __html: this.props.currentProject.description } })
+                { key: this.props.animatedImageUrl, className: "portfolioSlide" },
+                React.createElement("div", { className: "slideImage", style: backgroundStyles }),
+                React.createElement("div", { className: "slideImageOpacityOverlay" })
             );
         }
+
+        return React.createElement(
+            "div",
+            { id: "portfolioProjectAnimationContainer", className: this.props.animationDirection },
+            React.createElement(
+                ReactCSSTransitionGroup,
+                { transitionName: "portfolioProjectAnimation", transitionEnterTimeout: this.props.animationDuration, transitionLeaveTimeout: this.props.animationDuration },
+                animateProject
+            )
+        );
     }
 });
 
@@ -534,9 +477,8 @@ var ProjectList = React.createClass({
             loop = this.props.projects.map(function (project) {
                 return React.createElement(ProjectName, { key: project.name, name: project.name, active: project.active, fontColor: project.fontColor, shortDescription: project.shortDescription, selctProject: this.selctProject, handleProjectDetailsShow: this.handleProjectDetailsShow });
             }, this);
-        } else {
-            loop = "";
         }
+
         return React.createElement(
             "div",
             { id: "projectList", style: this.verticalMovement },
@@ -599,6 +541,64 @@ var ProjectName = React.createClass({
             ),
             React.createElement("p", { dangerouslySetInnerHTML: { __html: this.props.shortDescription } })
         );
+    }
+});
+
+var ProjectDetailsIntroView = React.createClass({
+    displayName: "ProjectDetailsIntroView",
+
+    render: function () {
+        if (this.props.currentProject === undefined) {
+            return React.createElement("div", { className: "projectDetailsIntroView" });
+        } else {
+            return React.createElement(
+                "div",
+                { className: "projectDetailsIntroView" },
+                React.createElement(
+                    "h2",
+                    null,
+                    this.props.currentProject.name
+                ),
+                React.createElement(
+                    "p",
+                    null,
+                    this.props.currentProject.shortDescription
+                )
+            );
+        }
+    }
+});
+
+var ProjectDetailsMainView = React.createClass({
+    displayName: "ProjectDetailsMainView",
+
+    handleProjectListShow: function () {
+        this.props.handleProjectListShow();
+    },
+    render: function () {
+        if (this.props.currentProject === undefined) {
+            return React.createElement("div", null);
+        } else {
+            return React.createElement(
+                "div",
+                { key: this.props.currentProject.name, className: "projectDetailsContent" },
+                React.createElement(
+                    "span",
+                    { className: "pointer" },
+                    React.createElement(
+                        "i",
+                        { className: "fa fa-arrow-up", onClick: this.handleProjectListShow },
+                        "Back to Projects"
+                    )
+                ),
+                React.createElement(
+                    "h2",
+                    null,
+                    this.props.currentProject.name
+                ),
+                React.createElement("p", { dangerouslySetInnerHTML: { __html: this.props.currentProject.description } })
+            );
+        }
     }
 });
 

@@ -6332,6 +6332,7 @@ body {
 }
 .introExplainingText {
   font-size: 2em;
+  text-align: left;
 }
 #projectListMenu {
   margin-left: 5%;
@@ -6396,6 +6397,7 @@ h4,
   }
   .introExplainingText {
     font-size: 1em;
+    text-align: center;
   }
   #projectListMenu {
     margin: auto;
