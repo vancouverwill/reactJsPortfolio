@@ -131,9 +131,9 @@ body {
 
 .projectTitle {
 	cursor: pointer;
-	height: 8em;
+	height: 12rem;
 	overflow: hidden;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
     margin-bottom: 0px;
     margin-top: 0px;
     transition: opacity @projectListViewAnimations, transform @projectListViewAnimations;
@@ -171,14 +171,19 @@ body {
 
 .arrowSeeProjectDetails {
     cursor: pointer;
-    font-size: 20px;
+    font-size: 1.6rem;
+    transition: transform 1s ease-out;
+    transform: scale(0.0);
+    transform-origin:left;
 }
 .projectTitle .arrowSeeProjectDetails {
-	display: none;
-	float: right;
+	/*display: none;*/
+	/*float: right;*/
+
 }
 .active.projectTitle .arrowSeeProjectDetails {
-	display: block;
+	/*display: block;*/
+	transform: scale(1.0);
 }
 
 #projectList  h4 {
@@ -188,8 +193,13 @@ body {
 	
 }
 
-.projectListView_active #projectList h4, .projectListView_active #projectList p {
+.projectListView_active #projectList h4 {
 	transition: transform 1s;
+	transform: scaleY(0.90);
+}
+
+.projectListView_active #projectList .projectShortDescription {
+	transition: transform 1s, margin-bottom 1s;
 	transform: scaleY(0.90);
 }
 
@@ -198,7 +208,7 @@ body {
  	transform: scaleY(1.0);
 }
 
-.projectListView_active #projectList .active p {
+.projectListView_active #projectList .active .projectShortDescription {
 	transform: scaleY(1.0);
 }
 
@@ -250,7 +260,7 @@ body {
     margin-bottom: 0.5em;
 }
 
-.projectDetailsIntroView p {
+.projectDetailsIntroView .projectShortDescription {
 	font-size: 1em;
 	margin-bottom: 0.5em;
 }
@@ -567,12 +577,12 @@ body {
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: @screen-md-min) { 
 
-	body {
-		font-size: 14px;
+	html, body {
+		font-size: 12px;
 	}
 
 	.introExplainingText {
-		font-size: 1em;
+		font-size: 1.2em;
 		 text-align: center;
 	}
 
@@ -581,12 +591,37 @@ body {
 		width: 450px;
 	}
 
-	h4, .h4 {
-	    font-size: 2rem;
+	.projectTitle {
+		height: auto;
 	}
 
-	.active.projectTitle h4, .active.projectTitle p {
+	#projectList h4 {
+	    font-size: 2rem;
+	    margin-bottom: 2rem;
+
+	    /*margin: 0px;*/
+	padding-top: 0px;
+    padding-bottom: 0px;
+	}
+
+
+	#projectList .projectShortDescription {
+		font-size: 1.1rem;
+		margin-bottom: 4rem;
+		    max-height: 3.0rem;
+    overflow: hidden;
+	}
+
+	.active.projectTitle h4, .active.projectTitle .projectShortDescription {
 		/*font-size: 140%;*/
+	}
+
+	.active.projectTitle .projectShortDescription {
+		margin-bottom: 2rem;
+	}
+
+	.active.projectTitle .arrowSeeProjectDetails {
+		margin-bottom: 8rem;
 	}
 
 	.projectDetailsView_active .projectListView {
