@@ -446,7 +446,16 @@ var ProjectList = React.createClass({
           // var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
              var verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
 
-             this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
+
+             var projectTitles = document.getElementsByClassName('projectTitle');
+
+
+
+             var verticalMovementInPixels = projectTitles[this.props.currentProjectIndex].offsetTop - 80;
+
+
+             // this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
+             this.verticalMovement = {transform: "translateY(-" + verticalMovementInPixels +  "px)"};
          }
         else {
              this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"};
