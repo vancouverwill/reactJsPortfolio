@@ -441,7 +441,7 @@ var ProjectList = React.createClass({
         if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
 
               // var projectTitleHeight = 120;
-             var projectTitleEmHeight = 7; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
+             var projectTitleEmHeight = 12; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
 
           // var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
              var verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
@@ -505,9 +505,14 @@ var ProjectName = React.createClass({
         <div className={classes}>          
           <h4  onClick={this.selctProject} style={fontColor} >
             {this.props.name}
-            <i className="fa fa-arrow-right arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow} style={fontColor}></i>
+            
           </h4>
-          <p dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
+          <p className="projectShortDescription" dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
+          <p className="arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow} style={fontColor}>
+            Read More
+            <i className="fa fa-arrow-right " >
+            </i>
+          </p>
         </div>
         );
     }
