@@ -409,7 +409,11 @@ var ProjectAnimationContainer = React.createClass({
 
       return (
       <div id="portfolioProjectAnimationContainer" className={this.props.animationDirection}>
-            <ReactCSSTransitionGroup transitionName="portfolioProjectAnimation" transitionEnterTimeout={this.props.animationDuration} transitionLeaveTimeout={this.props.animationDuration}>
+            <ReactCSSTransitionGroup 
+              transitionName="portfolioProjectAnimation" 
+              transitionEnterTimeout={this.props.animationDuration} 
+              transitionLeaveTimeout={this.props.animationDuration}
+              >
               {animateProject}                      
             </ReactCSSTransitionGroup>
           </div>
