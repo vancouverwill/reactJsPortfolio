@@ -6026,9 +6026,9 @@ body {
 }
 .projectTitle {
   cursor: pointer;
-  height: 8em;
+  height: 12rem;
   overflow: hidden;
-  padding-bottom: 10px;
+  padding-bottom: 0px;
   margin-bottom: 0px;
   margin-top: 0px;
   transition: opacity 1s ease-in-out 0.2s, -webkit-transform 1s ease-in-out 0.2s;
@@ -6065,25 +6065,40 @@ body {
 }
 .arrowSeeProjectDetails {
   cursor: pointer;
-  font-size: 20px;
+  font-size: 1.6rem;
+  transition: -webkit-transform 1s ease-out;
+  transition: transform 1s ease-out;
+  transition: transform 1s ease-out, -webkit-transform 1s ease-out;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  -webkit-transform-origin: left;
+  transform-origin: left;
 }
 .projectTitle .arrowSeeProjectDetails {
-  display: none;
-  float: right;
+  /*display: none;*/
+  /*float: right;*/
 }
 .active.projectTitle .arrowSeeProjectDetails {
-  display: block;
+  /*display: block;*/
+  -webkit-transform: scale(1);
+  transform: scale(1);
 }
 #projectList h4 {
   margin: 0px;
   padding-top: 25px;
   padding-bottom: 5px;
 }
-.projectListView_active #projectList h4,
-.projectListView_active #projectList p {
+.projectListView_active #projectList h4 {
   transition: -webkit-transform 1s;
   transition: transform 1s;
   transition: transform 1s, -webkit-transform 1s;
+  -webkit-transform: scaleY(0.9);
+  transform: scaleY(0.9);
+}
+.projectListView_active #projectList .projectShortDescription {
+  transition: margin-bottom 1s, -webkit-transform 1s;
+  transition: transform 1s, margin-bottom 1s;
+  transition: transform 1s, margin-bottom 1s, -webkit-transform 1s;
   -webkit-transform: scaleY(0.9);
   transform: scaleY(0.9);
 }
@@ -6092,7 +6107,7 @@ body {
   -webkit-transform: scaleY(1);
   transform: scaleY(1);
 }
-.projectListView_active #projectList .active p {
+.projectListView_active #projectList .active .projectShortDescription {
   -webkit-transform: scaleY(1);
   transform: scaleY(1);
 }
@@ -6142,7 +6157,7 @@ body {
   margin-top: 1em;
   margin-bottom: 0.5em;
 }
-.projectDetailsIntroView p {
+.projectDetailsIntroView .projectShortDescription {
   font-size: 1em;
   margin-bottom: 0.5em;
 }
@@ -6405,24 +6420,43 @@ h4,
 }
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 992px) {
+  html,
   body {
-    font-size: 14px;
+    font-size: 12px;
   }
   .introExplainingText {
-    font-size: 1em;
+    font-size: 1.2em;
     text-align: center;
   }
   #projectListMenu {
     margin: auto;
     width: 450px;
   }
-  h4,
-  .h4 {
+  .projectTitle {
+    height: auto;
+  }
+  #projectList h4 {
     font-size: 2rem;
+    margin-bottom: 2rem;
+    /*margin: 0px;*/
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+  #projectList .projectShortDescription {
+    font-size: 1.1rem;
+    margin-bottom: 4rem;
+    max-height: 3.0rem;
+    overflow: hidden;
   }
   .active.projectTitle h4,
-  .active.projectTitle p {
+  .active.projectTitle .projectShortDescription {
     /*font-size: 140%;*/
+  }
+  .active.projectTitle .projectShortDescription {
+    margin-bottom: 2rem;
+  }
+  .active.projectTitle .arrowSeeProjectDetails {
+    margin-bottom: 8rem;
   }
   .projectDetailsView_active .projectListView {
     -webkit-transform: scale(0.7, 0.6) translateY(12em);
