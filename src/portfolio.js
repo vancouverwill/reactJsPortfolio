@@ -247,18 +247,22 @@ var PortfolioContainer = React.createClass({
         this.moveUp();
     },
     moveUp: function() {
-        if (this.currentProjectIndex < (this.props.projects.length - 1)) {
-            this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name);
-        }
+      if (this.props.projects == undefined) return;
+
+      if (this.currentProjectIndex < (this.props.projects.length - 1)) {
+          this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name);
+      }
     },
     moveDown: function(){
-        if (this.currentProjectIndex > 0) {
-            this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name);
-        }
+      if (this.props.projects == undefined) return;
 
-        if (this.currentProjectIndex == 0) {
-            this.updateCurrentProject("");
-        }
+      if (this.currentProjectIndex > 0) {
+          this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name);
+      }
+
+      if (this.currentProjectIndex == 0) {
+          this.updateCurrentProject("");
+      }
     },
     setAnimating: function() {
         this.isAnimating = true;
@@ -440,10 +444,10 @@ var ProjectList = React.createClass({
  
         if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
 
-              // var projectTitleHeight = 120;
+              var projectTitleHeight = 120;
              var projectTitleEmHeight = 12; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
 
-          // var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
+            var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
              var verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
 
 
@@ -451,15 +455,54 @@ var ProjectList = React.createClass({
 
 
 
-             var verticalMovementInPixels = projectTitles[this.props.currentProjectIndex].offsetTop - 80;
+             // var verticalMovementInPixels = projectTitles[this.props.currentProjectIndex].offsetTop - 80;
+
+             // below code is to test out aligning from bottom of page
+
+             var parentElement = projectTitles[this.props.currentProjectIndex].offsetParent;
+
+             var tempOffSetHeight = parentElement.offsetHeight;
+
+             var offSetTop = projectTitles[this.props.currentProjectIndex].offsetTop;
+
+             var offsetBottom = parentElement.offsetHeight - projectTitles[this.props.currentProjectIndex].offsetTop  - 80;
+
+             // verticalMovementInPixels = offsetBottom;
 
 
              // this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
-             this.verticalMovement = {transform: "translateY(-" + verticalMovementInPixels +  "px)"};
+             // this.verticalMovement = {transform: "translateY(-" + verticalMovementInPixels +  "px)"};
+             this.verticalMovement = {top: "-" + verticalMovementInPixels +  "px"};
+             
+
+
+             // this.verticalMovement = {bottom: "+" + verticalMovementInPixels +  "px"};
          }
         else {
-             this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"};
+             // this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"};
+             this.verticalMovement = {top: "-" + 0 +  "px"};
+             // 
+            
+             // below code is to test out aligning from bottom of page
+
+            var menu = document.getElementById("projectList")
+            var menuHeight = menu.offsetHeight;
+
+
+            var containers = document.getElementsByClassName("projectListView")
+            var containersHeight = containers[0].offsetHeight;
+
+            var displacementFromBottom = menu.offsetHeight - containers[0].offsetHeight
+
+
+            // this.verticalMovement = {bottom: "" + displacementFromBottom +  "px"};
          }
+    },
+    componentDidUpdate: function() {
+      if (this.props.projects !== undefined && this.props.currentProjectIndex == -1) {
+        console.log("testing for projects loading, this would be the place to switch to bottom css positioning")
+        }
+        
     },
     render: function() {
         var loop;
