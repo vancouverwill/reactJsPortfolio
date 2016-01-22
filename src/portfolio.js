@@ -386,11 +386,11 @@ var PortfolioContainer = React.createClass({
             </div>
             
             
-            <p id="contactButton" className="contactBarFont" onClick={this.showContactView} >Contact</p>
-            <p className="contactBarFont projectClose" onClick={this.handleProjectListShow} >
+            <p id="contactButton" className="headerBarFont" onClick={this.showContactView} >Contact</p>
+            <p className="headerBarFont projectClose" onClick={this.handleProjectListShow} >
               Return to articles
             </p>
-            <div className="contactBar">  
+            <div className="headerBar">  
             </div>
 
 
