@@ -385,11 +385,11 @@ var PortfolioContainer = React.createClass({
               </div>
             </div>
             
-            <div className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
-              <i className="fa fa-times fa-2x"></i>
-            </div>
-            <p id="contactButton" onClick={this.showContactView} >Contact</p>
             
+            <p id="contactButton" className="contactBarFont" onClick={this.showContactView} >Contact</p>
+            <p className="contactBarFont projectClose" onClick={this.handleProjectListShow} >
+              Return to articles
+            </p>
             <div className="contactBar">  
             </div>
 
@@ -585,9 +585,8 @@ var ProjectName = React.createClass({
           </h4>
           <p className="projectShortDescription" dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
           <p className="arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow} style={fontColor}>
-            Read More
-            <i className="fa fa-arrow-right " >
-            </i>
+            Read More &nbsp;
+            <i className="fa fa-arrow-right " ></i>
           </p>
         </div>
         );

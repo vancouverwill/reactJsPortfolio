@@ -3,9 +3,9 @@
 
 
 @projectListViewSlideAnimations: 1.0s ease-in-out 0.200s;
-
-
 @projectListViewMenuAnimations: 2.0s;
+
+@contactBarHeight: 4em;
 
 body {
 	background: white;
@@ -18,23 +18,27 @@ body {
 /** contact button and modal */
 
 .contactBar { /* testint */
-	border-bottom: solid black;
-    height: 4em;
+	border-bottom: solid black 1px;
+    height: @contactBarHeight;
     width: 100%;
     z-index: 10;
-    position: relative;
-    display: none;
+    position: absolute;
+    top:0;
 }
 
 #contactButton {
-	cursor: pointer;
-    font-size: 1em;
-	position: absolute;
-	right:25px;
-	top: 10px;
-	z-index:40;
 	opacity: 1;
 	transition: opacity 1s ease-out;
+	float: right;
+	margin-right: 25px;
+}
+
+.contactBarFont {
+	cursor: pointer;
+	font-size: 1.2em;
+	margin-top: 1em;
+	position: relative;
+	z-index:40;
 }
 
 .animating_active #contactButton{
@@ -123,10 +127,10 @@ body {
 }
 
 #projectListContainer {
-	margin-top: 4em;
+	margin-top: @contactBarHeight;
 	position: relative;
 	overflow:hidden;
-	border-top: solid black 1px;
+	
 	width: 100%;
 	height: 100%;
 }
@@ -262,9 +266,17 @@ body {
     position: absolute;
 }
 
-.projectDetailsView_active .projectCloseButton, .modalView_active  .modalCloseButton {
+.projectClose {
+	margin-left: 25px;
+	float:left;
+	opacity: 0;
+	transition: opacity 2s;
+}
+
+.projectDetailsView_active .projectClose, .modalView_active  .modalCloseButton {
 	opacity: 1;
 	transform: translateX(0px);
+
 }
 
 .projectDetailsIntroView {
@@ -272,6 +284,7 @@ body {
     position: absolute;
     top: 0;
     text-align: center;
+    margin-top: @contactBarHeight;
     width: 100%;
     height: 20%;
     opacity : 0; 
