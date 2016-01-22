@@ -84,7 +84,8 @@ var PageLoadingClass = React.createClass({
     getInitialState: function() {
         return {
             projects: undefined,
-            ready: false
+            ready: false,
+            ajaxState: undefined
         };
     },
     componentWillMount : function() {
@@ -94,6 +95,7 @@ var PageLoadingClass = React.createClass({
         this.setState({ready: true});
     },
     handleError : function() {
+      this.setState({ajaxState : "failed"})
     },
     loadCommentsFromServer: function() {
         Jquery.ajax({
@@ -130,14 +132,27 @@ var PageLoadingClass = React.createClass({
                 }.bind(this),
             error: function(xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
+                    console.log('could not load projects')
+                    this.handleError();
                 }.bind(this)
         });
     },
     render: function() {
+
+      if (this.state.ajaxState == undefined) {
         return (
-      <PortfolioContainer url={this.props.url} projects={this.state.projects} imageReady={this.state.ready} >
-      </PortfolioContainer>
-    );
+          <PortfolioContainer url={this.props.url} projects={this.state.projects} imageReady={this.state.ready} >
+          </PortfolioContainer>
+        );
+      }
+      else {
+        return (
+          <div className="text-center">
+            <h3>Sorry projects are not available to view right now :(</h3> 
+            <h3>Please try again later....</h3>
+          </div>
+        );
+      }
     }
 });
 
