@@ -337,11 +337,12 @@ var PortfolioContainer = React.createClass({
 
       var overallStatusClasses;
 
-      if (this.props.imageReady == false ){
-          overallStatusClasses = classNames({"imageLoadingView_active": true});
-      }
-      else if (this.state.showContactModal == true) {
+      
+      if (this.state.showContactModal == true) {
           overallStatusClasses = classNames({"modalView_active": true});
+      }
+      else if (this.props.imageReady == false ){
+          overallStatusClasses = classNames({"imageLoadingView_active": true});
       }
       else if (this.state.showListView == true && this.currentProjectIndex == -1) {
           overallStatusClasses = classNames({"intialView_active": true});
@@ -384,10 +385,10 @@ var PortfolioContainer = React.createClass({
               </div>
             </div>
             
-              <div className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
-                <i className="fa fa-times fa-2x"></i>
-              </div>
-              <p id="contactButton" onClick={this.showContactView} >Contact</p>
+            <div className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
+              <i className="fa fa-times fa-2x"></i>
+            </div>
+            <p id="contactButton" onClick={this.showContactView} >Contact</p>
             
             <div className="contactBar">  
             </div>
