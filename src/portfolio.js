@@ -345,7 +345,6 @@ var PortfolioContainer = React.createClass({
 
       return ( 
           <div id="mainView" className={overallStatusClasses}><div id="animatingStatus" className={animatingStatusClass}>
-            <div id="testBlock"></div>
             <div id="modalContactView" className="active">
               <div className="closeButton modalCloseButton" onClick={this.hideContactView} >
                 <i className="fa fa-times fa-2x"></i>
@@ -369,10 +368,17 @@ var PortfolioContainer = React.createClass({
                 </a>
               </div>
             </div>
-            <button id="contactButton" type="button" className=" btn btn-default" onClick={this.showContactView} >Contact</button>
-            <div className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
-              <i className="fa fa-times fa-2x"></i>
+            
+              <div className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
+                <i className="fa fa-times fa-2x"></i>
+              </div>
+              <p id="contactButton" onClick={this.showContactView} >Contact</p>
+            
+            <div className="contactBar">  
             </div>
+
+
+            
             <div id="leftArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">
               <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
             </div>
@@ -382,7 +388,9 @@ var PortfolioContainer = React.createClass({
             <ProjectDetailsIntroView currentProject={this.state.currentProject}></ProjectDetailsIntroView>
             <div className="projectListView">
               <ProjectAnimationContainer animationDirection={this.animationDirection} animationDuration={this.animationDuration} animatedImageUrl={this.state.animatedImageUrl}></ProjectAnimationContainer>
-              <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
+              <div id="projectListContainer">
+                <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
+              </div>
             </div>
             <div className="projectDetailsMainView">
               <ProjectDetailsMainView currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetailsMainView>
