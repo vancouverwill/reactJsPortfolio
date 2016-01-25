@@ -1,6 +1,8 @@
 @import "../bower_components/bootstrap/less/bootstrap.less";
 
 
+@linkColor : #36D37F;
+@linkColor2 : #38AC75;
 
 @projectListViewSlideAnimations: 1.0s ease-in-out 0.200s;
 @projectListViewMenuAnimations: 2.0s;
@@ -39,6 +41,7 @@ p {
 }
 
 .headerBarFont {
+	color: @linkColor2;
 	cursor: pointer;
 	font-size: 1.2em;
 	margin-top: 1em;
@@ -203,6 +206,7 @@ p {
 
 
 .arrowSeeProjectDetails {
+	color: @linkColor2;
     cursor: pointer;
     font-size: 1.6rem;
     transition: transform 1s ease-out, margin-bottom 1s;
