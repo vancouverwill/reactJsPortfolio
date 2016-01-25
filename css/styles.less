@@ -7,10 +7,19 @@
 @projectListViewSlideAnimations: 1.0s ease-in-out 0.200s;
 @projectListViewMenuAnimations: 2.0s;
 
+@projectDetailsViewAnimations: 2.0s;
+
 @headerBarHeight: 4em;
 
 body {
 	background: white;
+	overflow: hidden;
+}
+
+.fullSize, #mainView, #animatingStatus {
+	    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
 #container {
@@ -25,7 +34,7 @@ p {
 /** contact button and modal */
 
 .headerBar { /* testint */
-	border-bottom: solid black 1px;
+	border-bottom: solid #929999 1px;
     height: @headerBarHeight;
     width: 100%;
     z-index: 10;
@@ -37,7 +46,8 @@ p {
 	opacity: 1;
 	transition: opacity 1s ease-out;
 	float: right;
-	margin-right: 25px;
+	right: 25px;
+	/*margin-right: 25px;*/
 }
 
 .headerBarFont {
@@ -45,7 +55,7 @@ p {
 	cursor: pointer;
 	font-size: 1.2em;
 	margin-top: 1em;
-	position: relative;
+	position: absolute;
 	z-index:40;
 }
 
@@ -177,12 +187,15 @@ p {
 
 .projectListView {
 	display: flex;
-	transition: transform 2s ease-in-out, opacity 2s, top 2s;
-	left: 0px;
-	position: absolute;
-	top: 0px;
+	/*transition: transform 2s ease-in-out, opacity 2s, top 2s;*/
+	transition: height @projectDetailsViewAnimations, width @projectDetailsViewAnimations, top @projectDetailsViewAnimations;
+	/*left: 0px;*/
+	/*position: absolute;*/
+	position: relative;
+	/*top: 0px;*/
+	margin: auto;
 	overflow: hidden;
-    transform-origin: top;
+    /*transform-origin: top;*/
     width : 100%; 
 	height : 100%;
 }
@@ -279,7 +292,7 @@ p {
 	margin-left: 25px;
 	float:left;
 	opacity: 0;
-	transition: opacity 2s;
+	transition: opacity @projectDetailsViewAnimations;
 }
 
 .projectDetailsView_active .projectClose, .modalView_active  .modalCloseButton {
@@ -290,14 +303,16 @@ p {
 
 .projectDetailsIntroView {
 	overflow: hidden;
-    position: absolute;
+    /*position: absolute;*/
+        position: relative;
     top: 0;
     text-align: center;
-    margin-top: @headerBarHeight;
+    /*margin-top: @headerBarHeight;*/
+    padding-top: @headerBarHeight;
     width: 100%;
     height: 8em;
     opacity : 0; 
-    transition: transform 2s ease-in-out, opacity 2s, top 2s;
+    transition: transform @projectDetailsViewAnimations ease-in-out, opacity @projectDetailsViewAnimations, top @projectDetailsViewAnimations;
     transform : scale(0.0,0.0);
 }
 
@@ -320,7 +335,7 @@ p {
 .projectDetailsMainView {
 	overflow: hidden;
 	position: absolute;
-	transition: transform 2s ease-in-out, opacity 2s, top 2s;
+	transition: transform @projectDetailsViewAnimations ease-in-out, opacity @projectDetailsViewAnimations, top @projectDetailsViewAnimations;
 	z-index: 30;
 	height: auto;
 	transform-origin: bottom;
@@ -672,7 +687,10 @@ p {
 	}
 
 	.projectDetailsView_active .projectListView {
-	    transform: scale(0.7, 0.6) translateY(18em);
+	    /*transform: scale(0.7, 0.6) translateY(18em);*/
+	    transform: none;
+	    height: 360px;
+	    width: 540px;
 	}
 
 	.arrow__individualProjecCarousel {

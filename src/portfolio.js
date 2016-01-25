@@ -390,7 +390,7 @@ var PortfolioContainer = React.createClass({
             <p className="headerBarFont projectClose" onClick={this.handleProjectListShow} >
               Return to articles
             </p>
-            <div className="headerBar">  
+            <div className="headerBar">&nbsp;
             </div>
 
 
