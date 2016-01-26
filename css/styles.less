@@ -13,13 +13,17 @@
 
 body {
 	background: white;
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 
 .fullSize, #mainView, #animatingStatus {
 	    width: 100%;
     height: 100%;
     position: relative;
+}
+
+.projectListView_active {
+	overflow: hidden;
 }
 
 #container {
@@ -308,17 +312,21 @@ p {
     top: 0;
     text-align: center;
     /*margin-top: @headerBarHeight;*/
-    padding-top: @headerBarHeight;
+    /*padding-top: @headerBarHeight;*/
     width: 100%;
-    height: 8em;
+    /*height: 8em;*/
     opacity : 0; 
-    transition: transform @projectDetailsViewAnimations ease-in-out, opacity @projectDetailsViewAnimations, top @projectDetailsViewAnimations;
-    transform : scale(0.0,0.0);
+    /*transition: transform @projectDetailsViewAnimations ease-in-out, opacity @projectDetailsViewAnimations, top @projectDetailsViewAnimations;
+    transform : scale(0.0,0.0);*/
+
+    transition: height @projectDetailsViewAnimations ease-in-out, opacity @projectDetailsViewAnimations, top @projectDetailsViewAnimations;
+    /*transform : scale(0.0,0.0);*/
+    height: 0px;
 }
 
 .projectDetailsIntroView h2 {
     font-size: 2em;
-    margin-top: 1em;
+    margin-top: 6rem;
     margin-bottom: 0.5em;
 }
 
@@ -329,12 +337,14 @@ p {
 
 .projectDetailsView_active .projectDetailsIntroView {
 	opacity : 1; 
-	transform : scale(1,1);
+	/*transform : scale(1,1);*/
+	height: 12rem;
 }
 
 .projectDetailsMainView {
 	overflow: hidden;
 	position: absolute;
+	position: relative;
 	transition: transform @projectDetailsViewAnimations ease-in-out, opacity @projectDetailsViewAnimations, top @projectDetailsViewAnimations;
 	z-index: 30;
 	height: auto;
@@ -342,7 +352,7 @@ p {
 	width:100%;
 	height: 100%;
 	opacity : 0; 
-	top : 100%; 
+	/*top : 100%; */
 	transform : scale(0.0,0.0);
 }
 
@@ -603,7 +613,7 @@ p {
 
 
  	.projectDetailsView_active .projectDetailsMainView {
- 		top: 80%;
+ 		/*top: 80%;*/
  	}
 
 
