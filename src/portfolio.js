@@ -338,25 +338,39 @@ var PortfolioContainer = React.createClass({
       var overallStatusClasses;
 
       
-      if (this.state.showContactModal == true) {
-          overallStatusClasses = classNames({"modalView_active": true});
-      }
-      else if (this.props.imageReady == false ){
-          overallStatusClasses = classNames({"imageLoadingView_active": true});
+      // if (this.state.showContactModal == true) {
+      //     // overallStatusClasses = classNames({"modalView_active": true});
+      //     overallStatusClasses = "modalView_active";
+      // }
+      if (this.props.imageReady == false ){
+          // overallStatusClasses = classNames({"imageLoadingView_active": true});
+          overallStatusClasses = "imageLoadingView_active";
       }
       else if (this.state.showListView == true && this.currentProjectIndex == -1) {
-          overallStatusClasses = classNames({"intialView_active": true});
+          // overallStatusClasses = classNames({"intialView_active": true});
+          overallStatusClasses = "intialView_active";
       }
       else if (this.state.showListView == true && this.currentProjectIndex != -1) {
-          overallStatusClasses = classNames({"projectListView_active": true});
+          // overallStatusClasses = classNames({"projectListView_active": true});
+          overallStatusClasses = "projectListView_active";
+      }
+      else if (this.state.currentProject.images.length == 1) {
+        overallStatusClasses = "projectDetailsView_active singleImageProject"
       }
       else {
-          overallStatusClasses = classNames({
-              "projectDetailsView_active": true,
-              "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false
-          });
+          // overallStatusClasses = classNames({
+          //     "projectDetailsView_active": true,
+          //     "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false
+          // });
+
+          overallStatusClasses = "projectDetailsView_active"
       }
 
+
+      if (this.state.showContactModal == true) {
+          // overallStatusClasses = classNames({"modalView_active": true});
+          overallStatusClasses += " modalView_active";
+      }
       
 
       return ( 
