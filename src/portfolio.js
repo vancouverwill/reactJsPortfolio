@@ -239,21 +239,32 @@ var PortfolioContainer = React.createClass({
         elem.addEventListener("touchstart", this.handleSwipeStart);
     },
     handleWheel: function(event) {
-        if (this.isAnimating !== false) return;
+      if (this.state.showListView == true) {
+        event.preventDefault();
+      }
+      
 
-        if (event.deltaY < 0) (this.moveDown());
-        if (event.deltaY > 0) (this.moveUp());
+
+      if (this.isAnimating !== false) return;
+
+
+
+      if (event.deltaY < 0) (this.moveDown());
+      if (event.deltaY > 0) (this.moveUp());
     },
     handleSwipe: function(event) {
-        if (this.isAnimating !== false) return;
-      
-        if (event.touches[0].screenY < this.startY) {
-            this.moveUp();
-        } else {
-            this.moveDown();
-        }
+      if (this.state.showListView == true) {
+        event.preventDefault();
+      }
+      if (this.isAnimating !== false) return;
+    
+      if (event.touches[0].screenY < this.startY) {
+          this.moveUp();
+      } else {
+          this.moveDown();
+      }
 
-        this.setAnimating();
+      this.setAnimating();
     },
     handleSwipeStart: function(event) {
         this.startY = event.touches[0].screenY;
