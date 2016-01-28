@@ -496,7 +496,7 @@ var ProjectList = React.createClass({
               var projectTitleHeight = 120;
              var projectTitleEmHeight = 12; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
 
-            var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
+            var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight + 120;
              var verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
 
 

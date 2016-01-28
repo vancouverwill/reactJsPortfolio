@@ -29,11 +29,12 @@ var banner = ['/**',
 
 /* Task to compile less */
 gulp.task('compile-less', function() {  
-  gulp.src('./css/styles.less')
+  gulp.src('./css/styles.less', { base: 'src' })
     .pipe(sourcemaps.init())
     .pipe(less())
     .pipe(header(banner, {pkg: pkg}))
-    .pipe(sourcemaps.write("."))
+    .pipe(sourcemaps.write()) // put sourcemap in generated css file
+    // .pipe(sourcemaps.write(".")) // put sourcemap in it's own file
     .pipe(gulp.dest('./css/'));
 });
 

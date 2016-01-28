@@ -566,8 +566,8 @@ p {
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 
-	body {
-		font-size: 25px;
+	html, body {
+		font-size: 12px;
 	}
 
 	.introExplainingText {
@@ -596,7 +596,9 @@ p {
 
 
 	.projectDetailsView_active .projectListView {
-	    transform: scale(1.0, 0.6)  translateY(30%);
+	    /*transform: scale(1.0, 0.6)  translateY(30%);*/
+	    transform: none;
+	    height: 460px;
 	}
 
 	.arrow__individualProjecCarousel {
@@ -633,13 +635,13 @@ p {
 /* Small devices (tablets, 768px and up) */
 @media (min-width: @screen-sm-min) { 
 
-	.introExplainingText {
+	/*.introExplainingText {
 		font-size: 1.2em;
-	}
+	}*/
 
-	h4, .h4 {
+	/*h4, .h4 {
 	    font-size: 4rem;
-	}
+	}*/
 
 	.projectDetailsView_active .projectListView {
 	    /*transform: scale(1.0, 0.6)  translateY(16em);*/
