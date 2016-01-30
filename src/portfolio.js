@@ -84,7 +84,8 @@ var PageLoadingClass = React.createClass({
     getInitialState: function() {
         return {
             projects: undefined,
-            ready: false
+            ready: false,
+            ajaxState: undefined
         };
     },
     componentWillMount : function() {
@@ -94,6 +95,7 @@ var PageLoadingClass = React.createClass({
         this.setState({ready: true});
     },
     handleError : function() {
+      this.setState({ajaxState : "failed"})
     },
     loadCommentsFromServer: function() {
         Jquery.ajax({
@@ -130,14 +132,27 @@ var PageLoadingClass = React.createClass({
                 }.bind(this),
             error: function(xhr, status, err) {
                     console.error(this.props.url, status, err.toString());
+                    console.log('could not load projects')
+                    this.handleError();
                 }.bind(this)
         });
     },
     render: function() {
+
+      if (this.state.ajaxState == undefined) {
         return (
-      <PortfolioContainer url={this.props.url} projects={this.state.projects} imageReady={this.state.ready} >
-      </PortfolioContainer>
-    );
+          <PortfolioContainer url={this.props.url} projects={this.state.projects} imageReady={this.state.ready} >
+          </PortfolioContainer>
+        );
+      }
+      else {
+        return (
+          <div className="text-center">
+            <h3>Sorry projects are not available to view right now :(</h3> 
+            <h3>Please try again later....</h3>
+          </div>
+        );
+      }
     }
 });
 
@@ -224,21 +239,30 @@ var PortfolioContainer = React.createClass({
         elem.addEventListener("touchstart", this.handleSwipeStart);
     },
     handleWheel: function(event) {
-        if (this.isAnimating !== false) return;
+      if (this.state.showListView == true) {
+        event.preventDefault();
+      }
+      
 
-        if (event.deltaY < 0) (this.moveDown());
-        if (event.deltaY > 0) (this.moveUp());
+
+      if (this.isAnimating !== false) return;
+
+
+
+      if (event.deltaY < 0) (this.moveDown());
+      if (event.deltaY > 0) (this.moveUp());
     },
     handleSwipe: function(event) {
-        if (this.isAnimating !== false) return;
-      
-        if (event.touches[0].screenY < this.startY) {
-            this.moveUp();
-        } else {
-            this.moveDown();
-        }
-
-        this.setAnimating();
+      if (this.state.showListView == true) {
+        event.preventDefault();
+      }
+      if (this.isAnimating !== false) return;
+    
+      if (event.touches[0].screenY < this.startY) {
+          this.moveUp();
+      } else {
+          this.moveDown();
+      }
     },
     handleSwipeStart: function(event) {
         this.startY = event.touches[0].screenY;
@@ -247,18 +271,22 @@ var PortfolioContainer = React.createClass({
         this.moveUp();
     },
     moveUp: function() {
-        if (this.currentProjectIndex < (this.props.projects.length - 1)) {
-            this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name);
-        }
+      if (this.props.projects == undefined) return;
+
+      if (this.currentProjectIndex < (this.props.projects.length - 1)) {
+          this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name);
+      }
     },
     moveDown: function(){
-        if (this.currentProjectIndex > 0) {
-            this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name);
-        }
+      if (this.props.projects == undefined) return;
 
-        if (this.currentProjectIndex == 0) {
-            this.updateCurrentProject("");
-        }
+      if (this.currentProjectIndex > 0) {
+          this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name);
+      }
+
+      if (this.currentProjectIndex == 0) {
+          this.updateCurrentProject("");
+      }
     },
     setAnimating: function() {
         this.isAnimating = true;
@@ -318,30 +346,44 @@ var PortfolioContainer = React.createClass({
 
       var overallStatusClasses;
 
+      
+      // if (this.state.showContactModal == true) {
+      //     // overallStatusClasses = classNames({"modalView_active": true});
+      //     overallStatusClasses = "modalView_active";
+      // }
       if (this.props.imageReady == false ){
-          overallStatusClasses = classNames({"imageLoadingView_active": true});
-      }
-      else if (this.state.showContactModal == true) {
-          overallStatusClasses = classNames({"modalView_active": true});
+          // overallStatusClasses = classNames({"imageLoadingView_active": true});
+          overallStatusClasses = "imageLoadingView_active";
       }
       else if (this.state.showListView == true && this.currentProjectIndex == -1) {
-          overallStatusClasses = classNames({"intialView_active": true});
+          // overallStatusClasses = classNames({"intialView_active": true});
+          overallStatusClasses = "intialView_active";
       }
       else if (this.state.showListView == true && this.currentProjectIndex != -1) {
-          overallStatusClasses = classNames({"projectListView_active": true});
+          // overallStatusClasses = classNames({"projectListView_active": true});
+          overallStatusClasses = "projectListView_active";
+      }
+      else if (this.state.currentProject.images.length == 1) {
+        overallStatusClasses = "projectDetailsView_active singleImageProject"
       }
       else {
-          overallStatusClasses = classNames({
-              "projectDetailsView_active": true,
-              "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false
-          });
+          // overallStatusClasses = classNames({
+          //     "projectDetailsView_active": true,
+          //     "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false
+          // });
+
+          overallStatusClasses = "projectDetailsView_active"
       }
 
+
+      if (this.state.showContactModal == true) {
+          // overallStatusClasses = classNames({"modalView_active": true});
+          overallStatusClasses += " modalView_active";
+      }
       
 
       return ( 
           <div id="mainView" className={overallStatusClasses}><div id="animatingStatus" className={animatingStatusClass}>
-            <div id="testBlock"></div>
             <div id="modalContactView" className="active">
               <div className="closeButton modalCloseButton" onClick={this.hideContactView} >
                 <i className="fa fa-times fa-2x"></i>
@@ -365,10 +407,17 @@ var PortfolioContainer = React.createClass({
                 </a>
               </div>
             </div>
-            <button id="contactButton" type="button" className=" btn btn-default" onClick={this.showContactView} >Contact</button>
-            <div className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
-              <i className="fa fa-times fa-2x"></i>
+            
+            
+            <p id="contactButton" className="headerBarFont" onClick={this.showContactView} >Contact</p>
+            <p className="headerBarFont projectClose" onClick={this.handleProjectListShow} >
+              Return to articles
+            </p>
+            <div className="headerBar">&nbsp;
             </div>
+
+
+            
             <div id="leftArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">
               <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
             </div>
@@ -378,7 +427,9 @@ var PortfolioContainer = React.createClass({
             <ProjectDetailsIntroView currentProject={this.state.currentProject}></ProjectDetailsIntroView>
             <div className="projectListView">
               <ProjectAnimationContainer animationDirection={this.animationDirection} animationDuration={this.animationDuration} animatedImageUrl={this.state.animatedImageUrl}></ProjectAnimationContainer>
-              <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
+              <div id="projectListContainer">
+                <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
+              </div>
             </div>
             <div className="projectDetailsMainView">
               <ProjectDetailsMainView currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetailsMainView>
@@ -440,17 +491,65 @@ var ProjectList = React.createClass({
  
         if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
 
-              // var projectTitleHeight = 120;
+              var projectTitleHeight = 120;
              var projectTitleEmHeight = 12; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
 
-          // var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
+            var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight + 120;
              var verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
 
-             this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
+
+             var projectTitles = document.getElementsByClassName('projectTitle');
+
+
+
+             // var verticalMovementInPixels = projectTitles[this.props.currentProjectIndex].offsetTop - 80;
+
+             // below code is to test out aligning from bottom of page
+
+             var parentElement = projectTitles[this.props.currentProjectIndex].offsetParent;
+
+             var tempOffSetHeight = parentElement.offsetHeight;
+
+             var offSetTop = projectTitles[this.props.currentProjectIndex].offsetTop;
+
+             var offsetBottom = parentElement.offsetHeight - projectTitles[this.props.currentProjectIndex].offsetTop  - 80;
+
+             // verticalMovementInPixels = offsetBottom;
+
+
+             // this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
+             // this.verticalMovement = {transform: "translateY(-" + verticalMovementInPixels +  "px)"};
+             this.verticalMovement = {top: "-" + verticalMovementInPixels +  "px"};
+             
+
+
+             // this.verticalMovement = {bottom: "+" + verticalMovementInPixels +  "px"};
          }
         else {
-             this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"};
+             // this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"};
+             this.verticalMovement = {top: "-" + 0 +  "px"};
+             // 
+            
+             // below code is to test out aligning from bottom of page
+
+            var menu = document.getElementById("projectList")
+            var menuHeight = menu.offsetHeight;
+
+
+            var containers = document.getElementsByClassName("projectListView")
+            var containersHeight = containers[0].offsetHeight;
+
+            var displacementFromBottom = menu.offsetHeight - containers[0].offsetHeight
+
+
+            // this.verticalMovement = {bottom: "" + displacementFromBottom +  "px"};
          }
+    },
+    componentDidUpdate: function() {
+      if (this.props.projects !== undefined && this.props.currentProjectIndex == -1) {
+        console.log("testing for projects loading, this would be the place to switch to bottom css positioning")
+        }
+        
     },
     render: function() {
         var loop;
@@ -508,10 +607,9 @@ var ProjectName = React.createClass({
             
           </h4>
           <p className="projectShortDescription" dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
-          <p className="arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow} style={fontColor}>
-            Read More
-            <i className="fa fa-arrow-right " >
-            </i>
+          <p className="arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow}>
+            Read More &nbsp;
+            <i className="fa fa-arrow-right " ></i>
           </p>
         </div>
         );
@@ -530,7 +628,7 @@ var ProjectDetailsIntroView = React.createClass({
             return (
           <div className="projectDetailsIntroView">
             <h2>{this.props.currentProject.name}</h2>
-            <p>{this.props.currentProject.shortDescription}</p>
+            <p dangerouslySetInnerHTML={{__html: this.props.currentProject.shortDescription}}></p>
           </div>
         );
         }

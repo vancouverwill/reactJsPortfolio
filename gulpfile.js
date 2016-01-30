@@ -29,11 +29,16 @@ var banner = ['/**',
 
 /* Task to compile less */
 gulp.task('compile-less', function() {  
-  gulp.src('./css/styles.less')
+  gulp.src('./css/styles.less', { base: 'src' })
     .pipe(sourcemaps.init())
     .pipe(less())
     .pipe(header(banner, {pkg: pkg}))
-    .pipe(sourcemaps.write("."))
+    .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
+    .pipe(sourcemaps.write()) // put sourcemap in generated css file
+    // .pipe(sourcemaps.write(".")) // put sourcemap in it's own file
     .pipe(gulp.dest('./css/'));
 });
 
@@ -51,19 +56,19 @@ gulp.task('babel', function() {
 /* Task to watch less changes */
 gulp.task('watch-less', function() {  
   gulp.watch('./css/*.less' , ['compile-less']);
-  gulp.watch('./css/styles.css' , ['autoprefixer']);
+  // gulp.watch('./css/styles.css' , ['autoprefixer']);
   gulp.watch('./src/*.js' , ['babel']);
 });
 
 
 gulp.task('autoprefixer', function () {
     return gulp.src('css/styles.css')
-        // .pipe(sourcemaps.init())
+        .pipe(sourcemaps.init())
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false
         }))
-        // .pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./dist/'));
 });
 

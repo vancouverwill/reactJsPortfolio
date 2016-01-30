@@ -1,26 +1,66 @@
 @import "../bower_components/bootstrap/less/bootstrap.less";
 
 
+@linkColor : #36D37F;
+@linkColor2 : #38AC75;
 
-@projectListViewAnimations: 1.0s ease-in-out 0.200s;
+@projectListViewSlideAnimations: 1.0s ease-in-out 0.200s;
+@projectListViewMenuAnimations: 1.0s;
+
+@projectDetailsViewAnimations: 2.0s;
+
+@headerBarHeight: 4em;
 
 body {
 	background: white;
+	/*overflow: hidden;*/
+}
+
+.fullSize, #mainView, #animatingStatus {
+	    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.projectListView_active {
+	overflow: hidden;
 }
 
 #container {
     background: white;
 }
 
+p {
+	font-size: 1em;
+	margin-bottom: 0.6em
+}
+
 /** contact button and modal */
 
+.headerBar { /* testint */
+	border-bottom: solid #929999 1px;
+    height: @headerBarHeight;
+    width: 100%;
+    z-index: 10;
+    position: absolute;
+    top:0;
+}
+
 #contactButton {
-	position: absolute;
-	right:25px;
-	top: 10px;
-	z-index:40;
 	opacity: 1;
 	transition: opacity 1s ease-out;
+	float: right;
+	right: 25px;
+	/*margin-right: 25px;*/
+}
+
+.headerBarFont {
+	color: @linkColor2;
+	cursor: pointer;
+	font-size: 1.2em;
+	margin-top: 1em;
+	position: absolute;
+	z-index:40;
 }
 
 .animating_active #contactButton{
@@ -108,10 +148,19 @@ body {
     display: inline-block;
 }
 
+#projectListContainer {
+	margin-top: @headerBarHeight;
+	position: relative;
+	overflow:hidden;
+	
+	width: 100%;
+	height: 100%;
+}
+
 #projectListMenu
 {
     padding-top: 140px;
-    transition: transform @projectListViewAnimations, color @projectListViewAnimations;
+    transition: transform @projectListViewMenuAnimations , color @projectListViewMenuAnimations;
     transform: translateY(0px);
 }
 
@@ -131,23 +180,27 @@ body {
 
 .projectTitle {
 	cursor: pointer;
-	height: 12rem;
+	/*height: 12rem;*/
+	height: auto;
 	overflow: hidden;
     padding-bottom: 0px;
     margin-bottom: 0px;
     margin-top: 0px;
-    transition: opacity @projectListViewAnimations, transform @projectListViewAnimations;
+    transition: opacity @projectListViewMenuAnimations, transform @projectListViewMenuAnimations;
 }
 
 
 .projectListView {
 	display: flex;
-	transition: transform 2s ease-in-out, opacity 2s, top 2s;
-	left: 0px;
-	position: absolute;
-	top: 0px;
+	/*transition: transform 2s ease-in-out, opacity 2s, top 2s;*/
+	transition: height @projectDetailsViewAnimations, width @projectDetailsViewAnimations, top @projectDetailsViewAnimations;
+	/*left: 0px;*/
+	/*position: absolute;*/
+	position: relative;
+	/*top: 0px;*/
+	margin: auto;
 	overflow: hidden;
-    transform-origin: top;
+    /*transform-origin: top;*/
     width : 100%; 
 	height : 100%;
 }
@@ -161,7 +214,8 @@ body {
 	width: 100%;
     position: absolute;
     z-index: 30;
-    transition: opacity 1s, transform 2s ease-out;
+    /*transition: opacity 1s, transform 2s ease-out;*/
+    transition: opacity 1s, transform @projectListViewMenuAnimations ease-out, top @projectListViewMenuAnimations ease-out, bottom @projectListViewMenuAnimations ease-out; /** temp trial **/
 }
 
 .active.projectTitle {
@@ -170,9 +224,11 @@ body {
 
 
 .arrowSeeProjectDetails {
+	color: @linkColor2;
     cursor: pointer;
     font-size: 1.6rem;
-    transition: transform 1s ease-out;
+    transition: transform 1s ease-out, margin-bottom 1s;
+    margin-bottom: 0px;
     transform: scale(0.0);
     transform-origin:left;
 }
@@ -237,26 +293,41 @@ body {
     position: absolute;
 }
 
-.projectDetailsView_active .projectCloseButton, .modalView_active  .modalCloseButton {
+.projectClose {
+	margin-left: 25px;
+	float:left;
+	opacity: 0;
+	transition: opacity @projectDetailsViewAnimations;
+}
+
+.projectDetailsView_active .projectClose, .modalView_active  .modalCloseButton {
 	opacity: 1;
 	transform: translateX(0px);
+
 }
 
 .projectDetailsIntroView {
 	overflow: hidden;
-    position: absolute;
+    /*position: absolute;*/
+        position: relative;
     top: 0;
     text-align: center;
+    /*margin-top: @headerBarHeight;*/
+    /*padding-top: @headerBarHeight;*/
     width: 100%;
-    height: 20%;
+    /*height: 8em;*/
     opacity : 0; 
-    transition: transform 2s ease-in-out, opacity 2s, top 2s;
-    transform : scale(0.0,0.0);
+    /*transition: transform @projectDetailsViewAnimations ease-in-out, opacity @projectDetailsViewAnimations, top @projectDetailsViewAnimations;
+    transform : scale(0.0,0.0);*/
+
+    transition: height @projectDetailsViewAnimations ease-in-out, opacity @projectDetailsViewAnimations, top @projectDetailsViewAnimations;
+    /*transform : scale(0.0,0.0);*/
+    height: 0px;
 }
 
 .projectDetailsIntroView h2 {
     font-size: 2em;
-    margin-top: 1em;
+    margin-top: 6rem;
     margin-bottom: 0.5em;
 }
 
@@ -267,20 +338,23 @@ body {
 
 .projectDetailsView_active .projectDetailsIntroView {
 	opacity : 1; 
-	transform : scale(1,1);
+	/*transform : scale(1,1);*/
+	height: 12rem;
 }
 
 .projectDetailsMainView {
 	overflow: hidden;
-	position: absolute;
-	transition: transform 2s ease-in-out, opacity 2s, top 2s;
+	/*position: absolute;*/
+	position: relative;
+	/*transition: transform @projectDetailsViewAnimations ease-in-out, opacity @projectDetailsViewAnimations, top @projectDetailsViewAnimations;*/
+	transition: transform @projectDetailsViewAnimations ease-in-out, opacity @projectDetailsViewAnimations;
 	z-index: 30;
-	height: auto;
-	transform-origin: bottom;
+	/*height: 0px;*/
+	/*transform-origin: bottom;*/
 	width:100%;
-	height: 100%;
+	/*height: 100%;*/
 	opacity : 0; 
-	top : 100%; 
+	/*top : 100%; */
 	transform : scale(0.0,0.0);
 }
 
@@ -288,6 +362,7 @@ body {
 	opacity : 1; 
 	/*top : 70%; */
 	transform : scale(1,1);
+	/*height: auto;*/
 }
 
 
@@ -377,6 +452,7 @@ body {
 }
 
 .projectDetailsView_active.singleImageProject .arrow__individualProjecCarousel {
+	cursor: none;
 	opacity: 0;
 }
 
@@ -396,7 +472,7 @@ body {
 
 .portfolioProjectAnimation-enter {
 	position: absolute;
-	transition: transform @projectListViewAnimations;
+	transition: transform @projectListViewSlideAnimations;
 }
 
 .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
@@ -406,7 +482,7 @@ body {
 .portfolioProjectAnimation-leave {
 	position: absolute;
 	opacity: 1;
-	transition: transform @projectListViewAnimations;
+	transition: transform @projectListViewSlideAnimations;
 }
 
 .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
@@ -490,8 +566,8 @@ body {
 /* Extra small devices (phones, less than 768px) */
 /* No media query since this is the default in Bootstrap */
 
-	body {
-		font-size: 25px;
+	html, body {
+		font-size: 12px;
 	}
 
 	.introExplainingText {
@@ -520,7 +596,9 @@ body {
 
 
 	.projectDetailsView_active .projectListView {
-	    transform: scale(1.0, 0.6)  translateY(30%);
+	    /*transform: scale(1.0, 0.6)  translateY(30%);*/
+	    transform: none;
+	    height: 460px;
 	}
 
 	.arrow__individualProjecCarousel {
@@ -533,6 +611,10 @@ body {
     font-size: 6rem;
 	}
 
+	.projectDetailsIntroView h2 {
+	    /*margin-top: 12rem;*/
+	}
+
 
 	.projectDetailsIntroView {
 		padding-left: 10%;
@@ -541,8 +623,11 @@ body {
 
 
  	.projectDetailsView_active .projectDetailsMainView {
- 		top: 80%;
+ 		/*top: 80%;*/
  	}
+
+
+ 	
 
 
 
@@ -550,28 +635,40 @@ body {
 /* Small devices (tablets, 768px and up) */
 @media (min-width: @screen-sm-min) { 
 
-	.introExplainingText {
+	/*.introExplainingText {
 		font-size: 1.2em;
-	}
+	}*/
 
-	h4, .h4 {
+	/*h4, .h4 {
 	    font-size: 4rem;
-	}
+	}*/
 
 	.projectDetailsView_active .projectListView {
-	    transform: scale(1.0, 0.6)  translateY(16em);
+	    /*transform: scale(1.0, 0.6)  translateY(16em);*/
+	    transform: none;
+	    height: 760px;
+	    /*width: 540px;*/
 	}
 }
 
 /* Small devices with retina display (tablets, 768px and up) */
 @media (max-width: @screen-md-min) and (min-resolution: 2dppx) {
+	html, body {
+		font-size: 25px;
+	}
 	h4, .h4 {
-	    font-size: 8rem;
+	    /*font-size: 8rem;*/
 	}
 
-	#contactButton {
+	
+
+	/*#contactButton {
 	    font-size: 4rem;
-	}
+	}*/
+
+	.projectDetailsView_active .projectDetailsIntroView {
+    /*height: 22rem;*/
+}
 }
 
 /* Medium devices (desktops, 992px and up) */
@@ -625,7 +722,14 @@ body {
 	}
 
 	.projectDetailsView_active .projectListView {
-	    transform: scale(0.7, 0.6) translateY(12em);
+	    /*transform: scale(0.7, 0.6) translateY(18em);*/
+	    transform: none;
+	    height: 360px;
+	    width: 540px;
+	}
+
+	.projectDetailsIntroView h2 {
+		/*margin-top: 6rem;*/
 	}
 
 	.arrow__individualProjecCarousel {
@@ -634,7 +738,7 @@ body {
 	}
 
 	.projectDetailsView_active .closeButton {
-	    font-size: 3rem;
+	    font-size: 3rem; 
 	}
 
 	/*.projectDetailsView_active .projectDetailsMainView {
