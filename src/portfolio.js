@@ -263,8 +263,6 @@ var PortfolioContainer = React.createClass({
       } else {
           this.moveDown();
       }
-
-      this.setAnimating();
     },
     handleSwipeStart: function(event) {
         this.startY = event.touches[0].screenY;
