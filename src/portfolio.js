@@ -628,7 +628,7 @@ var ProjectDetailsIntroView = React.createClass({
             return (
           <div className="projectDetailsIntroView">
             <h2>{this.props.currentProject.name}</h2>
-            <p>{this.props.currentProject.shortDescription}</p>
+            <p dangerouslySetInnerHTML={{__html: this.props.currentProject.shortDescription}}></p>
           </div>
         );
         }
