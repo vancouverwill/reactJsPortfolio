@@ -26,21 +26,21 @@ function get(url) {
 
 function imgRequestUrlLoad(url) {
 
-    var image = get(url);
+  var image = get(url);
 
-    return new Promise(function (resolve, reject) {
-        var handleSuccess = function handleSuccess() {
-            resolve(image);
-        };
+  return new Promise(function (resolve, reject) {
+    var handleSuccess = function handleSuccess() {
+        resolve(image);
+    };
 
-        if (image.naturalWidth && image.naturalHeight) {
-                //Image is loaded, go ahead and change the state
-            handleSuccess();
-        } else {
-            image.addEventListener("load", handleSuccess, false);
-            image.addEventListener("error", reject, false);
-        }
-    });
+    if (image.naturalWidth && image.naturalHeight) {
+            //Image is loaded, go ahead and change the state
+        handleSuccess();
+    } else {
+        image.addEventListener("load", handleSuccess, false);
+        image.addEventListener("error", reject, false);
+    }
+  });
 }
 
 
@@ -144,16 +144,16 @@ var PageLoadingClass = React.createClass({
 
       if (this.state.ajaxState == undefined) {
         return (
-          <PortfolioContainer projects={this.state.projects} imageReady={this.state.ready} >
-          </PortfolioContainer>
+            <PortfolioContainer projects={this.state.projects} imageReady={this.state.ready} >
+            </PortfolioContainer>
         );
       }
       else {
         return (
-          <div className="text-center">
-            <h3>Sorry projects are not available to view right now :(</h3> 
-            <h3>Please try again later....</h3>
-          </div>
+            <div className="text-center">
+                <h3>Sorry projects are not available to view right now :(</h3> 
+                <h3>Please try again later....</h3>
+            </div>
         );
       }
     }
@@ -391,29 +391,29 @@ var PortfolioContainer = React.createClass({
 
     return ( 
         <div id="mainView" className={overallStatusClasses}><div id="animatingStatus" className={animatingStatusClass}>
-          <div id="modalContactView" className="active">
-            <div className="closeButton modalCloseButton" onClick={this.hideContactView} >
-              <i className="fa fa-times fa-2x"></i>
-            </div>
-            <div className="modalContactViewText">
-              contact : willmelbourne@gmail.com
-              <a href="https://ca.linkedin.com/in/willmelbourne" target="_blank">
-                <span className="circleBorder">
-                  <i className="fa fa-linkedin fa-lg"></i>
-                </span>
-              </a>
-              <a href="mailto:willmelbourne@gmail.com">
-                <span className="circleBorder">
-                  <i className="fa fa-envelope fa-lg"></i>
-                </span>
-              </a>
-              <a href="https://github.com/vancouverwill" target="_blank">
-                <span className="circleBorder">
-                  <i className="fa fa-github-alt fa-lg"></i>
-                </span>
-              </a>
-            </div>
-          </div>
+            <div id="modalContactView" className="active">
+                <div className="closeButton modalCloseButton" onClick={this.hideContactView} >
+                    <i className="fa fa-times fa-2x"></i>
+                </div>
+                <div className="modalContactViewText">
+                    contact : willmelbourne@gmail.com
+                    <a href="https://ca.linkedin.com/in/willmelbourne" target="_blank">
+                        <span className="circleBorder">
+                            <i className="fa fa-linkedin fa-lg"></i>
+                        </span>
+                    </a>
+                    <a href="mailto:willmelbourne@gmail.com">
+                        <span className="circleBorder">
+                            <i className="fa fa-envelope fa-lg"></i>
+                        </span>
+                    </a>
+                    <a href="https://github.com/vancouverwill" target="_blank">
+                        <span className="circleBorder">
+                            <i className="fa fa-github-alt fa-lg"></i>
+                        </span>
+                    </a>
+                  </div>
+              </div>
           
           
           <p id="contactButton" className="headerBarFont" onClick={this.showContactView} >Contact</p>
@@ -571,24 +571,24 @@ var ProjectList = React.createClass({
         var loop;
 
         if (this.props.projects !== undefined && this.props.imageReady == true) {
-             loop = this.props.projects.map(function (project) {
-                      return (
-                    <ProjectName key={project.name} name={project.name} active={project.active} fontColor={project.fontColor} shortDescription={project.shortDescription} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
-                );
-                  }, this);
+          loop = this.props.projects.map(function (project) {
+            return (
+                <ProjectName key={project.name} name={project.name} active={project.active} fontColor={project.fontColor} shortDescription={project.shortDescription} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow}></ProjectName>
+            );
+          }, this);
          }
 
         return (
-          <div id="projectList" style={this.verticalMovement} >
-            <p className="introExplainingText">scroll down to view some of the key projects <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne} /></p>
-            <div className="text-center loadingState">
-              <i className="fa fa-spinner fa-pulse fa-5x"></i>
-              <h3>projects loading</h3>
+            <div id="projectList" style={this.verticalMovement} >
+                <p className="introExplainingText">scroll down to view some of the key projects <i className="fa fa-arrow-down introText__arrow" onClick={this.chooseProjectOne} /></p>
+                <div className="text-center loadingState">
+                    <i className="fa fa-spinner fa-pulse fa-5x"></i>
+                    <h3>projects loading</h3>
+                </div>
+                <div id="projectListMenu">
+                    {loop}
+                </div>
             </div>
-            <div id="projectListMenu">
-              {loop}
-              </div>
-          </div>
     );
     }
 });
@@ -601,7 +601,7 @@ var ProjectName = React.createClass({
       active: React.PropTypes.bool,
 
       selctProject: React.PropTypes.func,
-      handleProjectDetailsShow: React.PropTypes.func,
+      handleProjectDetailsShow: React.PropTypes.func
     },
     selctProject: function() {
         this.props.selctProject(this.props.name);
@@ -617,21 +617,21 @@ var ProjectName = React.createClass({
 
         var fontColor;
         if (this.props.active == true) {
-             fontColor = {"color" : this.props.fontColor};
-         }
+          fontColor = {"color" : this.props.fontColor};
+        }
 
         return (
-        <div className={classes}>          
-          <h4  onClick={this.selctProject} style={fontColor} >
-            {this.props.name}
-            
-          </h4>
-          <p className="projectShortDescription" dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
-          <p className="arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow}>
-            Read More &nbsp;
-            <i className="fa fa-arrow-right " ></i>
-          </p>
-        </div>
+            <div className={classes}>          
+                <h4  onClick={this.selctProject} style={fontColor} >
+                  {this.props.name}
+                  
+                </h4>
+                <p className="projectShortDescription" dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
+                <p className="arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow}>
+                    Read More &nbsp;
+                    <i className="fa fa-arrow-right " ></i>
+                </p>
+            </div>
         );
     }
 });
@@ -643,16 +643,16 @@ var ProjectDetailsIntroView = React.createClass({
     },
     render: function() {
         if (this.props.currentProject === undefined) {
-            return (
-          <div className="projectDetailsIntroView"></div>
+          return (
+              <div className="projectDetailsIntroView"></div>
         );
         }
       else {
-            return (
-          <div className="projectDetailsIntroView">
-            <h2>{this.props.currentProject.name}</h2>
-            <p dangerouslySetInnerHTML={{__html: this.props.currentProject.shortDescription}}></p>
-          </div>
+        return (
+            <div className="projectDetailsIntroView">
+                <h2>{this.props.currentProject.name}</h2>
+                <p dangerouslySetInnerHTML={{__html: this.props.currentProject.shortDescription}}></p>
+            </div>
         );
         }
     }
@@ -670,18 +670,18 @@ var ProjectDetailsMainView = React.createClass({
     },
     render: function() {
         if (this.props.currentProject === undefined) {
-            return (
-          <div></div>
+          return (
+              <div></div>
         );
         }
       else {
-            return (
-          <div key={this.props.currentProject.name} className="projectDetailsContent">
-            <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
-            <h2>{this.props.currentProject.name}</h2>
+        return (
+            <div key={this.props.currentProject.name} className="projectDetailsContent">
+                <span className="pointer"><i className="fa fa-arrow-up" onClick={this.handleProjectListShow}>Back to Projects</i></span>
+                <h2>{this.props.currentProject.name}</h2>
 
-            <p dangerouslySetInnerHTML={{__html: this.props.currentProject.description}}></p>
-          </div>
+                <p dangerouslySetInnerHTML={{__html: this.props.currentProject.description}}></p>
+            </div>
         );
         }
     }
@@ -690,6 +690,6 @@ var ProjectDetailsMainView = React.createClass({
 
 
 ReactDOM.render(
-  <PageLoadingClass url={apiUrl} />,
+    <PageLoadingClass url={apiUrl} />,
   document.getElementById("container")
 );
