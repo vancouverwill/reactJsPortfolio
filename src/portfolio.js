@@ -602,8 +602,8 @@ var ProjectName = React.createClass({
                 </h4>
                 <p className="projectShortDescription" dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
                 <p className="arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow}>
-                    Read More &nbsp;
-                    <i className="fa fa-arrow-right " ></i>
+                    Read More 
+                    <i className="fa fa-arrow-right arrowSeeProjectDetailsArrow" ></i>
                 </p>
             </div>
         );
