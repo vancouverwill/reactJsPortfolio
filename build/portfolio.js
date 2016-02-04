@@ -644,8 +644,8 @@ var ProjectName = React.createClass({
             React.createElement(
                 "p",
                 { className: "arrowSeeProjectDetails", onClick: this.handleProjectDetailsShow },
-                "Read More  ",
-                React.createElement("i", { className: "fa fa-arrow-right " })
+                "Read More",
+                React.createElement("i", { className: "fa fa-arrow-right arrowSeeProjectDetailsArrow" })
             )
         );
     }

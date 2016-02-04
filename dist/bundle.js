@@ -494,7 +494,7 @@ var ProjectName = React.createClass({
             fontColor = { "color": this.props.fontColor };
         }
 
-        return React.createElement("div", { className: classes }, React.createElement("h4", { onClick: this.selctProject, style: fontColor }, this.props.name), React.createElement("p", { className: "projectShortDescription", dangerouslySetInnerHTML: { __html: this.props.shortDescription } }), React.createElement("p", { className: "arrowSeeProjectDetails", onClick: this.handleProjectDetailsShow }, "Read More  ", React.createElement("i", { className: "fa fa-arrow-right " })));
+        return React.createElement("div", { className: classes }, React.createElement("h4", { onClick: this.selctProject, style: fontColor }, this.props.name), React.createElement("p", { className: "projectShortDescription", dangerouslySetInnerHTML: { __html: this.props.shortDescription } }), React.createElement("p", { className: "arrowSeeProjectDetails", onClick: this.handleProjectDetailsShow }, "Read More", React.createElement("i", { className: "fa fa-arrow-right arrowSeeProjectDetailsArrow" })));
     }
 });
 
