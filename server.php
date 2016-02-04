@@ -5,7 +5,7 @@ $scriptInvokedFromCli =
 if($scriptInvokedFromCli) {
     $port = getenv('PORT');
     if (empty($port)) {
-        $port = "5000";
+        $port = "4000";
     }
     echo 'starting server on port '. $port . PHP_EOL;
     exec('php -S 127.0.0.1:'. $port . ' -t ./ server.php');

@@ -80,6 +80,9 @@ function loadImages(urls) {
 var PageLoadingClass = React.createClass({
     displayName: "PageLoadingClass",
 
+    propTypes: {
+        url: React.PropTypes.string
+    },
     getInitialState: function () {
         return {
             projects: undefined,
@@ -137,7 +140,7 @@ var PageLoadingClass = React.createClass({
     render: function () {
 
         if (this.state.ajaxState == undefined) {
-            return React.createElement(PortfolioContainer, { url: this.props.url, projects: this.state.projects, imageReady: this.state.ready });
+            return React.createElement(PortfolioContainer, { projects: this.state.projects, imageReady: this.state.ready });
         } else {
             return React.createElement("div", { className: "text-center" }, React.createElement("h3", null, "Sorry projects are not available to view right now :("), React.createElement("h3", null, "Please try again later...."));
         }
@@ -147,6 +150,10 @@ var PageLoadingClass = React.createClass({
 var PortfolioContainer = React.createClass({
     displayName: "PortfolioContainer",
 
+    propTypes: {
+        projects: React.PropTypes.array,
+        imageReady: React.PropTypes.bool
+    },
     isAnimating: false,
     currentProjectIndex: -1,
     animationDirection: "movingUp",
@@ -327,32 +334,19 @@ var PortfolioContainer = React.createClass({
 
         var overallStatusClasses;
 
-        // if (this.state.showContactModal == true) {
-        //     // overallStatusClasses = classNames({"modalView_active": true});
-        //     overallStatusClasses = "modalView_active";
-        // }
         if (this.props.imageReady == false) {
-            // overallStatusClasses = classNames({"imageLoadingView_active": true});
             overallStatusClasses = "imageLoadingView_active";
         } else if (this.state.showListView == true && this.currentProjectIndex == -1) {
-            // overallStatusClasses = classNames({"intialView_active": true});
             overallStatusClasses = "intialView_active";
         } else if (this.state.showListView == true && this.currentProjectIndex != -1) {
-            // overallStatusClasses = classNames({"projectListView_active": true});
             overallStatusClasses = "projectListView_active";
         } else if (this.state.currentProject.images.length == 1) {
             overallStatusClasses = "projectDetailsView_active singleImageProject";
         } else {
-            // overallStatusClasses = classNames({
-            //     "projectDetailsView_active": true,
-            //     "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false
-            // });
-
             overallStatusClasses = "projectDetailsView_active";
         }
 
         if (this.state.showContactModal == true) {
-            // overallStatusClasses = classNames({"modalView_active": true});
             overallStatusClasses += " modalView_active";
         }
 
@@ -363,6 +357,10 @@ var PortfolioContainer = React.createClass({
 var ProjectAnimationContainer = React.createClass({
     displayName: "ProjectAnimationContainer",
 
+    propTypes: {
+        animatedImageUrl: React.PropTypes.string,
+        animationDirection: React.PropTypes.string
+    },
     getInitialState: function () {
         return {};
     },
@@ -387,8 +385,13 @@ var ProjectAnimationContainer = React.createClass({
 var ProjectList = React.createClass({
     displayName: "ProjectList",
 
-    getInitialState: function () {
-        return {};
+    propTypes: {
+        currentProjectIndex: React.PropTypes.number,
+        projects: React.PropTypes.array,
+        imageReady: React.PropTypes.bool,
+        selctProject: React.PropTypes.func,
+        handleProjectDetailsShow: React.PropTypes.func,
+        chooseProjectOne: React.PropTypes.func
     },
     selctProject: function (projectName) {
         this.props.selctProject(projectName);
@@ -422,8 +425,6 @@ var ProjectList = React.createClass({
             var offSetTop = projectTitles[this.props.currentProjectIndex].offsetTop;
 
             var offsetBottom = parentElement.offsetHeight - projectTitles[this.props.currentProjectIndex].offsetTop - 80;
-
-            // verticalMovementInPixels = offsetBottom;
 
             // this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
             // this.verticalMovement = {transform: "translateY(-" + verticalMovementInPixels +  "px)"};
@@ -469,6 +470,13 @@ var ProjectList = React.createClass({
 var ProjectName = React.createClass({
     displayName: "ProjectName",
 
+    propTypes: {
+        name: React.PropTypes.string,
+        shortDescription: React.PropTypes.string,
+        active: React.PropTypes.bool,
+        selctProject: React.PropTypes.func,
+        handleProjectDetailsShow: React.PropTypes.func
+    },
     selctProject: function () {
         this.props.selctProject(this.props.name);
     },
@@ -482,11 +490,8 @@ var ProjectName = React.createClass({
         });
 
         var fontColor;
-
         if (this.props.active == true) {
             fontColor = { "color": this.props.fontColor };
-        } else {
-            fontColor = {};
         }
 
         return React.createElement("div", { className: classes }, React.createElement("h4", { onClick: this.selctProject, style: fontColor }, this.props.name), React.createElement("p", { className: "projectShortDescription", dangerouslySetInnerHTML: { __html: this.props.shortDescription } }), React.createElement("p", { className: "arrowSeeProjectDetails", onClick: this.handleProjectDetailsShow }, "Read More  ", React.createElement("i", { className: "fa fa-arrow-right " })));
@@ -496,6 +501,9 @@ var ProjectName = React.createClass({
 var ProjectDetailsIntroView = React.createClass({
     displayName: "ProjectDetailsIntroView",
 
+    propTypes: {
+        currentProject: React.PropTypes.object
+    },
     render: function () {
         if (this.props.currentProject === undefined) {
             return React.createElement("div", { className: "projectDetailsIntroView" });
@@ -508,6 +516,10 @@ var ProjectDetailsIntroView = React.createClass({
 var ProjectDetailsMainView = React.createClass({
     displayName: "ProjectDetailsMainView",
 
+    propTypes: {
+        currentProject: React.PropTypes.object,
+        handleProjectListShow: React.PropTypes.func
+    },
     handleProjectListShow: function () {
         this.props.handleProjectListShow();
     },
