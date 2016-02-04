@@ -126,4 +126,4 @@ function bundle() {
 
 
 /* Task when running `gulp` from terminal */
-gulp.task('default', ['compile-less', 'watch-less', 'watchify-react']);  
+gulp.task('default', ['compile-less', 'babel', 'watch-less', 'watchify-react']);  
