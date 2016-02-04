@@ -47,3 +47,8 @@ gulp
 finally run 
 
 `php server.php`
+
+
+## DEV-STEPS
+
+While building use eslint `src/portfolio.js` to lint javascript

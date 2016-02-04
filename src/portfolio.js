@@ -250,11 +250,7 @@ var PortfolioContainer = React.createClass({
       event.preventDefault();
     }
     
-
-
     if (this.isAnimating !== false) return;
-
-
 
     if (event.deltaY < 0) (this.moveDown());
     if (event.deltaY > 0) (this.moveUp());
@@ -345,8 +341,6 @@ var PortfolioContainer = React.createClass({
   },
   render: function() {
 
-   
-
     var animatingStatusClass = classNames({
             "animating_active" : this.state.showIsAnimating
         });
@@ -354,37 +348,24 @@ var PortfolioContainer = React.createClass({
     var overallStatusClasses;
 
     
-    // if (this.state.showContactModal == true) {
-    //     // overallStatusClasses = classNames({"modalView_active": true});
-    //     overallStatusClasses = "modalView_active";
-    // }
     if (this.props.imageReady == false ){
-        // overallStatusClasses = classNames({"imageLoadingView_active": true});
         overallStatusClasses = "imageLoadingView_active";
     }
     else if (this.state.showListView == true && this.currentProjectIndex == -1) {
-        // overallStatusClasses = classNames({"intialView_active": true});
         overallStatusClasses = "intialView_active";
     }
     else if (this.state.showListView == true && this.currentProjectIndex != -1) {
-        // overallStatusClasses = classNames({"projectListView_active": true});
         overallStatusClasses = "projectListView_active";
     }
     else if (this.state.currentProject.images.length == 1) {
       overallStatusClasses = "projectDetailsView_active singleImageProject"
     }
     else {
-        // overallStatusClasses = classNames({
-        //     "projectDetailsView_active": true,
-        //     "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false
-        // });
-
         overallStatusClasses = "projectDetailsView_active"
     }
 
 
     if (this.state.showContactModal == true) {
-        // overallStatusClasses = classNames({"modalView_active": true});
         overallStatusClasses += " modalView_active";
     }
     
@@ -489,7 +470,6 @@ var ProjectList = React.createClass({
       currentProjectIndex: React.PropTypes.number,
       projects:  React.PropTypes.array,
       imageReady: React.PropTypes.bool,
-
       selctProject: React.PropTypes.func,
       handleProjectDetailsShow: React.PropTypes.func,
       chooseProjectOne: React.PropTypes.func,
@@ -517,7 +497,6 @@ var ProjectList = React.createClass({
              var projectTitles = document.getElementsByClassName('projectTitle');
 
 
-
              // var verticalMovementInPixels = projectTitles[this.props.currentProjectIndex].offsetTop - 80;
 
              // below code is to test out aligning from bottom of page
@@ -529,9 +508,6 @@ var ProjectList = React.createClass({
              var offSetTop = projectTitles[this.props.currentProjectIndex].offsetTop;
 
              var offsetBottom = parentElement.offsetHeight - projectTitles[this.props.currentProjectIndex].offsetTop  - 80;
-
-             // verticalMovementInPixels = offsetBottom;
-
 
              // this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
              // this.verticalMovement = {transform: "translateY(-" + verticalMovementInPixels +  "px)"};
@@ -556,7 +532,6 @@ var ProjectList = React.createClass({
             var containersHeight = containers[0].offsetHeight;
 
             var displacementFromBottom = menu.offsetHeight - containers[0].offsetHeight
-
 
             // this.verticalMovement = {bottom: "" + displacementFromBottom +  "px"};
          }
@@ -599,7 +574,6 @@ var ProjectName = React.createClass({
       name:  React.PropTypes.string,
       shortDescription:  React.PropTypes.string, 
       active: React.PropTypes.bool,
-
       selctProject: React.PropTypes.func,
       handleProjectDetailsShow: React.PropTypes.func
     },
@@ -662,7 +636,6 @@ var ProjectDetailsIntroView = React.createClass({
 var ProjectDetailsMainView = React.createClass({
     propTypes: {
       currentProject : React.PropTypes.object,
-
       handleProjectListShow : React.PropTypes.func
     },
     handleProjectListShow: function() {
