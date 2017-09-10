@@ -44,6 +44,15 @@ gulp
 
 
 
-finally run 
+finally to run as local web server
 
 `php server.php`
+
+or
+
+`open index.html`
+
+
+## DEV-STEPS
+
+While building use eslint `src/portfolio.js` to lint javascript
