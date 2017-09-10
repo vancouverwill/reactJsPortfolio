@@ -28,7 +28,7 @@ function imgRequestUrlLoad(url) {
 
     var image = get(url);
 
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         var handleSuccess = function handleSuccess() {
             resolve(image);
         };
@@ -48,13 +48,13 @@ function imgLoad(url) {
     // Create new promise with the Promise() constructor;
     // This has as its argument a function
     // with two parameters, resolve and reject
-    return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
       // Standard XHR to load an image
         var request = new XMLHttpRequest();
         request.open("GET", url);
         request.responseType = "blob";
       // When the request loads, check whether it was successful
-        request.onload = function() {
+        request.onload = () => {
             if (request.status === 200) {
         // If successful, resolve the promise by passing back the request response
                       resolve(request.response);
