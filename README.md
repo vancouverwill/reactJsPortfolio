@@ -26,13 +26,22 @@ npm install -g eslint
 bower install
 ```
 
-while building we need to update the files in the src directory, run the below so babel the src directory for changes
+### Outdate js build
+~~while building we need to update the files in the src directory, run the below so babel the src directory for changes
 
 `babel --presets react src --watch --out-dir build`
 
 and 
 
 `watchify  -t babelify  build/portfolio.js -o bundle.js` 
+
+or 
+
+`broswerify  -t babelify  build/portfolio.js --outfile bundle.js`~~
+
+### New js build
+
+`watchify  -t babelify  src/portfolio.js -o bundle.js`
 
 
 
