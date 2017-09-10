@@ -36,7 +36,7 @@ and
 
 
 
-for CSS build I use gulp which runs default by 
+for CSS build I use gulp which runs default by
 
 `
 gulp

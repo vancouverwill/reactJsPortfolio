@@ -52,7 +52,7 @@ gulp.task('babel', function() {
 gulp.task('watch-less', function() {  
   gulp.watch('./css/*.less' , ['compile-less']);
   gulp.watch('./css/styles.css' , ['autoprefixer']);
-  gulp.watch('./src/*.js' , ['babel']);
+  // gulp.watch('./src/*.js' , ['babel']);
 });
 
 
@@ -121,4 +121,5 @@ function bundle() {
 
 
 /* Task when running `gulp` from terminal */
-gulp.task('default', ['compile-less', 'watch-less', 'watchify-react']);  
+// gulp.task('default', ['compile-less', 'watch-less', 'watchify-react']);  
+gulp.task('default', ['compile-less', 'watch-less']);  
