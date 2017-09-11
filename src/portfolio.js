@@ -440,7 +440,6 @@ class PortfolioContainer extends React.Component{
   }
 }
 
-
 class ProjectAnimationContainer extends React.Component{
   constructor() {
     super();

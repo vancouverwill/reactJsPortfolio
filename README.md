@@ -7,10 +7,6 @@
 ```
 npm install
 
-
-
-npm install -g react-tools
-
 npm install -g bower
 
 npm install -g babel-cli
@@ -24,31 +20,21 @@ npm install --global gulp
 bower install
 ```
 
-### Outdate js build
-~~while building we need to update the files in the src directory, run the below so babel the src directory for changes
-
-`babel --presets react src --watch --out-dir build`
-
-and 
-
-`watchify  -t babelify  build/portfolio.js -o bundle.js` 
-
-or 
-
-`broswerify  -t babelify  build/portfolio.js --outfile bundle.js`~~
-
 ### New js build
+`broswerify  -t babelify  src/portfolio.js -o bundle.js`
+
+or
 
 `watchify  -t babelify  src/portfolio.js -o bundle.js`
 
 
+### CSS
 
-for CSS build I use gulp which runs default by
+for CSS build I use gulp which runs default gulp tasks by. Minimization is currently disabled but that is easy to switch on.
 
 `
 gulp
 `
-
 
 
 finally to run as local web server
