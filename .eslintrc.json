@@ -19,11 +19,13 @@
         "react/jsx-indent": [1, 2],
         "class-property/rule-name": 2,
         "strict": 0,
-        "react/jsx-uses-vars": 2
+        "react/jsx-uses-vars": 2,
+        "no-undef": "error"
     },
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "amd": true
     },
     "extends": "eslint:recommended",
     // "ecmaFeatures": {
