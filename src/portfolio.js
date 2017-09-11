@@ -163,30 +163,64 @@ class PageLoadingClass  extends React.Component{
 };
 
 
-var PortfolioContainer = React.createClass({
-    isAnimating : false,
-    currentProjectIndex : -1,
-    animationDirection : "movingUp",
-    animationDuration : 1200,
-    getInitialState: function() {
-        return {
+class PortfolioContainer extends React.Component{
+     constructor() {
+        super();
+        this.isAnimating = false;
+        this.currentProjectIndex = -1;
+        this.animationDirection = "movingUp";
+        this.animationDuration = 1200;
+        this.state = {
             title: "Portfolio Site",
             showContactModal: false,
             showListView: true,
             currentProject : undefined,
             showIsAnimating : false,
             items : []
-        };
-    },
-    selctProject: function(projectName)   {
+        }
+        
+        this.selctProject = this.selctProject.bind(this);
+        this.updateCurrentProject = this.updateCurrentProject.bind(this);
+        this.handleProjectDetailsShow = this.handleProjectDetailsShow.bind(this);
+        this.handleProjectListShow = this.handleProjectListShow.bind(this);
+        this.hideContactView = this.hideContactView.bind(this);
+        this.showContactView = this.showContactView.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
+        this.handleWheel = this.handleWheel.bind(this);
+        this.handleSwipe = this.handleSwipe.bind(this);
+        this.handleSwipeStart = this.handleSwipeStart.bind(this);
+        this.chooseProjectOne = this.chooseProjectOne.bind(this);
+        this.moveUp = this.moveUp.bind(this);
+        this.moveDown = this.moveDown.bind(this);
+        this.setAnimating = this.setAnimating.bind(this);
+        this.setNotAnimating = this.setNotAnimating.bind(this);
+        this.clickLeftIndividualProjectCarousel = this.clickLeftIndividualProjectCarousel.bind(this);
+        this.clickRightIndividualProjectCarousel = this.clickRightIndividualProjectCarousel.bind(this);
+        this.render = this.render.bind(this);
+     }
+    // isAnimating : false,
+    // currentProjectIndex : -1,
+    // animationDirection : "movingUp",
+    // animationDuration : 1200,
+    // getInitialState: function() {
+    //     return {
+    //         title: "Portfolio Site",
+    //         showContactModal: false,
+    //         showListView: true,
+    //         currentProject : undefined,
+    //         showIsAnimating : false,
+    //         items : []
+    //     };
+    // },
+    selctProject(projectName)   {
         if (this.state.currentProject === undefined || this.state.currentProject.name != projectName) {
             this.updateCurrentProject(projectName);
         }
       else {
             this.handleProjectDetailsShow();
         }
-    },
-    updateCurrentProject: function(projectName) {
+    }
+    updateCurrentProject(projectName) {
         if (this.isAnimating ===   true) return;
         if (this.state.showListView ===  false) return;
 
@@ -222,35 +256,35 @@ var PortfolioContainer = React.createClass({
         }
 
         this.setNotAnimating();
-    },
-    handleProjectDetailsShow:function() {
+    }
+    handleProjectDetailsShow() {
         this.setAnimating();
         this.setState({"showListView" : false});
         this.setNotAnimating();
-    },
-    handleProjectListShow:function() {
+    }
+    handleProjectListShow() {
         this.isAnimating = false;
         this.setState({"showListView" : true});
-    },
-    hideContactView : function() {
+    }
+    hideContactView () {
         this.setState({"showContactModal" : false});
-    },
-    showContactView : function() {
+    }
+    showContactView () {
         this.setState({"showContactModal" : true});
-    },
-    componentDidMount: function() {
+    }
+    componentDidMount() {
         var elem = ReactDOM.findDOMNode(this);
         elem.addEventListener("wheel", this.handleWheel);
         elem.addEventListener("touchmove", this.handleSwipe);
         elem.addEventListener("touchstart", this.handleSwipeStart);
-    },
-    handleWheel: function(event) {
+    }
+    handleWheel(event) {
         if (this.isAnimating !== false) return;
 
         if (event.deltaY < 0) (this.moveDown());
         if (event.deltaY > 0) (this.moveUp());
-    },
-    handleSwipe: function(event) {
+    }
+    handleSwipe(event) {
         if (this.isAnimating !== false) return;
       
         if (event.touches[0].screenY < this.startY) {
@@ -260,19 +294,19 @@ var PortfolioContainer = React.createClass({
         }
 
         this.setAnimating();
-    },
-    handleSwipeStart: function(event) {
+    }
+    handleSwipeStart(event) {
         this.startY = event.touches[0].screenY;
-    },
-    chooseProjectOne: function() {
+    }
+    chooseProjectOne() {
         this.moveUp();
-    },
-    moveUp: function() {
+    }
+    moveUp() {
         if (this.currentProjectIndex < (this.props.projects.length - 1)) {
             this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name);
         }
-    },
-    moveDown: function(){
+    }
+    moveDown(){
         if (this.currentProjectIndex > 0) {
             this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name);
         }
@@ -280,20 +314,20 @@ var PortfolioContainer = React.createClass({
         if (this.currentProjectIndex == 0) {
             this.updateCurrentProject("");
         }
-    },
-    setAnimating: function() {
+    }
+    setAnimating() {
         this.isAnimating = true;
         this.setState({"showIsAnimating" : true});
-    },
-    setNotAnimating: function() {
+    }
+    setNotAnimating() {
         var self = this;
 
         this.timeout = setTimeout(function(){
             self.isAnimating = false;
             self.setState({"showIsAnimating" : false});
         }, this.animationDuration);
-    },
-    clickLeftIndividualProjectCarousel: function() {
+    }
+    clickLeftIndividualProjectCarousel() {
         if (this.isAnimating ===   true) return;
         this.setAnimating();
 
@@ -310,8 +344,8 @@ var PortfolioContainer = React.createClass({
         this.setState({"animatedImageUrlIndex" : newIndex});
 
         this.setNotAnimating();
-    },
-    clickRightIndividualProjectCarousel: function() {
+    }
+    clickRightIndividualProjectCarousel() {
         if (this.isAnimating ===   true) return;
         this.setAnimating();
 
@@ -328,10 +362,8 @@ var PortfolioContainer = React.createClass({
         this.setState({"animatedImageUrlIndex" : newIndex});
 
         this.setNotAnimating();
-    },
-    render: function() {
-
-     
+    }
+    render() {
 
       var animatingStatusClass = classNames({
               "animating_active" : this.state.showIsAnimating
@@ -407,7 +439,7 @@ var PortfolioContainer = React.createClass({
           </div></div>
       );
     }
-});
+};
 
 
 class ProjectAnimationContainer extends React.Component{
