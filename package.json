@@ -34,7 +34,7 @@
     "babel-preset-react": "*",
     "babelify": "*",
     "browserify": "*",
-    "eslint": "3.x",
+    "eslint": "3.9",
     "eslint-plugin-class-property": "^1.0.6",
     "eslint-plugin-react": "^7.3.0",
     "gulp": "^3.9.0",

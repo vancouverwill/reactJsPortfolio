@@ -87,11 +87,6 @@ class PageLoadingClass  extends React.Component{
       ready: false,
       ajaxState: undefined
     };
-    // this.componentWillMount = this.componentWillMount.bind(this);
-    this.handleSuccess = this.handleSuccess.bind(this);
-    this.handleError = this.handleError.bind(this);
-    this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
-    this.render = this.render.bind(this);
   }
   componentWillMount = () => {
     this.loadCommentsFromServer();
@@ -99,10 +94,10 @@ class PageLoadingClass  extends React.Component{
   handleSuccess = () => {
     this.setState({ready: true});
   }
-  handleError() {
+  handleError = () => {
     this.setState({ajaxState : "failed"});
   }
-  loadCommentsFromServer() {
+  loadCommentsFromServer = () => {
     Jquery.ajax({
       url: this.props.url,
       dataType: "json",
