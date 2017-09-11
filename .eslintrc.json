@@ -24,6 +24,7 @@
         "jsx": true,
         "experimentalObjectRestSpread": true
     },
+    "parserOptions": { "ecmaVersion": 6 },
     "plugins": [
         "react"
     ],

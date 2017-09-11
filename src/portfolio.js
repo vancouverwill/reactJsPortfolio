@@ -80,24 +80,30 @@ function loadImages(urls) {
 }
 
 
-var PageLoadingClass = React.createClass({
-    getInitialState: function() {
-        return {
+class PageLoadingClass  extends React.Component{
+    constructor() {
+        super();
+        this.state = {
             projects: undefined,
             ready: false,
             ajaxState: undefined
         };
-    },
-    componentWillMount : function() {
+        this.componentWillMount = this.componentWillMount.bind(this);
+        this.handleSuccess = this.handleSuccess.bind(this);
+        this.handleError = this.handleError.bind(this);
+        this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
+        this.render = this.render.bind(this);
+    }
+    componentWillMount() {
         this.loadCommentsFromServer();
-    },
-    handleSuccess : function() {
+    }
+    handleSuccess() {
         this.setState({ready: true});
-    },
-    handleError : function() {
+    }
+    handleError() {
       this.setState({ajaxState : "failed"})
-    },
-    loadCommentsFromServer: function() {
+    }
+    loadCommentsFromServer() {
         Jquery.ajax({
             url: this.props.url,
             dataType: "json",
@@ -136,8 +142,8 @@ var PageLoadingClass = React.createClass({
                     this.handleError();
                 }.bind(this)
         });
-    },
-    render: function() {
+    }
+    render() {
 
       if (this.state.ajaxState == undefined) {
         return (
@@ -154,7 +160,7 @@ var PageLoadingClass = React.createClass({
         );
       }
     }
-});
+};
 
 
 var PortfolioContainer = React.createClass({
@@ -404,12 +410,12 @@ var PortfolioContainer = React.createClass({
 });
 
 
-var ProjectAnimationContainer = React.createClass({
-  getInitialState: function() {
-      return {
-       };
-  },
-   render: function() {
+class ProjectAnimationContainer extends React.Component{
+constructor() {
+        super();
+        this.render = this.render.bind(this);
+    }
+render() {
       var animateProject;
 
       if (this.props.animatedImageUrl != null) {
@@ -434,24 +440,28 @@ var ProjectAnimationContainer = React.createClass({
           </div>
     );
   }
-});
+};
 
 
-var ProjectList = React.createClass({
-    getInitialState: function() {
-        return {
-         };
-    },
-    selctProject: function(projectName) {
+class ProjectList extends React.Component{
+    constructor() {
+        super();
+        this.state = {};
+        this.selctProject = this.selctProject.bind(this);
+        this.handleProjectDetailsShow = this.handleProjectDetailsShow.bind(this);
+        this.componentWillUpdate = this.componentWillUpdate.bind(this);
+        this.render = this.render.bind(this);
+    }
+    selctProject(projectName) {
         this.props.selctProject(projectName);
-    },
-    handleProjectDetailsShow: function() {
+    }
+    handleProjectDetailsShow() {
         this.props.handleProjectDetailsShow();
-    },
-    chooseProjectOne: function() {
+    }
+    chooseProjectOne() {
         this.props.chooseProjectOne();
-    },
-    componentWillUpdate: function() {
+    }
+    componentWillUpdate() {
  
         if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
 
@@ -466,8 +476,8 @@ var ProjectList = React.createClass({
         else {
              this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"};
          }
-    },
-    render: function() {
+    }
+    render() {
         var loop;
 
         if (this.props.projects !== undefined && this.props.imageReady == true) {
@@ -491,17 +501,23 @@ var ProjectList = React.createClass({
           </div>
     );
     }
-});
+};
 
 
-var ProjectName = React.createClass({
-    selctProject: function() {
+class ProjectName  extends React.Component {
+    constructor() {
+        super();
+        this.selctProject = this.selctProject.bind(this);
+        this.handleProjectDetailsShow = this.handleProjectDetailsShow.bind(this);
+        this.render = this.render.bind(this);
+    }
+    selctProject() {
         this.props.selctProject(this.props.name);
-    },
-    handleProjectDetailsShow: function() {
+    }
+    handleProjectDetailsShow() {
         this.props.handleProjectDetailsShow();
-    },
-    render: function() {
+    }
+    render() {
         var classes = classNames({
              "active": this.props.active,
              "projectTitle" : true
@@ -526,11 +542,15 @@ var ProjectName = React.createClass({
         </div>
         );
     }
-});
+};
 
 
-var ProjectDetailsIntroView = React.createClass({
-    render: function() {
+class ProjectDetailsIntroView extends React.Component {
+    constructor() {
+        super();
+        this.render = this.render.bind(this);
+    }
+    render() {
         if (this.props.currentProject === undefined) {
             return (
           <div className="projectDetailsIntroView"></div>
@@ -545,14 +565,19 @@ var ProjectDetailsIntroView = React.createClass({
         );
         }
     }
-});
+};
 
 
-var ProjectDetailsMainView = React.createClass({
-    handleProjectListShow: function() {
+class ProjectDetailsMainView  extends React.Component {
+    constructor() {
+        super();
+        this.handleProjectListShow = this.handleProjectListShow.bind(this);
+        this.render = this.render.bind(this);
+    }
+    handleProjectListShow() {
         this.props.handleProjectListShow();
-    },
-    render: function() {
+    }
+    render() {
         if (this.props.currentProject === undefined) {
             return (
           <div></div>
@@ -569,7 +594,7 @@ var ProjectDetailsMainView = React.createClass({
         );
         }
     }
-});
+};
 
 
 

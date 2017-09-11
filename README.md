@@ -21,8 +21,6 @@ npm install -g less
 
 npm install --global gulp
 
-npm install -g eslint
-
 bower install
 ```
 
