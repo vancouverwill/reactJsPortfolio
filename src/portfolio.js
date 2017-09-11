@@ -4,7 +4,6 @@ var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
 var React = require("react");
 var classNames = require("classnames");
 var ReactDOM = require("react-dom");
-var Jquery = require("jquery");
 
 var hash = {};
 var cache = [];
@@ -98,43 +97,39 @@ class PageLoadingClass  extends React.Component{
     this.setState({ajaxState : "failed"});
   }
   loadCommentsFromServer = () => {
-    Jquery.ajax({
-      url: this.props.url,
-      dataType: "json",
-      success: function(apiProjects) {
+    fetch(this.props.url).then((response) => {
+      if (response.ok) {
+        response.json().then(apiProjects => {
+          var projects = [];
+          var allImages = [];
 
-        var projects = [];
-        var allImages = [];
+          apiProjects.forEach(function(apiProject) {
+            var project = {};
+            project.name = apiProject.title.rendered;
+            project.shortDescription = apiProject.project_short_description;
+            project.description = apiProject.content.rendered;
+            project.fontColor = apiProject.font_color;
 
-        apiProjects.forEach(function(apiProject) {
-          var project = {};
-          project.name = apiProject.title.rendered;
-          project.shortDescription = apiProject.project_short_description;
-          project.description = apiProject.content.rendered;
-          project.fontColor = apiProject.font_color;
+            project.images = [];
 
-          project.images = [];
+            if (apiProject.gallery_set !== undefined && apiProject.gallery_set.length > 0) {
+              apiProject.gallery_set.forEach(function(galleryImage) {
+                project.images.push(galleryImage.url);
+                allImages.push(galleryImage.url);
+              });
+            }
+            projects.push(project);
+          });
 
-          if (apiProject.gallery_set !== undefined && apiProject.gallery_set.length > 0) {
-            apiProject.gallery_set.forEach(function(galleryImage) {
-              project.images.push(galleryImage.url);
-              allImages.push(galleryImage.url);
-            });
-          }
-          projects.push(project);
+          this.setState({projects: projects});
+
+          loadImages(allImages).then(this.handleSuccess, this.handleError);
         });
-
-        this.setState({projects: projects});
-
-        loadImages(allImages).then(this.handleSuccess, this.handleError);
-
-
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
-        console.log("could not load projects")
-        this.handleError();
-      }.bind(this)
+      } else {
+        response.json().then(() => {
+          this.handleError();
+        }); 
+      }    
     });
   }
   render() {
