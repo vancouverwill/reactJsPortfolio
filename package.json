@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "classnames": "*",
+    "eslint-plugin-promise": "^3.5.0",
     "jquery": "^2.1.4",
     "react": "^15.0.0",
     "react-addons-css-transition-group": "*",

@@ -1,7 +1,7 @@
 {
     "rules": {
         "indent": [
-            1
+            "error", 2
         ],
         "quotes": [
             2,
@@ -15,12 +15,15 @@
             2,
             "always"
         ],
-        "react/jsx-indent-props": 1,
-        "react/jsx-indent": 1,
-        "class-property/rule-name": 2
+        "react/jsx-indent-props": [1, 2],
+        "react/jsx-indent": [1, 2],
+        "class-property/rule-name": 2,
+        "strict": 0,
+        "react/jsx-uses-vars": 2
     },
     "env": {
-        "browser": true
+        "browser": true,
+        "es6": true
     },
     "extends": "eslint:recommended",
     // "ecmaFeatures": {
@@ -29,11 +32,9 @@
     // },
     "parserOptions": { "ecmaVersion": 6 },
     "parser": "babel-eslint",
-    "rules": {
-        "strict": 0
-    },
     "plugins": [
         "react",
-        "class-property"
+        "class-property",
+        "promise"
     ]
 }
