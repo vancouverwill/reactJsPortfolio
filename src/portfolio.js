@@ -6,7 +6,6 @@ var classNames = require("classnames");
 var ReactDOM = require("react-dom");
 var Jquery = require("jquery");
 
-
 var hash = {};
 var cache = [];
 
@@ -88,16 +87,16 @@ class PageLoadingClass  extends React.Component{
             ready: false,
             ajaxState: undefined
         };
-        this.componentWillMount = this.componentWillMount.bind(this);
+        // this.componentWillMount = this.componentWillMount.bind(this);
         this.handleSuccess = this.handleSuccess.bind(this);
         this.handleError = this.handleError.bind(this);
         this.loadCommentsFromServer = this.loadCommentsFromServer.bind(this);
         this.render = this.render.bind(this);
     }
-    componentWillMount() {
+    componentWillMount = () => {
         this.loadCommentsFromServer();
     }
-    handleSuccess() {
+    handleSuccess = () => {
         this.setState({ready: true});
     }
     handleError() {
@@ -160,7 +159,7 @@ class PageLoadingClass  extends React.Component{
         );
       }
     }
-};
+}
 
 
 class PortfolioContainer extends React.Component{
@@ -472,7 +471,7 @@ render() {
           </div>
     );
   }
-};
+}
 
 
 class ProjectList extends React.Component{
@@ -574,7 +573,7 @@ class ProjectName  extends React.Component {
         </div>
         );
     }
-};
+}
 
 
 class ProjectDetailsIntroView extends React.Component {
@@ -597,7 +596,7 @@ class ProjectDetailsIntroView extends React.Component {
         );
         }
     }
-};
+}
 
 
 class ProjectDetailsMainView  extends React.Component {
@@ -626,7 +625,7 @@ class ProjectDetailsMainView  extends React.Component {
         );
         }
     }
-};
+}
 
 
 

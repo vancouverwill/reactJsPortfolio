@@ -62,4 +62,6 @@ or
 
 ## DEV-STEPS
 
-While building use eslint `src/portfolio.js` to lint javascript
+While building use eslint to lint javascript
+
+`./node_modules/.bin/eslint src/portfolio.js`

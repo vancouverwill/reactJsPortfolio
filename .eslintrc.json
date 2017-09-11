@@ -14,22 +14,26 @@
         "semi": [
             2,
             "always"
-        ]
+        ],
+        "react/jsx-indent-props": 1,
+        "react/jsx-indent": 1,
+        "class-property/rule-name": 2
     },
     "env": {
         "browser": true
     },
     "extends": "eslint:recommended",
-    "ecmaFeatures": {
-        "jsx": true,
-        "experimentalObjectRestSpread": true
-    },
+    // "ecmaFeatures": {
+    //     "jsx": true,
+    //     "experimentalObjectRestSpread": true
+    // },
     "parserOptions": { "ecmaVersion": 6 },
-    "plugins": [
-        "react"
-    ],
+    "parser": "babel-eslint",
     "rules": {
-        "react/jsx-indent-props": 1,
-        "react/jsx-indent": 1
-    }
+        "strict": 0
+    },
+    "plugins": [
+        "react",
+        "class-property"
+    ]
 }
