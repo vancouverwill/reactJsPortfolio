@@ -29,11 +29,16 @@ var banner = ['/**',
 
 /* Task to compile less */
 gulp.task('compile-less', function() {  
-  gulp.src('./css/styles.less')
+  gulp.src('./css/styles.less', { base: 'src' })
     .pipe(sourcemaps.init())
     .pipe(less())
     .pipe(header(banner, {pkg: pkg}))
-    .pipe(sourcemaps.write("."))
+    .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
+    .pipe(sourcemaps.write()) // put sourcemap in generated css file
+    // .pipe(sourcemaps.write(".")) // put sourcemap in it's own file
     .pipe(gulp.dest('./css/'));
 });
 
@@ -58,12 +63,12 @@ gulp.task('watch-less', function() {
 
 gulp.task('autoprefixer', function () {
     return gulp.src('css/styles.css')
-        // .pipe(sourcemaps.init())
+        .pipe(sourcemaps.init())
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
             cascade: false
         }))
-        // .pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('./dist/'));
 });
 
@@ -123,3 +128,4 @@ function bundle() {
 /* Task when running `gulp` from terminal */
 // gulp.task('default', ['compile-less', 'watch-less', 'watchify-react']);  
 gulp.task('default', ['compile-less', 'watch-less']);  
+// gulp.task('default', ['compile-less', 'babel', 'watch-less', 'watchify-react']);  

@@ -30,13 +30,17 @@ class ProjectName  extends React.Component {
     }
 
     return (
-      <div className={classes}>          
-        <h4  onClick={this.selctProject} style={fontColor} >
-          {this.props.name}
-          <i className="fa fa-arrow-right arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow} style={fontColor}></i>
-        </h4>
-        <p dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
-      </div>
+              <div className={classes}>          
+                <h4  onClick={this.selctProject} style={fontColor} >
+                  {this.props.name}
+                  
+                </h4>
+                <p className="projectShortDescription" dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
+                <p className="arrowSeeProjectDetails" onClick={this.handleProjectDetailsShow}>
+                    Read More 
+                    <i className="fa fa-arrow-right arrowSeeProjectDetailsArrow" ></i>
+                </p>
+            </div>
     );
   }
 }

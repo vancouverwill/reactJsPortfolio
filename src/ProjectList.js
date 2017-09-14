@@ -23,19 +23,62 @@ class ProjectList extends React.Component{
   }
   componentWillUpdate() {
  
-    if (this.props.projects !== undefined && this.props.currentProjectIndex !== PortfolioContainer.unSetProjectIndex()) {
+    if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
 
-      // var projectTitleHeight = 120;
-      const projectTitleEmHeight = 7; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
+        var projectTitleHeight = 120;
+             var projectTitleEmHeight = 12; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
 
-      // var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
-      const verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
+            var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight + 120;
+             var verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
 
-      this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
-    }
-    else {
-      this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"};
-    }
+
+             var projectTitles = document.getElementsByClassName('projectTitle');
+
+
+             // var verticalMovementInPixels = projectTitles[this.props.currentProjectIndex].offsetTop - 80;
+
+             // below code is to test out aligning from bottom of page
+
+             var parentElement = projectTitles[this.props.currentProjectIndex].offsetParent;
+
+             var tempOffSetHeight = parentElement.offsetHeight;
+
+             var offSetTop = projectTitles[this.props.currentProjectIndex].offsetTop;
+
+             var offsetBottom = parentElement.offsetHeight - projectTitles[this.props.currentProjectIndex].offsetTop  - 80;
+
+             // this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
+             // this.verticalMovement = {transform: "translateY(-" + verticalMovementInPixels +  "px)"};
+             this.verticalMovement = {top: "-" + verticalMovementInPixels +  "px"};
+             
+
+
+             // this.verticalMovement = {bottom: "+" + verticalMovementInPixels +  "px"};
+         }
+        else {
+             // this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"};
+             this.verticalMovement = {top: "-" + 0 +  "px"};
+             // 
+            
+             // below code is to test out aligning from bottom of page
+
+            var menu = document.getElementById("projectList")
+            var menuHeight = menu.offsetHeight;
+
+
+            var containers = document.getElementsByClassName("projectListView")
+            var containersHeight = containers[0].offsetHeight;
+
+            var displacementFromBottom = menu.offsetHeight - containers[0].offsetHeight
+
+            // this.verticalMovement = {bottom: "" + displacementFromBottom +  "px"};
+         }
+  }
+  componentDidUpdate() {
+      if (this.props.projects !== undefined && this.props.currentProjectIndex == -1) {
+        console.log("testing for projects loading, this would be the place to switch to bottom css positioning")
+        }
+        
   }
   render() {
     let loop;
