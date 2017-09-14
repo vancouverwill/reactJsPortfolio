@@ -1,4 +1,4 @@
-var React = require("react");
+import React from "react";
 
 class ProjectDetailsIntroView extends React.Component {
   constructor() {
@@ -11,14 +11,12 @@ class ProjectDetailsIntroView extends React.Component {
         <div className="projectDetailsIntroView"></div>
       );
     }
-    else {
-      return (
-        <div className="projectDetailsIntroView">
-          <h2>{this.props.currentProject.name}</h2>
-          <p>{this.props.currentProject.shortDescription}</p>
-        </div>
-      );
-    }
+    return (
+      <div className="projectDetailsIntroView">
+        <h2>{this.props.currentProject.name}</h2>
+        <p>{this.props.currentProject.shortDescription}</p>
+      </div>
+    );
   }
 }
 export default ProjectDetailsIntroView;

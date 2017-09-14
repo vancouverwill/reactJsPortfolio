@@ -7,11 +7,11 @@ class ProjectAnimationContainer extends React.Component{
     this.render = this.render.bind(this);
   }
   render() {
-    var animateProject;
+    let animateProject;
 
-    if (this.props.animatedImageUrl != null) {
-      var imageUrl = "url('" + this.props.animatedImageUrl + "')";
-      var backgroundStyles = {"backgroundImage" : imageUrl};
+    if (this.props.animatedImageUrl !== null) {
+      const imageUrl = "url('" + this.props.animatedImageUrl + "')";
+      const backgroundStyles = {"backgroundImage" : imageUrl};
 
       animateProject = <div key={this.props.animatedImageUrl} className="portfolioSlide"  >
         <div className="slideImage" style={backgroundStyles} ></div>

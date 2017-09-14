@@ -1,5 +1,6 @@
-import React from"react";
+import PortfolioContainer from "./PortfolioContainer.js";
 import ProjectName from"./ProjectName.js";
+import React from"react";
 
 
 class ProjectList extends React.Component{
@@ -22,13 +23,13 @@ class ProjectList extends React.Component{
   }
   componentWillUpdate() {
  
-    if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
+    if (this.props.projects !== undefined && this.props.currentProjectIndex !== PortfolioContainer.unSetProjectIndex()) {
 
       // var projectTitleHeight = 120;
-      var projectTitleEmHeight = 7; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
+      const projectTitleEmHeight = 7; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
 
       // var verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight;
-      var verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
+      const verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
 
       this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
     }
@@ -37,7 +38,7 @@ class ProjectList extends React.Component{
     }
   }
   render() {
-    var loop;
+    let loop;
 
     if (this.props.projects !== undefined && this.props.imageReady == true) {
       loop = this.props.projects.map(function (project) {

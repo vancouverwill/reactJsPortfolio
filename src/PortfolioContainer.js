@@ -1,18 +1,17 @@
-import React from "react";
 import classNames from "classnames";
-import ReactDOM from "react-dom";
-// import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import ProjectDetailsIntroView from "./ProjectDetailsIntroView.js";
 import ProjectAnimationContainer from "./ProjectAnimationContainer.js";
-import ProjectList from "./ProjectList.js";
+import ProjectDetailsIntroView from "./ProjectDetailsIntroView.js";
 import ProjectDetailsMainView from "./ProjectDetailsMainView.js";
-
+import ProjectList from "./ProjectList.js";
+import React from "react";
+import ReactDOM from "react-dom";
 
 class PortfolioContainer extends React.Component{
   constructor() {
     super();
     this.isAnimating = false;
-    this.currentProjectIndex = -1;
+    this.unSetProjectIndex = -1;
+    this.currentProjectIndex = this.unSetProjectIndex;
     this.animationDirection = "movingUp";
     this.animationDuration = 1200;
     this.state = {
@@ -23,6 +22,9 @@ class PortfolioContainer extends React.Component{
       showIsAnimating : false,
       items : []
     };
+  }
+  static unSetProjectIndex() {
+    return this.unSetProjectIndex;
   }
   selctProject = (projectName) => {
     if (this.state.currentProject === undefined || this.state.currentProject.name != projectName) {
@@ -35,9 +37,10 @@ class PortfolioContainer extends React.Component{
   updateCurrentProject = (projectName) => {
     if (this.isAnimating ===   true) return;
     if (this.state.showListView ===  false) return;
+    let currentProject;
 
     this.setAnimating();
-    for (var i = 0; i < this.props.projects.length; i++) {
+    for (let i = 0; i < this.props.projects.length; i++) {
       if (this.props.projects[i].name == projectName) {
         if (i < this.currentProjectIndex) {
           this.animationDirection = "movingDown";
@@ -47,7 +50,7 @@ class PortfolioContainer extends React.Component{
         this.setState({"currentProject" : this.props.projects[i]});
         this.currentProjectIndex = i;
         this.props.projects[i].active = true;
-        var currentProject = this.props.projects[i];
+        currentProject = this.props.projects[i];
       } else {
         this.props.projects[i].active = false;
       }
@@ -61,7 +64,7 @@ class PortfolioContainer extends React.Component{
     else {
       // no project means reset
       this.animationDirection = "movingDown";
-      this.currentProjectIndex = -1;
+      this.currentProjectIndex = this.unSetProjectIndex;
       this.setState({"animatedProject" : null});
       this.setState({"animatedImageUrl" : null});
       this.setState({"animatedImageUrlIndex" : null});
@@ -85,7 +88,7 @@ class PortfolioContainer extends React.Component{
     this.setState({"showContactModal" : true});
   }
   componentDidMount = () => {
-    var elem = ReactDOM.findDOMNode(this);
+    const elem = ReactDOM.findDOMNode(this);
     elem.addEventListener("wheel", this.handleWheel);
     elem.addEventListener("touchmove", this.handleSwipe);
     elem.addEventListener("touchstart", this.handleSwipeStart);
@@ -118,7 +121,7 @@ class PortfolioContainer extends React.Component{
       this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name);
     }
   }
-  moveDown = () =>{
+  moveDown = () => {
     if (this.currentProjectIndex > 0) {
       this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name);
     }
@@ -132,7 +135,7 @@ class PortfolioContainer extends React.Component{
     this.setState({"showIsAnimating" : true});
   }
   setNotAnimating = () => {
-    var self = this;
+    const self = this;
 
     this.timeout = setTimeout(() => {
       self.isAnimating = false;
@@ -144,7 +147,7 @@ class PortfolioContainer extends React.Component{
     this.setAnimating();
 
     this.animationDirection = "movingLeft";     
-    var newIndex;         
+    let newIndex;         
 
     if (this.state.animatedImageUrlIndex != 0) {
       newIndex = this.state.animatedImageUrlIndex - 1;
@@ -162,7 +165,7 @@ class PortfolioContainer extends React.Component{
     this.setAnimating();
 
     this.animationDirection = "movingRight";
-    var newIndex;        
+    let newIndex;        
 
     if (this.state.animatedImageUrlIndex != this.state.currentProject.images.length - 1) {
       newIndex = this.state.animatedImageUrlIndex + 1;
@@ -177,11 +180,11 @@ class PortfolioContainer extends React.Component{
   }
   render = () => {
 
-    var animatingStatusClass = classNames({
+    const animatingStatusClass = classNames({
       "animating_active" : this.state.showIsAnimating
     });
 
-    var overallStatusClasses;
+    let overallStatusClasses;
 
     if (this.props.imageReady == false ){
       overallStatusClasses = classNames({"imageLoadingView_active": true});
@@ -189,10 +192,10 @@ class PortfolioContainer extends React.Component{
     else if (this.state.showContactModal == true) {
       overallStatusClasses = classNames({"modalView_active": true});
     }
-    else if (this.state.showListView == true && this.currentProjectIndex == -1) {
+    else if (this.state.showListView == true && this.currentProjectIndex == this.unSetProjectIndex) {
       overallStatusClasses = classNames({"intialView_active": true});
     }
-    else if (this.state.showListView == true && this.currentProjectIndex != -1) {
+    else if (this.state.showListView == true && this.currentProjectIndex != this.unSetProjectIndex) {
       overallStatusClasses = classNames({"projectListView_active": true});
     }
     else {

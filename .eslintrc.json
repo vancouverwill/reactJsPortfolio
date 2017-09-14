@@ -16,21 +16,47 @@
             "always"
         ],
         "class-property/class-property-semicolon": ["error", "never"],
-        "react/jsx-indent-props": [1, 2],
-        "react/jsx-indent": [1, 2],
-        "strict": 0,
+        "react/jsx-indent-props": ["warn", 2],
+        "react/jsx-indent": ["warn", 2],
+        "strict": "error",
         "react/jsx-uses-vars": 2,
-        "no-undef": "error"
+        "no-undef": "error",
+        "no-magic-numbers": "warn",
+        "class-methods-use-this": "error",
+        "no-else-return": "error",
+        "no-eq-null": "error",
+        "no-extra-bind": "error",
+        // ES6
+        "no-var": "error",
+        "no-this-before-super": "error",
+        "constructor-super": "error",
+        "no-duplicate-imports": "error",
+        "no-const-assign": "error",
+        "prefer-const": "error",
+        "sort-imports": "error",
+        "arrow-spacing": "warn",
+        "prefer-arrow-callback": "warn",
+        "babel/no-invalid-this": 1
     },
     "env": {
         "browser": true,
-        "es6": true,
-        "amd": true
+        "es6": true
     },
     "extends": "eslint:recommended",
-    "parserOptions": { "ecmaVersion": 6 },
+    "globals": {
+        "apiUrl": true
+    },
+    "parserOptions": { 
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true,
+            "impliedStrict": true
+        }
+     },
     "parser": "babel-eslint",
     "plugins": [
+        "babel",
         "react",
         "class-property",
         "import",

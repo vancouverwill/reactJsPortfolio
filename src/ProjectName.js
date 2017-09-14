@@ -15,12 +15,12 @@ class ProjectName  extends React.Component {
     this.props.handleProjectDetailsShow();
   }
   render() {
-    var classes = classNames({
+    const classes = classNames({
       "active": this.props.active,
       "projectTitle" : true
     });
 
-    var fontColor;
+    let fontColor;
 
     if (this.props.active == true) {
       fontColor = {"color" : this.props.fontColor};

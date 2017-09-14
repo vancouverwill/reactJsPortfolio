@@ -1,6 +1,5 @@
-/*global require, apiUrl*/
-
 import PageLoadingClass from "./PageLoadingClass.js";
+import React from "react";
 import ReactDOM from "react-dom";
 
 function imgLoad(url) {
@@ -9,7 +8,7 @@ function imgLoad(url) {
   // with two parameters, resolve and reject
   return new Promise((resolve, reject) => {
     // Standard XHR to load an image
-    var request = new XMLHttpRequest();
+    const request = new XMLHttpRequest();
     request.open("GET", url);
     request.responseType = "blob";
     // When the request loads, check whether it was successful
