@@ -1,3 +1,4 @@
+import ImageCacher from "./ImageCacher.js";
 import PortfolioContainer from "./PortfolioContainer.js";
 import React from "react";
 
@@ -46,8 +47,8 @@ class PageLoadingClass  extends React.Component{
           });
 
           this.setState({projects: projects});
-
-          loadImages(allImages).then(this.handleSuccess, this.handleError);
+          const cache = new ImageCacher();
+          cache.loadImages(allImages).then(this.handleSuccess, this.handleError);
         });
       } else {
         response.json().then(() => {
@@ -72,47 +73,6 @@ class PageLoadingClass  extends React.Component{
     );
   }
   
-}
-
-const hash = {};
-const cache = [];
-
-function loadImages(urls) {
-  const promises = urls.map(imgRequestUrlLoad);
-  return Promise.all(promises);
-}
-
-function imgRequestUrlLoad(url) {
-
-  const image = get(url);
-
-  return new Promise((resolve, reject) => {
-    const handleSuccess = function handleSuccess() {
-      resolve(image);
-    };
-
-    if (image.naturalWidth && image.naturalHeight) {
-      //Image is loaded, go ahead and change the state
-      handleSuccess();
-    } else {
-      image.addEventListener("load", handleSuccess, false);
-      image.addEventListener("error", reject, false);
-    }
-  });
-}
-
-function add(url) {
-  if (!hash[url]) {
-    hash[url] = new Image();
-    hash[url].src = url;
-
-    cache.push(hash[url]);
-  }
-  return hash[url];
-}
-
-function get(url) {
-  return add(url);
 }
 
 export default PageLoadingClass;

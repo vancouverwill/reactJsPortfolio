@@ -27,6 +27,8 @@ or
 
 `watchify  -t babelify  src/portfolio.js -o bundle.js`
 
+Note for either add `--debug` to add sourcemaps.
+
 
 ### CSS
 
