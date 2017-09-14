@@ -1,9 +1,9 @@
 /*global require, apiUrl*/
 
-var React = require("react");
-var classNames = require("classnames");
-const PageLoadingClass = require("./PageLoadingClass.js");
-var ReactDOM = require("react-dom");
+import React from "react";
+import classNames from "classnames";
+import PageLoadingClass from "./PageLoadingClass.js";
+import ReactDOM from "react-dom";
 
 function imgLoad(url) {
   // Create new promise with the Promise() constructor;

@@ -1,5 +1,5 @@
-var React = require("react");
-var ProjectName = require('./ProjectName.js');
+import React from"react";
+import ProjectName from'./ProjectName.js';
 
 
 class ProjectList extends React.Component{
@@ -62,4 +62,4 @@ class ProjectList extends React.Component{
   }
 }
 
-module.exports = ProjectList;
+export default ProjectList;

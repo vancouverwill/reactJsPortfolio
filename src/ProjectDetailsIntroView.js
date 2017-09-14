@@ -21,5 +21,4 @@ class ProjectDetailsIntroView extends React.Component {
     }
   }
 }
-
-module.exports = ProjectDetailsIntroView;
+export default ProjectDetailsIntroView;

@@ -1,6 +1,5 @@
-var React = require("react");
-var classNames = require("classnames");
-
+import React from"react";
+import classNames from"classnames";
 
 class ProjectName  extends React.Component {
   constructor() {
@@ -42,4 +41,4 @@ class ProjectName  extends React.Component {
   }
 }
 
-module.exports = ProjectName;
+export default ProjectName;

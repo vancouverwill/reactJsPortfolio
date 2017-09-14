@@ -1,11 +1,9 @@
-var React = require("react");
-var classNames = require("classnames");
-var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
-var ReactDOM = require("react-dom");
-var ProjectDetailsIntroView = require('./ProjectDetailsIntroView.js');
-var PortfolioContainer = require('./PortfolioContainer.js');
-
-
+import React from "react";
+import classNames from "classnames";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import ReactDOM from "react-dom";
+import ProjectDetailsIntroView from './ProjectDetailsIntroView.js';
+import PortfolioContainer from './PortfolioContainer.js';
 
 class PageLoadingClass  extends React.Component{
   constructor() {
@@ -121,5 +119,4 @@ function get(url) {
   return add(url);
 }
 
-module.exports = PageLoadingClass;
-// export default PageLoadingClass;
+export default PageLoadingClass;

@@ -1,5 +1,5 @@
-var React = require("react");
-var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
+import React from "react";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class ProjectAnimationContainer extends React.Component{
   constructor() {
@@ -33,4 +33,4 @@ class ProjectAnimationContainer extends React.Component{
   }
 }
 
-module.exports = ProjectAnimationContainer;
+export default ProjectAnimationContainer;

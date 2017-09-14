@@ -1,4 +1,4 @@
-var React = require("react");
+import React from "react";
 
 class ProjectDetailsMainView  extends React.Component {
   constructor() {
@@ -27,5 +27,4 @@ class ProjectDetailsMainView  extends React.Component {
     }
   }
 }
-
-module.exports = ProjectDetailsMainView;
+export default ProjectDetailsMainView;

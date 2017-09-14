@@ -1,12 +1,11 @@
-var React = require("react");
-var classNames = require("classnames");
-var ReactDOM = require("react-dom");
-var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
-var ProjectDetailsIntroView = require("./ProjectDetailsIntroView.js");
-var ProjectAnimationContainer = require('./ProjectAnimationContainer.js');
-var ProjectList = require('./ProjectList.js');
-var ProjectDetailsMainView = require('./ProjectDetailsMainView.js');
-
+import React from "react";
+import classNames from "classnames";
+import ReactDOM from "react-dom";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import ProjectDetailsIntroView from "./ProjectDetailsIntroView.js";
+import ProjectAnimationContainer from './ProjectAnimationContainer.js';
+import ProjectList from './ProjectList.js';
+import ProjectDetailsMainView from './ProjectDetailsMainView.js';
 
 
 class PortfolioContainer extends React.Component{
@@ -254,4 +253,4 @@ class PortfolioContainer extends React.Component{
   }
 }
 
-module.exports = PortfolioContainer;
+export default PortfolioContainer;
