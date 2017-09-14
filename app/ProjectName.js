@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from"react";
 import classNames from"classnames";
 
@@ -43,6 +44,13 @@ class ProjectName  extends React.Component {
             </div>
     );
   }
+}
+ProjectName.propTypes = {
+  name:  React.PropTypes.string,
+  shortDescription:  React.PropTypes.string, 
+  active: React.PropTypes.bool,
+  selctProject: React.PropTypes.func,
+  handleProjectDetailsShow: React.PropTypes.func
 }
 
 export default ProjectName;

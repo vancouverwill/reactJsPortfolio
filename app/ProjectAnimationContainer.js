@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from "react";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
@@ -31,6 +32,10 @@ class ProjectAnimationContainer extends React.Component{
       </div>
     );
   }
+}
+ProjectAnimationContainer.propTypes = {
+  animatedImageUrl :  React.PropTypes.string,
+  animationDirection :  React.PropTypes.string,
 }
 
 export default ProjectAnimationContainer;

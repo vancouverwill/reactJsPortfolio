@@ -1,5 +1,6 @@
 import PortfolioContainer from "./PortfolioContainer.js";
 import ProjectName from"./ProjectName.js";
+import PropTypes from 'prop-types';
 import React from"react";
 
 
@@ -104,6 +105,14 @@ class ProjectList extends React.Component{
       </div>
     );
   }
+}
+ProjectList.propTypes = {
+  currentProjectIndex: React.PropTypes.number,
+  projects:  React.PropTypes.array,
+  imageReady: React.PropTypes.bool,
+  selctProject: React.PropTypes.func,
+  handleProjectDetailsShow: React.PropTypes.func,
+  chooseProjectOne: React.PropTypes.func,
 }
 
 export default ProjectList;

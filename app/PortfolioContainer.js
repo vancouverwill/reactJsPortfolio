@@ -3,6 +3,7 @@ import ProjectAnimationContainer from "./ProjectAnimationContainer.js";
 import ProjectDetailsIntroView from "./ProjectDetailsIntroView.js";
 import ProjectDetailsMainView from "./ProjectDetailsMainView.js";
 import ProjectList from "./ProjectList.js";
+import PropTypes from 'prop-types';
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -78,6 +79,7 @@ class PortfolioContainer extends React.Component{
     this.setNotAnimating();
   }
   handleProjectListShow = () => {
+    if (this.props.projects == undefined) return;
     this.isAnimating = false;
     this.setState({"showListView" : true});
   }
@@ -117,11 +119,13 @@ class PortfolioContainer extends React.Component{
     this.moveUp();
   }
   moveUp = () => {
+    if (this.props.projects == undefined) return;
     if (this.currentProjectIndex < (this.props.projects.length - 1)) {
       this.updateCurrentProject(this.props.projects[this.currentProjectIndex + 1].name);
     }
   }
   moveDown = () => {
+    if (this.props.projects == undefined) return;
     if (this.currentProjectIndex > 0) {
       this.updateCurrentProject(this.props.projects[this.currentProjectIndex - 1].name);
     }
@@ -232,10 +236,14 @@ class PortfolioContainer extends React.Component{
             </a>
           </div>
         </div>
-        <div id="contactSection" hidden>
-          <a href="https://github.com/vancouverwill/reactJsPortfolio">source</a>
+        <div id="contactSection" className="headerBarFont">
+          
+          <p>
+          <a  href="https://github.com/vancouverwill/reactJsPortfolio">Source</a>
+          &nbsp;
+          <span id="contactButton"  onClick={this.showContactView} >Contact</span>
+          </p>
         </div>
-                  <p id="contactButton" className="headerBarFont" onClick={this.showContactView} >Contact</p>
 
           <p className="headerBarFont projectClose" onClick={this.handleProjectListShow} >
             Return to articles
@@ -251,9 +259,18 @@ class PortfolioContainer extends React.Component{
         </div>
         <ProjectDetailsIntroView currentProject={this.state.currentProject}></ProjectDetailsIntroView>
         <div className="projectListView">
-          <ProjectAnimationContainer animationDirection={this.animationDirection} animationDuration={this.animationDuration} animatedImageUrl={this.state.animatedImageUrl}></ProjectAnimationContainer>
+          <ProjectAnimationContainer
+            animationDirection={this.animationDirection}
+            animationDuration={this.animationDuration}
+            animatedImageUrl={this.state.animatedImageUrl}></ProjectAnimationContainer>
           <div id="projectListContainer">
-            <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
+            <ProjectList
+              projects={this.props.projects}
+              selctProject={this.selctProject}
+              handleProjectDetailsShow={this.handleProjectDetailsShow}
+              chooseProjectOne={this.chooseProjectOne}
+              imageReady={this.props.imageReady}
+              currentProjectIndex={this.currentProjectIndex}></ProjectList>
           </div>
         </div>
         <div className="projectDetailsMainView">
@@ -262,6 +279,10 @@ class PortfolioContainer extends React.Component{
       </div></div>
     );
   }
+}
+PortfolioContainer.propTypes = {
+  projects: React.PropTypes.array,
+  imageReady: React.PropTypes.bool,
 }
 
 export default PortfolioContainer;

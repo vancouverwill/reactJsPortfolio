@@ -7,35 +7,19 @@
 ```
 npm install
 
-npm install -g bower
-
-npm install -g babel-cli
-
-npm install -g watchify
-
-npm install -g less
-
 npm install --global gulp
-
-bower install
 ```
 
 ### New js build
-`broswerify  -t babelify  src/portfolio.js -o bundle.js`
-
-or
-
-`watchify  -t babelify  src/portfolio.js -o bundle.js`
-
-Note for either add `--debug` to add sourcemaps.
-
+`gulp js`
 
 ### CSS
-
-for CSS build I use gulp which runs default gulp tasks by. Minimization is currently disabled but that is easy to switch on.
-
 `
-gulp
+gulp css
+`
+or 
+`
+gulp css  --prod
 `
 
 
@@ -52,4 +36,4 @@ or
 
 While building use eslint to lint javascript
 
-`./node_modules/.bin/eslint src/portfolio.js`
+`gulp lint`

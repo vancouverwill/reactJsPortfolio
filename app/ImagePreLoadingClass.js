@@ -1,9 +1,10 @@
 import ImageCacher from "./ImageCacher.js";
 import PortfolioContainer from "./PortfolioContainer.js";
+import PropTypes from 'prop-types';
 import React from "react";
 
 const emptyGallerySetSize = 0;
-class PageLoadingClass  extends React.Component{
+class ImagePreLoadingClass  extends React.Component{
   constructor() {
     super();
     this.state = {
@@ -72,7 +73,9 @@ class PageLoadingClass  extends React.Component{
       </div>
     );
   }
-  
+}
+ImagePreLoadingClass.propTypes = {
+  url: React.PropTypes.string
 }
 
-export default PageLoadingClass;
+export default ImagePreLoadingClass;

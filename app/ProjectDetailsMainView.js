@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from "react";
 
 class ProjectDetailsMainView  extends React.Component {
@@ -24,5 +25,9 @@ class ProjectDetailsMainView  extends React.Component {
       </div>
     );
   }
+}
+ProjectDetailsMainView.propTypes = {
+  currentProject : React.PropTypes.object,
+  handleProjectListShow : React.PropTypes.func
 }
 export default ProjectDetailsMainView;

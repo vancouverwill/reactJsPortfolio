@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from "react";
 
 class ProjectDetailsIntroView extends React.Component {
@@ -17,5 +18,8 @@ class ProjectDetailsIntroView extends React.Component {
         <p dangerouslySetInnerHTML={{__html: this.props.currentProject.shortDescription}}></p>      </div>
     );
   }
+}
+ProjectDetailsIntroView.propTypes = {
+  currentProject : React.PropTypes.object
 }
 export default ProjectDetailsIntroView;

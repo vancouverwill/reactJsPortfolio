@@ -1,4 +1,5 @@
-import PageLoadingClass from "./PageLoadingClass.js";
+import apiUrl from './config.js'
+import ImagePreLoadingClass from "./ImagePreLoadingClass.js";
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -373,7 +374,10 @@ var PortfolioContainer = React.createClass({
           </div>
           <ProjectDetailsIntroView currentProject={this.state.currentProject}></ProjectDetailsIntroView>
           <div className="projectListView">
-            <ProjectAnimationContainer animationDirection={this.animationDirection} animationDuration={this.animationDuration} animatedImageUrl={this.state.animatedImageUrl}></ProjectAnimationContainer>
+            <ProjectAnimationContainer 
+              animationDirection={this.animationDirection}
+              animationDuration={this.animationDuration}
+              animatedImageUrl={this.state.animatedImageUrl}></ProjectAnimationContainer>
             <div id="projectListContainer">
               <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
             </div>
@@ -623,6 +627,6 @@ var ProjectDetailsMainView = React.createClass({
 
 >>>>>>> changeProjectListViewWithFixedWidth */
 ReactDOM.render(
-    <PageLoadingClass url={apiUrl} />,
+    <ImagePreLoadingClass url={apiUrl} />,
   document.getElementById("container")
 );

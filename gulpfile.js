@@ -1,131 +1,140 @@
-var gulp       = require('gulp');  
-var babel = require('gulp-babel'); 
-var less       = require('gulp-less');
-var watch      = require('gulp-watch');
-var cssnano = require('gulp-cssnano'); 
-var sourcemaps = require('gulp-sourcemaps');
-var rename     = require('gulp-rename');  
-var header     = require('gulp-header');  
-var pkg        = require('./package.json');
-var autoprefixer = require('gulp-autoprefixer');
+/** GULP libraries */
+const gulp       = require('gulp');
+const autoprefixer = require('gulp-autoprefixer');
+const babel = require('gulp-babel');
+const concat = require('gulp-concat');
+const cond = require('gulp-cond');
+const eslint = require('gulp-eslint');
+const less       = require('gulp-less');
+const livereload = require('gulp-livereload');
+const minifyCSS = require('gulp-clean-css');
+const nodemon = require('gulp-nodemon');
+const sourcemaps = require('gulp-sourcemaps');
+const minifyJS = require('gulp-uglify');
+const gutil     = require('gulp-util');  
 
+/** other libraries */
+const browserify = require('browserify');
+const del = require('del');
+const hmr = require('browserify-hmr');
+const buffer = require('vinyl-buffer');
+const runSequence = require('run-sequence');
+const source = require('vinyl-source-stream');
+const watchify = require('watchify');
+const {argv} = require('yargs');
 
-var watchify = require('watchify');
-var babelify    = require('babelify');
-var browserify = require('browserify');
-var source = require('vinyl-source-stream');
-var buffer = require('vinyl-buffer');
-var gutil = require('gulp-util');
-var assign = require('lodash.assign');
+// If gulp was called in the terminal with the --prod flag, set the node environment to production
+if (argv.prod) {
+  console.log('Running production')
+  process.env.NODE_ENV = 'production';
+} else {
+  console.log('Running dev')
+}
+let PROD = process.env.NODE_ENV === 'production';
 
-
-/* Prepare banner text */
-var banner = ['/**',  
-  ' * <%= pkg.name %> v<%= pkg.version %>',
-  ' * <%= pkg.description %>',
-  ' * <%= pkg.author.name %>',
-  ' */',
-  ''].join('\n');
-
-/* Task to compile less */
-gulp.task('compile-less', function() {  
-  gulp.src('./css/styles.less', { base: 'src' })
-    .pipe(sourcemaps.init())
-    .pipe(less())
-    .pipe(header(banner, {pkg: pkg}))
-    .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
-            cascade: false
-        }))
-    .pipe(sourcemaps.write()) // put sourcemap in generated css file
-    // .pipe(sourcemaps.write(".")) // put sourcemap in it's own file
-    .pipe(gulp.dest('./css/'));
-});
-
-gulp.task('babel', function() {
-	return gulp.src('src/portfolio.js')
-		.pipe(sourcemaps.init())
-		.pipe(babel({
-			presets: ['react']
-		}))
-		.pipe(sourcemaps.write("."))
-		.pipe(gulp.dest('build'));
-});
-
-
-/* Task to watch less changes */
-gulp.task('watch-less', function() {  
-  gulp.watch('./css/*.less' , ['compile-less']);
-  gulp.watch('./css/styles.css' , ['autoprefixer']);
-  // gulp.watch('./src/*.js' , ['babel']);
-});
-
-
-gulp.task('autoprefixer', function () {
-    return gulp.src('css/styles.css')
-        .pipe(sourcemaps.init())
-        .pipe(autoprefixer({
-            browsers: ['last 2 versions'],
-            cascade: false
-        }))
-        .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('./dist/'));
-});
-
-
-/* Task to minify css */
-gulp.task('minify-css', function() {  
-  gulp.src('./css/styles.css')
-  	.pipe(sourcemaps.init())
-    .pipe(cssnano())
-    .pipe(header(banner, {pkg: pkg}))
-    .pipe(rename('styles.min.css'))
-    .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest( './css/dist/' ));
-});
-
-
-// add custom browserify options here
-var customOpts = {
-  entries: ['./build/portfolio.js'],
-  debug: true
+// Configuration
+const src = 'app';
+const config = {
+  port: PROD ? 8080 : 3000,
+  paths: {
+    baseDir: PROD ? 'build' : 'dist',
+    html: 'index.html',
+    entry: src + '/index.js',
+    js: src + '/**/*.js',
+    css: src + '/**/*.less',
+    fonts: src + '/fonts/**/*'
+  }
 };
-var opts = assign({}, watchify.args, customOpts);
-var bundler = watchify(browserify(opts)); 
 
-// add transformations here
-// i.e. b.transform(coffeeify);
-// Babel transform
-bundler.transform(babelify.configure({
-    sourceMapRelative: 'build'
-}));
+// Browserify specific configuration
+const b = browserify({
+  entries: [config.paths.entry],
+  debug: true,
+  plugin: PROD ? [] : [hmr, watchify],
+  cache: {},
+  packageCache: {}
+})
+.transform('babelify');
+b.on('update', bundle);
+b.on('log', gutil.log);
 
-gulp.task('watchify-react', bundle); // so you can run `gulp js` to build the file
-bundler.on('update', bundle); // on any dep update, runs the bundler
-bundler.on('log', gutil.log); // output build logs to terminal
+// Copies our index.html file from the app folder to either the dist or build folder, depending on the node environment
+gulp.task('html', () => {
+  return gulp.src(config.paths.html)
+  .pipe(gulp.dest(config.paths.baseDir))
+  .pipe(cond(!PROD, livereload()));
+});
 
+// Clears the contents of the dist and build folder
+gulp.task('clean', () => {
+  return del(['dist/**/*', 'build/**/*']);
+});
+
+
+gulp.task('css', () => {
+  return gulp.src(
+    [
+      config.paths.css
+    ]
+  )
+  .pipe(cond(!PROD, sourcemaps.init()))
+  .pipe(less())
+  .on('error', gutil.log)
+  .pipe(autoprefixer({
+            browsers: ['last 2 versions'],
+            cascade: false
+        }))
+  .on('error', gutil.log)
+  .pipe(concat('bundle.css'))
+  .pipe(cond(PROD, minifyCSS()))
+  .pipe(cond(!PROD, sourcemaps.write()))
+  .pipe(gulp.dest(config.paths.baseDir))
+  .pipe(cond(!PROD, livereload()));
+});
+
+// Linting
+gulp.task('lint', () => {
+  return gulp.src(config.paths.js)
+  .pipe(eslint())
+  .pipe(eslint.format())
+});
+
+// Bundles our JS (see the helper function at the bottom of the file)
+gulp.task('js', bundle);
+
+// Bundles our JS using browserify. Sourcemaps are used in development, while minification is used in production.
 function bundle() {
-  return bundler.bundle()
-    // log errors if they happen
-    .on('error', function (err) {
-    	gutil.log.bind(gutil, 'Browserify Error')
-    	this.emit("end");
-    })
-    .pipe(source('./dist/bundle.js'))
-    // optional, remove if you don't need to buffer file contents
-    .pipe(buffer())
-    // optional, remove if you dont want sourcemaps
-    .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
-       // Add transformation tasks to the pipeline here.
-    .pipe(sourcemaps.write('./')) // writes .map file
-    .pipe(gulp.dest('./'));
+  return b.bundle()
+  .on('error', gutil.log.bind(gutil, 'Browserify Error'))
+  .pipe(source('bundle.js'))
+  .pipe(buffer())
+  .pipe(cond(PROD, minifyJS()))
+  .pipe(cond(!PROD, sourcemaps.init({loadMaps: true})))
+  .pipe(cond(!PROD, sourcemaps.write()))
+  .pipe(gulp.dest(config.paths.baseDir));
 }
 
+// Runs an Express server defined in app.js
+gulp.task('server', () => {
+  nodemon({
+    script: 'server.js'
+  });
+});
+
+// Re-runs specific tasks when certain files are changed
+gulp.task('watch', () => {
+  // livereload.listen({basePath: 'dist'});
+  livereload.listen({basePath: config.paths.baseDir});
 
 
+  gulp.watch(config.paths.html, ['html']);
+  gulp.watch(config.paths.css, ['css']);
+  gulp.watch(config.paths.js, () => {
+    runSequence('lint');
+  });
+});
 
-
-/* Task when running `gulp` from terminal */
-// gulp.task('default', ['compile-less', 'watch-less', 'watchify-react']);  
-gulp.task('default', ['compile-less', 'watch-less']);  
-// gulp.task('default', ['compile-less', 'babel', 'watch-less', 'watchify-react']);  
+// Default task, bundles the entire app and hosts it on an Express server
+gulp.task('default', (cb) => {
+  runSequence('clean', 'lint', 'html', 'css', 'js', 'server', 'watch', cb);
+});

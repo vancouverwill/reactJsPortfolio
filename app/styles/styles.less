@@ -1,4 +1,4 @@
-@import "../bower_components/bootstrap/less/bootstrap.less";
+@import "../../node_modules/bootstrap/less/bootstrap.less";
 
 
 @linkColor : #36D37F;
@@ -56,12 +56,21 @@ p {
     top:0;
 }
 
-#contactButton {
-	opacity: 1;
-	transition: opacity 1s ease-out;
+#contactSection {
 	float: right;
 	right: 25px;
-	/*margin-right: 25px;*/
+	a {
+		color: @linkColor2;
+	}
+	// p {
+
+	// }
+	#contactButton {
+		opacity: 1;
+		transition: opacity 1s ease-out;
+		
+		/*margin-right: 25px;*/
+	}
 }
 
 .headerBarFont {
