@@ -233,7 +233,10 @@ class PortfolioContainer extends React.Component{
             </a>
           </div>
         </div>
-        <button id="contactButton" type="button" className=" btn btn-default" onClick={this.showContactView} >Contact</button>
+        <div id="contactButton">
+          <a href="https://github.com/vancouverwill/reactJsPortfolio">source</a>
+          <button  type="button" className=" btn btn-default" onClick={this.showContactView} >Contact</button>
+        </div>
         <div className="closeButton projectCloseButton" onClick={this.handleProjectListShow} >
           <i className="fa fa-times fa-2x"></i>
         </div>
