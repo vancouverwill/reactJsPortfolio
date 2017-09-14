@@ -1,7 +1,5 @@
 /*global require, apiUrl*/
 
-import React from "react";
-import classNames from "classnames";
 import PageLoadingClass from "./PageLoadingClass.js";
 import ReactDOM from "react-dom";
 

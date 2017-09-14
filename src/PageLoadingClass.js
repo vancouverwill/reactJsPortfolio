@@ -1,9 +1,5 @@
 import React from "react";
-import classNames from "classnames";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
-import ReactDOM from "react-dom";
-import ProjectDetailsIntroView from './ProjectDetailsIntroView.js';
-import PortfolioContainer from './PortfolioContainer.js';
+import PortfolioContainer from "./PortfolioContainer.js";
 
 class PageLoadingClass  extends React.Component{
   constructor() {

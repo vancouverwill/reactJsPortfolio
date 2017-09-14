@@ -1,11 +1,11 @@
 import React from "react";
 import classNames from "classnames";
 import ReactDOM from "react-dom";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+// import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import ProjectDetailsIntroView from "./ProjectDetailsIntroView.js";
-import ProjectAnimationContainer from './ProjectAnimationContainer.js';
-import ProjectList from './ProjectList.js';
-import ProjectDetailsMainView from './ProjectDetailsMainView.js';
+import ProjectAnimationContainer from "./ProjectAnimationContainer.js";
+import ProjectList from "./ProjectList.js";
+import ProjectDetailsMainView from "./ProjectDetailsMainView.js";
 
 
 class PortfolioContainer extends React.Component{
