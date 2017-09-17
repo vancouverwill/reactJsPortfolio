@@ -306,7 +306,7 @@ var PortfolioContainer = React.createClass({
         });
 
     var overallStatusClasses;
-
+------
     
     if (this.props.imageReady == false ){
         overallStatusClasses = "imageLoadingView_active";
@@ -379,7 +379,13 @@ var PortfolioContainer = React.createClass({
               animationDuration={this.animationDuration}
               animatedImageUrl={this.state.animatedImageUrl}></ProjectAnimationContainer>
             <div id="projectListContainer">
-              <ProjectList projects={this.props.projects} selctProject={this.selctProject} handleProjectDetailsShow={this.handleProjectDetailsShow} chooseProjectOne={this.chooseProjectOne} imageReady={this.props.imageReady} currentProjectIndex={this.currentProjectIndex}></ProjectList>
+              <ProjectList
+              projects={this.props.projects}
+              selctProject={this.selctProject}
+              handleProjectDetailsShow={this.handleProjectDetailsShow}
+              chooseProjectOne={this.chooseProjectOne} 
+              imageReady={this.props.imageReady} 
+              currentProjectIndex={this.currentProjectIndex}></ProjectList>
             </div>
           </div>
           <div className="projectDetailsMainView">

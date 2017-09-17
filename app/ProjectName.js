@@ -3,19 +3,13 @@ import React from"react";
 import classNames from"classnames";
 
 class ProjectName  extends React.Component {
-  constructor() {
-    super();
-    this.selctProject = this.selctProject.bind(this);
-    this.handleProjectDetailsShow = this.handleProjectDetailsShow.bind(this);
-    this.render = this.render.bind(this);
-  }
-  selctProject() {
+  selctProject= () => {
     this.props.selctProject(this.props.name);
   }
-  handleProjectDetailsShow() {
+  handleProjectDetailsShow= () => {
     this.props.handleProjectDetailsShow();
   }
-  render() {
+  render= () => {
     const classes = classNames({
       "active": this.props.active,
       "projectTitle" : true

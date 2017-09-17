@@ -2,11 +2,7 @@ import PropTypes from 'prop-types';
 import React from "react";
 
 class ProjectDetailsIntroView extends React.Component {
-  constructor() {
-    super();
-    this.render = this.render.bind(this);
-  }
-  render() {
+  render = () => {
     if (this.props.currentProject === undefined) {
       return (
         <div className="projectDetailsIntroView"></div>

@@ -5,24 +5,16 @@ import React from"react";
 
 
 class ProjectList extends React.Component{
-  constructor() {
-    super();
-    this.state = {};
-    this.selctProject = this.selctProject.bind(this);
-    this.handleProjectDetailsShow = this.handleProjectDetailsShow.bind(this);
-    this.componentWillUpdate = this.componentWillUpdate.bind(this);
-    this.render = this.render.bind(this);
-  }
-  selctProject(projectName) {
+  selctProject = (projectName) => {
     this.props.selctProject(projectName);
   }
-  handleProjectDetailsShow() {
+  handleProjectDetailsShow = () => {
     this.props.handleProjectDetailsShow();
   }
-  chooseProjectOne() {
+  chooseProjectOne = () => {
     this.props.chooseProjectOne();
   }
-  componentWillUpdate() {
+  componentWillUpdate = () => {
  
     if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
 
@@ -35,7 +27,7 @@ class ProjectList extends React.Component{
 
              var projectTitles = document.getElementsByClassName('projectTitle');
 
-
+            // todo clear up
              // var verticalMovementInPixels = projectTitles[this.props.currentProjectIndex].offsetTop - 80;
 
              // below code is to test out aligning from bottom of page
@@ -75,13 +67,13 @@ class ProjectList extends React.Component{
             // this.verticalMovement = {bottom: "" + displacementFromBottom +  "px"};
          }
   }
-  componentDidUpdate() {
+  componentDidUpdate = () => {
       if (this.props.projects !== undefined && this.props.currentProjectIndex == -1) {
         console.log("testing for projects loading, this would be the place to switch to bottom css positioning")
         }
         
   }
-  render() {
+  render = () => {
     let loop;
 
     if (this.props.projects !== undefined && this.props.imageReady == true) {

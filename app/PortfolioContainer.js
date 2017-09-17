@@ -96,12 +96,18 @@ class PortfolioContainer extends React.Component{
     elem.addEventListener("touchstart", this.handleSwipeStart);
   }
   handleWheel = (event) => {
+    if (this.state.showListView == true) {
+      event.preventDefault();
+    }
     if (this.isAnimating !== false) return;
 
     if (event.deltaY < 0) (this.moveDown());
     if (event.deltaY > 0) (this.moveUp());
   }
   handleSwipe = (event) => {
+    if (this.state.showListView == true) {
+      event.preventDefault();
+    }
     if (this.isAnimating !== false) return;
       
     if (event.touches[0].screenY < this.startY) {
@@ -187,7 +193,7 @@ class PortfolioContainer extends React.Component{
     const animatingStatusClass = classNames({
       "animating_active" : this.state.showIsAnimating
     });
-
+ 
     let overallStatusClasses;
 
     if (this.props.imageReady == false ){
@@ -208,6 +214,28 @@ class PortfolioContainer extends React.Component{
         "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false
       });
     }
+    /**
+     *  if (this.props.imageReady == false ){
+        overallStatusClasses = "imageLoadingView_active";
+    }
+    else if (this.state.showListView == true && this.currentProjectIndex == -1) {
+        overallStatusClasses = "intialView_active";
+    }
+    else if (this.state.showListView == true && this.currentProjectIndex != -1) {
+        overallStatusClasses = "projectListView_active";
+    }
+    else if (this.state.currentProject.images.length == 1) {
+      overallStatusClasses = "projectDetailsView_active singleImageProject"
+    }
+    else {
+        overallStatusClasses = "projectDetailsView_active"
+    }
+
+
+    if (this.state.showContactModal == true) {
+        overallStatusClasses += " modalView_active";
+    }
+     */
 
       
 
@@ -274,7 +302,10 @@ class PortfolioContainer extends React.Component{
           </div>
         </div>
         <div className="projectDetailsMainView">
-          <ProjectDetailsMainView currentProject={this.state.currentProject} handleProjectListShow={this.handleProjectListShow} ></ProjectDetailsMainView>
+          <ProjectDetailsMainView
+            currentProject={this.state.currentProject}
+            handleProjectListShow={this.handleProjectListShow} >
+          </ProjectDetailsMainView>
         </div>
       </div></div>
     );

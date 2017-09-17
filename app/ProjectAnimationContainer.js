@@ -3,11 +3,7 @@ import React from "react";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 class ProjectAnimationContainer extends React.Component{
-  constructor() {
-    super();
-    this.render = this.render.bind(this);
-  }
-  render() {
+  render = () => {
     let animateProject;
 
     if (this.props.animatedImageUrl !== null) {

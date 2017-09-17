@@ -2,15 +2,10 @@ import PropTypes from 'prop-types';
 import React from "react";
 
 class ProjectDetailsMainView  extends React.Component {
-  constructor() {
-    super();
-    this.handleProjectListShow = this.handleProjectListShow.bind(this);
-    this.render = this.render.bind(this);
-  }
-  handleProjectListShow() {
+  handleProjectListShow = () => {
     this.props.handleProjectListShow();
   }
-  render() {
+  render = () => {
     if (this.props.currentProject === undefined) {
       return (
         <div></div>

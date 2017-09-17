@@ -60,7 +60,7 @@ class ImagePreLoadingClass  extends React.Component{
   }
   render() {
 
-    if (this.state.ajaxState == undefined) {
+    if (this.state.ajaxState === undefined) {
       return (
         <PortfolioContainer url={this.props.url} projects={this.state.projects} imageReady={this.state.ready} >
         </PortfolioContainer>
