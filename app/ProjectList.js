@@ -63,7 +63,7 @@ class ProjectList extends React.Component{
   }
   componentDidUpdate = () => {
     if (this.props.projects !== undefined && this.props.currentProjectIndex == -1) {
-      console.log("testing for projects loading, this would be the place to switch to bottom css positioning");
+      // console.log("testing for projects loading, this would be the place to switch to bottom css positioning");
     }
         
   }

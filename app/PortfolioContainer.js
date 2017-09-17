@@ -8,7 +8,10 @@ import PropTypes from "prop-types";
 import React from "react";
 import ReactDOM from "react-dom";
 
-
+/**
+ * PortfolioContainer is the main component which handles the swipe events to move projects up and down
+ * and the left, right click events to change the selected image within a project
+ */
 class PortfolioContainer extends React.Component{
   constructor() {
     super();
@@ -154,6 +157,9 @@ class PortfolioContainer extends React.Component{
       self.setState({"showIsAnimating" : false});
     }, this.animationDuration);
   }
+  /**
+   * Cycle left through images related to a project
+   */
   clickLeftIndividualProjectCarousel = () => {
     if (this.isAnimating ===   true) return;
     this.setAnimating();
@@ -172,6 +178,9 @@ class PortfolioContainer extends React.Component{
 
     this.setNotAnimating();
   }
+  /**
+   * Cycle right through images related to a project
+   */
   clickRightIndividualProjectCarousel = () => {
     if (this.isAnimating ===   true) return;
     this.setAnimating();
@@ -268,7 +277,8 @@ class PortfolioContainer extends React.Component{
               handleProjectDetailsShow={this.handleProjectDetailsShow}
               chooseProjectOne={this.chooseProjectOne}
               imageReady={this.props.imageReady}
-              currentProjectIndex={this.currentProjectIndex}></ProjectList>
+              currentProjectIndex={this.currentProjectIndex}>
+            </ProjectList>
           </div>
         </div>
         <div className="projectDetailsMainView">
