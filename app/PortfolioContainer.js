@@ -1,11 +1,13 @@
-import classNames from "classnames";
+import ClassNames from "classnames";
+import HeaderBar from "./HeaderBar.js";
 import ProjectAnimationContainer from "./ProjectAnimationContainer.js";
 import ProjectDetailsIntroView from "./ProjectDetailsIntroView.js";
 import ProjectDetailsMainView from "./ProjectDetailsMainView.js";
 import ProjectList from "./ProjectList.js";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import React from "react";
 import ReactDOM from "react-dom";
+
 
 class PortfolioContainer extends React.Component{
   constructor() {
@@ -190,26 +192,26 @@ class PortfolioContainer extends React.Component{
   }
   render = () => {
 
-    const animatingStatusClass = classNames({
+    const animatingStatusClass = ClassNames({
       "animating_active" : this.state.showIsAnimating
     });
  
     let overallStatusClasses;
 
     if (this.props.imageReady == false ){
-      overallStatusClasses = classNames({"imageLoadingView_active": true});
+      overallStatusClasses = ClassNames({"imageLoadingView_active": true});
     }
     else if (this.state.showContactModal == true) {
-      overallStatusClasses = classNames({"modalView_active": true});
+      overallStatusClasses = ClassNames({"modalView_active": true});
     }
     else if (this.state.showListView == true && this.currentProjectIndex == this.unSetProjectIndex) {
-      overallStatusClasses = classNames({"intialView_active": true});
+      overallStatusClasses = ClassNames({"intialView_active": true});
     }
     else if (this.state.showListView == true && this.currentProjectIndex != this.unSetProjectIndex) {
-      overallStatusClasses = classNames({"projectListView_active": true});
+      overallStatusClasses = ClassNames({"projectListView_active": true});
     }
     else {
-      overallStatusClasses = classNames({
+      overallStatusClasses = ClassNames({
         "projectDetailsView_active": true,
         "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false
       });
@@ -241,44 +243,11 @@ class PortfolioContainer extends React.Component{
 
     return ( 
       <div id="mainView" className={overallStatusClasses}><div id="animatingStatus" className={animatingStatusClass}>
-        <div id="modalContactView" className="active">
-          <div className="closeButton modalCloseButton" onClick={this.hideContactView} >
-            <i className="fa fa-times fa-2x"></i>
-          </div>
-          <div className="modalContactViewText">
-                contact : willmelbourne@gmail.com
-            <a href="https://ca.linkedin.com/in/willmelbourne" target="_blank">
-              <span className="circleBorder">
-                <i className="fa fa-linkedin fa-lg"></i>
-              </span>
-            </a>
-            <a href="mailto:willmelbourne@gmail.com">
-              <span className="circleBorder">
-                <i className="fa fa-envelope fa-lg"></i>
-              </span>
-            </a>
-            <a href="https://github.com/vancouverwill" target="_blank">
-              <span className="circleBorder">
-                <i className="fa fa-github-alt fa-lg"></i>
-              </span>
-            </a>
-          </div>
-        </div>
-        <div id="contactSection" className="headerBarFont">
-          
-          <p>
-          <a  href="https://github.com/vancouverwill/reactJsPortfolio">Source</a>
-          &nbsp;
-          <span id="contactButton"  onClick={this.showContactView} >Contact</span>
-          </p>
-        </div>
-
-          <p className="headerBarFont projectClose" onClick={this.handleProjectListShow} >
-            Return to articles
-          </p>
-        <div className="headerBar">&nbsp;
-        </div>
-
+        <HeaderBar
+          hideContactView={this.hideContactView}
+          showContactView={this.showContactView}
+          handleProjectListShow={this.handleProjectListShow}
+        ></HeaderBar>
         <div id="leftArrow__individualProjecCarousel" className="arrow__individualProjecCarousel">
           <i className="fa fa-chevron-left" onClick={this.clickLeftIndividualProjectCarousel}></i>
         </div>
@@ -290,7 +259,8 @@ class PortfolioContainer extends React.Component{
           <ProjectAnimationContainer
             animationDirection={this.animationDirection}
             animationDuration={this.animationDuration}
-            animatedImageUrl={this.state.animatedImageUrl}></ProjectAnimationContainer>
+            animatedImageUrl={this.state.animatedImageUrl}>
+          </ProjectAnimationContainer>
           <div id="projectListContainer">
             <ProjectList
               projects={this.props.projects}
@@ -312,8 +282,8 @@ class PortfolioContainer extends React.Component{
   }
 }
 PortfolioContainer.propTypes = {
-  projects: React.PropTypes.array,
-  imageReady: React.PropTypes.bool,
-}
+  projects: PropTypes.array,
+  imageReady: PropTypes.bool,
+};
 
 export default PortfolioContainer;

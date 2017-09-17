@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import React from "react";
 
 class ProjectDetailsIntroView extends React.Component {
@@ -16,6 +16,6 @@ class ProjectDetailsIntroView extends React.Component {
   }
 }
 ProjectDetailsIntroView.propTypes = {
-  currentProject : React.PropTypes.object
-}
+  currentProject : PropTypes.object
+};
 export default ProjectDetailsIntroView;

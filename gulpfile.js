@@ -5,6 +5,7 @@ const babel = require('gulp-babel');
 const concat = require('gulp-concat');
 const cond = require('gulp-cond');
 const eslint = require('gulp-eslint');
+const gulpIf = require('gulp-if');
 const less       = require('gulp-less');
 const livereload = require('gulp-livereload');
 const minifyCSS = require('gulp-clean-css');
@@ -97,6 +98,20 @@ gulp.task('lint', () => {
   return gulp.src(config.paths.js)
   .pipe(eslint())
   .pipe(eslint.format())
+});
+
+function isFixed(file) {
+	// Has ESLint fixed the file contents?
+	return file.eslint != null && file.eslint.fixed;
+}
+gulp.task('lint-fix', () => {
+  return gulp.src(config.paths.js)
+  .pipe(eslint({
+			fix: true
+		}))
+  .pipe(eslint.format())
+  // if fixed, write the file to dest
+	.pipe(gulpIf(isFixed, gulp.dest(src)));
 });
 
 // Bundles our JS (see the helper function at the bottom of the file)

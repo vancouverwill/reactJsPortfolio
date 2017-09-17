@@ -1,6 +1,6 @@
 import ImageCacher from "./ImageCacher.js";
 import PortfolioContainer from "./PortfolioContainer.js";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import React from "react";
 
 const emptyGallerySetSize = 0;
@@ -75,7 +75,7 @@ class ImagePreLoadingClass  extends React.Component{
   }
 }
 ImagePreLoadingClass.propTypes = {
-  url: React.PropTypes.string
-}
+  url: PropTypes.string
+};
 
 export default ImagePreLoadingClass;
