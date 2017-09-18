@@ -1,0 +1,93 @@
+@import "./Variables.less";
+
+.portfolioProjectAnimation-enter {
+	position: absolute;
+	transition: transform @projectListViewSlideAnimations;
+}
+
+.portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  opacity: 1;
+}
+
+.portfolioProjectAnimation-leave {
+	position: absolute;
+	opacity: 1;
+	transition: transform @projectListViewSlideAnimations;
+}
+
+.portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+}
+
+/** UP *******/
+
+.movingUp .portfolioProjectAnimation-enter {
+	top:100%;
+}
+
+.movingUp .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  transform: translateY(-100%);
+}
+
+.movingUp .portfolioProjectAnimation-leave {
+}
+
+.movingUp .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+  	transform: translateY(-100%);
+}
+
+
+/** DOWN *******/
+
+.movingDown .portfolioProjectAnimation-enter {
+  top:-100%;
+}
+
+.movingDown .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  transform: translateY(+100%);
+}
+
+.movingDown .portfolioProjectAnimation-leave {
+}
+
+.movingDown .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+ 	transform: translateY(+100%);
+}
+
+/** LEFT *******/
+
+.movingLeft .portfolioProjectAnimation-enter {
+	top:0%;	
+	left:100%;
+}
+
+.movingLeft .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  transform: translateX(-100%);
+}
+
+.movingLeft .portfolioProjectAnimation-leave {
+	top:0%;
+	left:0%;
+}
+
+.movingLeft .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+ 	transform: translateX(-100%);
+}
+
+/** RIGHT *******/
+
+.movingRight .portfolioProjectAnimation-enter {
+	top:0%;	
+  right:100%;
+}
+
+.movingRight .portfolioProjectAnimation-enter.portfolioProjectAnimation-enter-active {
+  transform: translateX(100%);
+}
+
+.movingRight .portfolioProjectAnimation-leave {
+	top:0%;
+}
+
+.movingRight .portfolioProjectAnimation-leave.portfolioProjectAnimation-leave-active {
+ 	transform: translateX(100%);
+}

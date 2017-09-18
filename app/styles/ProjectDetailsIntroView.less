@@ -1,0 +1,26 @@
+@import "./Variables.less";
+
+.projectDetailsIntroView {
+	overflow: hidden;
+  position: relative;
+  top: 0;
+  text-align: center;
+  width: 100%;
+  opacity : 0; 
+  transition: 
+    height @projectDetailsViewAnimations ease-in-out, 
+    opacity @projectDetailsViewAnimations,
+    top @projectDetailsViewAnimations;
+  height: 0px;
+}
+
+.projectDetailsIntroView h2 {
+    font-size: 2em;
+    margin-top: 6rem;
+    margin-bottom: 0.5em;
+}
+
+.projectDetailsView_active .projectDetailsIntroView {
+	opacity : 1; 
+	height: 12rem;
+}

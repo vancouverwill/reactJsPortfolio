@@ -1,0 +1,43 @@
+@import "./Variables.less";
+
+.arrowSeeProjectDetails {
+	color: @linkColor2;
+    cursor: pointer;
+    font-size: 1.6rem;
+    transition: transform 1s ease-out, margin-bottom 1s;
+    margin-bottom: 0px;
+    transform: scale(0.0);
+    transform-origin:left;
+}
+
+.arrowSeeProjectDetailsArrow {
+	padding-left: 8px;
+}
+
+.projectTitle {
+	cursor: pointer;
+	height: auto;
+	overflow: hidden;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    transition: opacity @projectListViewMenuAnimations, transform @projectListViewMenuAnimations;
+}
+
+.active.projectTitle {
+	transform: scale(1.3) translateX(25%);
+}
+
+.projectTitle .arrowSeeProjectDetails {
+}
+.active.projectTitle .arrowSeeProjectDetails {
+	transform: scale(1.0);
+}
+
+.active.projectTitle .projectShortDescription {
+  margin-bottom: 2rem;
+}
+
+.active.projectTitle .arrowSeeProjectDetails {
+  margin-bottom: 8rem;
+}

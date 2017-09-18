@@ -1,0 +1,26 @@
+@import "./Variables.less";
+
+.projectDetailsMainView {
+	overflow: hidden;
+	position: relative;
+	transition: transform @projectDetailsViewAnimations ease-in-out, opacity @projectDetailsViewAnimations;
+	z-index: 30;
+	width:100%;
+	opacity : 0; 
+	transform : scale(0.0,0.0);
+}
+
+.projectDetailsView_active .projectDetailsMainView {
+	opacity : 1; 
+	transform : scale(1,1);
+}
+.projectDetailsContent {
+	padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 40px;
+	text-align: center;
+}
+
+.projectDetailsContent li {
+	text-align: left;
+}
