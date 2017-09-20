@@ -8,6 +8,13 @@ import PropTypes from "prop-types";
 import React from "react";
 import ReactDOM from "react-dom";
 
+const ANIMATING = {
+  LEFT: "movingLeft",
+  RIGHT: "movingRight",
+  UP: "movingUp",
+  DOWN: "movingDown",
+};
+
 /**
  * PortfolioContainer is the main component which handles the swipe events to move projects up and down
  * and the left, right click events to change the selected image within a project
@@ -18,10 +25,9 @@ class PortfolioContainer extends React.Component{
     this.isAnimating = false;
     this.unSetProjectIndex = -1;
     this.currentProjectIndex = this.unSetProjectIndex;
-    this.animationDirection = "movingUp";
+    this.animationDirection = ANIMATING.UP;
     this.animationDuration = 1200;
     this.state = {
-      title: "Portfolio Site",
       showContactModal: false,
       showListView: true,
       currentProject : undefined,
@@ -49,9 +55,9 @@ class PortfolioContainer extends React.Component{
     for (let i = 0; i < this.props.projects.length; i++) {
       if (this.props.projects[i].name == projectName) {
         if (i < this.currentProjectIndex) {
-          this.animationDirection = "movingDown";
+          this.animationDirection = ANIMATING.DOWN;
         } else {
-          this.animationDirection = "movingUp";
+          this.animationDirection = ANIMATING.UP;
         }
         this.setState({"currentProject" : this.props.projects[i]});
         this.currentProjectIndex = i;
@@ -69,7 +75,7 @@ class PortfolioContainer extends React.Component{
     }
     else {
       // no project means reset
-      this.animationDirection = "movingDown";
+      this.animationDirection = ANIMATING.DOWN;
       this.currentProjectIndex = this.unSetProjectIndex;
       this.setState({"animatedProject" : null});
       this.setState({"animatedImageUrl" : null});
@@ -164,7 +170,7 @@ class PortfolioContainer extends React.Component{
     if (this.isAnimating ===   true) return;
     this.setAnimating();
 
-    this.animationDirection = "movingLeft";     
+    this.animationDirection = ANIMATING.LEFT;     
     let newIndex;         
 
     if (this.state.animatedImageUrlIndex != 0) {
@@ -185,7 +191,7 @@ class PortfolioContainer extends React.Component{
     if (this.isAnimating ===   true) return;
     this.setAnimating();
 
-    this.animationDirection = "movingRight";
+    this.animationDirection = ANIMATING.RIGHT;
     let newIndex;        
 
     if (this.state.animatedImageUrlIndex != this.state.currentProject.images.length - 1) {

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from"react";
 
 class ContactModal  extends React.Component {
-  render= () => {
+  render = () => {
     return (
       <div id="modalContactView" className="active">
         <div className="closeButton modalCloseButton" onClick={this.props.hideContactView} >
