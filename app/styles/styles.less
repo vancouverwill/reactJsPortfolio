@@ -35,24 +35,6 @@ p {
 	float: left;
 }
 
-
-
-
-
-
-// #projectList  h4 {
-// 	margin: 0px;
-// 	padding-top: 25px;
-//     padding-bottom: 5px;
-	
-// }
-
-// .projectListView_active #projectList h4 {
-// 	transition: transform 1s;
-// 	transform: scaleY(0.90);
-// }
-
-
 .projectListView_active #projectList .projectShortDescription {
 	transition: transform 1s, margin-bottom 1s;
 	transform: scaleY(0.90);
@@ -168,9 +150,7 @@ p {
 
 /** RESPONSIVE SECTION ***/
 
-/* Extra small devices (phones, less than 768px) */
-/* No media query since this is the default in Bootstrap */
-
+.extraSmallDevices({
 	html, body {
 		font-size: 12px;
 	}
@@ -197,8 +177,6 @@ p {
 		font-size: 1em;
 	    margin-right: 100px;
 	}
-
-
 
 	.projectDetailsView_active .projectListView {
 	    /*transform: scale(1.0, 0.6)  translateY(30%);*/
@@ -230,57 +208,22 @@ p {
  	.projectDetailsView_active .projectDetailsMainView {
  		/*top: 80%;*/
  	}
+});
 
-
- 	
-
-
-
-
-/* Small devices (tablets, 768px and up) */
-@media (min-width: @screen-sm-min) { 
-
-	/*.introExplainingText {
-		font-size: 1.2em;
-	}*/
-
-	/*h4, .h4 {
-	    font-size: 4rem;
-	}*/
-
+.smallDevices({ 
 	.projectDetailsView_active .projectListView {
-	    /*transform: scale(1.0, 0.6)  translateY(16em);*/
 	    transform: none;
 	    height: 760px;
-	    /*width: 540px;*/
 	}
-}
+});
 
-/* Small devices with retina display (tablets, 768px and up) */
-@media (max-width: @screen-md-min) and (min-resolution: 2dppx) {
+.smallRetinaDevices( {
 	html, body {
 		font-size: 25px;
 	}
-	h4, .h4 {
-	    /*font-size: 8rem;*/
-	}
+});
 
-	// #contactSection {
-	
-
-	/*#contactButton {
->>>>>>> changeProjectListViewWithFixedWidth
-	    font-size: 4rem;
-	}*/
-
-	.projectDetailsView_active .projectDetailsIntroView {
-	/*height: 22rem;*/
-	}
-}
-
-
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: @screen-md-min) { 
+.mediumDevices({
 
 	html, body {
 		font-size: 12px;
@@ -343,4 +286,4 @@ p {
  		top: 70%;
  	}*/
 
-}
+});

@@ -7,3 +7,24 @@
 @projectDetailsViewAnimations: 2.0s;
 
 @headerBarHeight: 4em;
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+.extraSmallDevices(@rules) {
+  @rules();
+}
+
+/* Small devices (tablets, 768px and up) */
+.smallDevices(@rules) {
+@media (min-width: @screen-sm-min) { @rules(); }
+}
+
+/* Small devices with retina display (tablets, 768px and up) */
+.smallRetinaDevices(@rules) {
+@media (max-width: @screen-md-min) and (min-resolution: 2dppx) { @rules(); }
+}
+
+/* Medium devices (desktops, 992px and up) */
+.mediumDevices(@rules) {
+  @media (min-width: @screen-md-min) { @rules(); }
+}
