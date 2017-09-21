@@ -1,6 +1,7 @@
 
 
 @import "../../node_modules/bootstrap/less/bootstrap.less";
+@import "./Variables.less";
 @import "./ContactModal.less";
 @import "./HeaderBar.less";
 @import "./PortfolioContainer.less";
@@ -9,7 +10,7 @@
 @import "./ProjectDetailsMainView.less";
 @import "./ProjectList.less";
 @import "./ProjectName.less";
-@import "./Variables.less";
+
 
 body {
 	background: white;
@@ -50,12 +51,12 @@ p {
 }
 
 
-.animating_active .projectTitle {
+.animating_active .projectName {
 	opacity: 0.7;
 	cursor: default;
 }
 
-.animating_active .active.projectTitle {
+.animating_active .active.projectName {
 	opacity: 1;
 }
 
@@ -115,35 +116,7 @@ p {
 	cursor: pointer;
 }
 
-.arrow__individualProjecCarousel {
-    cursor: pointer;
-    opacity: 0;
-    position: absolute;
-    transition: opacity 1s ease-in-out;
-}
 
-.projectDetailsView_active .arrow__individualProjecCarousel {
-	opacity: 1;
-}
-
-.projectDetailsView_active.singleImageProject .arrow__individualProjecCarousel {
-	cursor: none;
-	opacity: 0;
-}
-
-.projectDetailsView_active .animating_active .arrow__individualProjecCarousel {
-	opacity: 0.1;
-}
-
-#leftArrow__individualProjecCarousel {
-    left: 10%;
-    top: 15%;
-}
-
-#rightArrow__individualProjecCarousel {
-    right: 10%;
-    top: 15%;
-}
 
 
 
@@ -155,66 +128,29 @@ p {
 		font-size: 12px;
 	}
 
-	.introExplainingText {
-	    font-size: 2em;
-	    text-align: left;
-	}
-
-	#projectListMenu {
-		margin-left: 5%;
-		width: 85%;
-	}
-
-	h4, .h4 {
-	    font-size: 4rem;
-	}
-
-	.active.projectTitle {
-	    transform: translateX(8%);
-	}
-
-	.projectTitle .arrowSeeProjectDetails {
-		font-size: 1em;
-	    margin-right: 100px;
-	}
-
-	.projectDetailsView_active .projectListView {
-	    /*transform: scale(1.0, 0.6)  translateY(30%);*/
-	    transform: none;
-	    height: 460px;
-	}
-
-	.arrow__individualProjecCarousel {
-	    color: lightgrey;
-	    font-size: 10em;
-	    z-index: 20;
-	}
-
-	.projectDetailsView_active .closeButton {
-    font-size: 6rem;
-	}
-
-	.projectDetailsIntroView h2 {
-	    /*margin-top: 12rem;*/
-	}
+	// h4, .h4 {
+	// 	font-size: 4rem;
+	//   }
 
 
-	.projectDetailsIntroView {
-		padding-left: 10%;
-    	padding-right: 10%;
-	}
+	// .projectDetailsView_active .closeButton {
+    // font-size: 6rem;
+	// }
+
+	// .projectDetailsIntroView h2 {
+	//     /*margin-top: 12rem;*/
+	// }
 
 
- 	.projectDetailsView_active .projectDetailsMainView {
- 		/*top: 80%;*/
- 	}
+	
+
+
+ 	// .projectDetailsView_active .projectDetailsMainView {
+ 	// 	/*top: 80%;*/
+ 	// }
 });
 
 .smallDevices({ 
-	.projectDetailsView_active .projectListView {
-	    transform: none;
-	    height: 760px;
-	}
 });
 
 .smallRetinaDevices( {
@@ -229,58 +165,23 @@ p {
 		font-size: 12px;
 	}
 
-	.introExplainingText {
-		font-size: 1.2em;
-		 text-align: center;
-	}
-
-	#projectListMenu {
-		margin: auto;
-		width: 450px;
-	}
-
-	.projectTitle {
-		height: auto;
-	}
-
-	#projectList h4 {
-	    font-size: 2rem;
-	    margin-bottom: 2rem;
-
-	    /*margin: 0px;*/
-	padding-top: 0px;
-    padding-bottom: 0px;
-	}
-
-
-	#projectList .projectShortDescription {
-		font-size: 1.1rem;
-		margin-bottom: 4rem;
-		    max-height: 3.0rem;
-    overflow: hidden;
-	}
 
 
 
-	.projectDetailsView_active .projectListView {
-	    /*transform: scale(0.7, 0.6) translateY(18em);*/
-	    transform: none;
-	    height: 360px;
-	    width: 540px;
-	}
 
-	.projectDetailsIntroView h2 {
-		/*margin-top: 6rem;*/
-	}
 
-	.arrow__individualProjecCarousel {
-	    color: black;
-	    font-size: 5em;
-	}
 
-	.projectDetailsView_active .closeButton {
-	    font-size: 3rem; 
-	}
+
+
+
+	// .projectDetailsIntroView h2 {
+	// 	/*margin-top: 6rem;*/
+	// }
+
+
+	// .projectDetailsView_active .closeButton {
+	//     font-size: 3rem; 
+	// }
 
 	/*.projectDetailsView_active .projectDetailsMainView {
  		top: 70%;

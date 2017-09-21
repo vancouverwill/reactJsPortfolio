@@ -9,7 +9,7 @@ class ProjectName  extends React.Component {
   render= () => {
     const classes = classNames({
       "active": this.props.active,
-      "projectTitle" : true
+      "projectName" : true
     });
 
     let fontColor;

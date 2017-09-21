@@ -16,16 +16,11 @@
 
 .projectListView {
 	display: flex;
-	/*transition: transform 2s ease-in-out, opacity 2s, top 2s;*/
 	transition: height @projectDetailsViewAnimations, width @projectDetailsViewAnimations, top @projectDetailsViewAnimations;
-	/*left: 0px;*/
-	/*position: absolute;*/
 	position: relative;
-	/*top: 0px;*/
 	margin: auto;
 	overflow: hidden;
-    /*transform-origin: top;*/
-    width : 100%; 
+  width : 100%; 
 	height : 100%;
 }
 
@@ -41,3 +36,66 @@
 	transform: translateX(0px);
 
 }
+
+.arrow__individualProjecCarousel {
+	cursor: pointer;
+	opacity: 0;
+	position: absolute;
+	transition: opacity 1s ease-in-out;
+}
+
+.projectDetailsView_active .arrow__individualProjecCarousel {
+opacity: 1;
+}
+
+.projectDetailsView_active.singleImageProject .arrow__individualProjecCarousel {
+cursor: none;
+opacity: 0;
+}
+
+.projectDetailsView_active .animating_active .arrow__individualProjecCarousel {
+opacity: 0.1;
+}
+
+#leftArrow__individualProjecCarousel {
+	left: 10%;
+	top: 15%;
+}
+
+#rightArrow__individualProjecCarousel {
+	right: 10%;
+	top: 15%;
+}
+
+.extraSmallDevices({
+	.projectDetailsView_active .projectListView {
+		transform: none;
+		height: 460px;
+	}
+
+	.arrow__individualProjecCarousel {
+		color: lightgrey;
+		font-size: 10em;
+		z-index: 20;
+	}
+});
+
+.smallDevices({ 
+	.projectDetailsView_active .projectListView {
+	    transform: none;
+	    height: 760px;
+	}
+});
+
+.mediumDevices({
+	.arrow__individualProjecCarousel {
+		color: black;
+		font-size: 5em;
+	}
+	.projectDetailsView_active .projectListView {
+		/*transform: scale(0.7, 0.6) translateY(18em);*/
+		transform: none;
+		height: 360px;
+		width: 540px;
+}
+});
