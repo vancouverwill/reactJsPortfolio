@@ -31,7 +31,7 @@ class ContactModal  extends React.Component {
   }
 }
 ContactModal.propTypes = {
-  hideContactView: PropTypes.func,
+  hideContactView: PropTypes.func.isRequired,
 };
 
 export default ContactModal;

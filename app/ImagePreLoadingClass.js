@@ -75,7 +75,7 @@ class ImagePreLoadingClass  extends React.Component{
   }
 }
 ImagePreLoadingClass.propTypes = {
-  url: PropTypes.string
+  url: PropTypes.string.isRequired
 };
 
 export default ImagePreLoadingClass;

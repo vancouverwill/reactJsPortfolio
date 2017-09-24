@@ -24,9 +24,9 @@ class HeaderBar  extends React.Component {
   }
 }
 HeaderBar.propTypes = {
-  handleProjectListShow: PropTypes.func,
-  hideContactView: PropTypes.func,
-  showContactView: PropTypes.func,
+  handleProjectListShow: PropTypes.func.isRequired,
+  hideContactView: PropTypes.func.isRequired,
+  showContactView: PropTypes.func.isRequired,
 };
 
 export default HeaderBar;

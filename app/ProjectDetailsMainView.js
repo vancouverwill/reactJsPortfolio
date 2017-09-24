@@ -20,6 +20,6 @@ class ProjectDetailsMainView  extends React.Component {
 }
 ProjectDetailsMainView.propTypes = {
   currentProject : PropTypes.object,
-  handleProjectListShow : PropTypes.func
+  handleProjectListShow : PropTypes.func.isRequired
 };
 export default ProjectDetailsMainView;

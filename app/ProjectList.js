@@ -105,11 +105,11 @@ class ProjectList extends React.Component{
 }
 ProjectList.propTypes = {
   currentProjectIndex: PropTypes.number,
-  projects:  PropTypes.array,
-  imageReady: PropTypes.bool,
-  selctProject: PropTypes.func,
-  handleProjectDetailsShow: PropTypes.func,
-  chooseProjectOne: PropTypes.func,
+  projects:  PropTypes.arrayOf(PropTypes.object),
+  imageReady: PropTypes.bool.isRequired,
+  selctProject: PropTypes.func.isRequired,
+  handleProjectDetailsShow: PropTypes.func.isRequired,
+  chooseProjectOne: PropTypes.func.isRequired,
 };
 
 export default ProjectList;

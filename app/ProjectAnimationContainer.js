@@ -29,9 +29,15 @@ class ProjectAnimationContainer extends React.Component{
     );
   }
 }
+ProjectAnimationContainer.ANIMATING = {
+  LEFT: "movingLeft",
+  RIGHT: "movingRight",
+  UP: "movingUp",
+  DOWN: "movingDown",
+};
 ProjectAnimationContainer.propTypes = {
   animatedImageUrl :  PropTypes.string,
-  animationDirection :  PropTypes.string,
+  animationDirection :  PropTypes.oneOf(Object.values(ProjectAnimationContainer.ANIMATING)),
 };
 
 export default ProjectAnimationContainer;

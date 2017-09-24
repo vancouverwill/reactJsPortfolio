@@ -23,8 +23,7 @@ class ProjectName  extends React.Component {
     return (
       <div className={classes}>          
         <h4  onClick={this.selctProject} style={fontColor} >
-          {this.props.name}
-                  
+          {this.props.name}       
         </h4>
         <p className="projectShortDescription" dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
         <p className="arrowSeeProjectDetails" onClick={this.props.handleProjectDetailsShow}>
@@ -36,11 +35,11 @@ class ProjectName  extends React.Component {
   }
 }
 ProjectName.propTypes = {
-  name:  PropTypes.string,
-  shortDescription:  PropTypes.string, 
+  name:  PropTypes.string.isRequired,
+  shortDescription:  PropTypes.string.isRequired, 
   active: PropTypes.bool,
-  selctProject: PropTypes.func,
-  handleProjectDetailsShow: PropTypes.func
+  selctProject: PropTypes.func.isRequired,
+  handleProjectDetailsShow: PropTypes.func.isRequired
 };
 
 export default ProjectName;
