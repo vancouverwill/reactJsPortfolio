@@ -1,77 +1,24 @@
 import ProjectName from"./ProjectName.js";
 import PropTypes from "prop-types";
-import React from"react";
+import React from "react";
 
 
 class ProjectList extends React.Component{
+  /**
+   * As the current project index updates we use it to define the vertical position
+   * of the projectList
+   */
   componentWillUpdate = () => {
- 
     if (this.props.projects !== undefined && this.props.currentProjectIndex !== -1) {
-
-      const projectTitleHeight = 120;
-
-      const verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * projectTitleHeight + 120;
-      
-
-
-      // const projectTitles = document.getElementsByClassName("projectTitle");
-
-      // @todo clear up
-      // var verticalMovementInPixels = projectTitles[this.props.currentProjectIndex].offsetTop - 80;
-
-      // below code is to test out aligning from bottom of page
-
-      // const projectTitleEmHeight = 12; // this has to be matched to the .projectTitle CSS height property so that the animation moves up relative to the length of the menu
-
-
-      // const verticalMovementInEm = (this.props.currentProjectIndex + 0.5) * projectTitleEmHeight;
-
-      // const parentElement = projectTitles[this.props.currentProjectIndex].offsetParent;
-
-      // const tempOffSetHeight = parentElement.offsetHeight;
-
-      // const offSetTop = projectTitles[this.props.currentProjectIndex].offsetTop;
-
-      // const offsetBottom = parentElement.offsetHeight - projectTitles[this.props.currentProjectIndex].offsetTop  - 80;
-
-      // this.verticalMovement = {transform: "translateY(-" + verticalMovementInEm +  "em)"};
-      // this.verticalMovement = {transform: "translateY(-" + verticalMovementInPixels +  "px)"};
-      this.verticalMovement = {top: "-" + verticalMovementInPixels +  "px"};
-             
-
-
-      // this.verticalMovement = {bottom: "+" + verticalMovementInPixels +  "px"};
+      this.verticalMovementInPixels = (this.props.currentProjectIndex + 0.5) * ProjectList.PROJECT_TITLE_HEIGHT + 120;
+    } else {
+      this.verticalMovementInPixels = 0;
     }
-    else {
-      // this.verticalMovement = {transform: "translateY(-" + 0 +  "px)"};
-      this.verticalMovement = {top: "-" + 0 +  "px"};
-      // 
-            
-      // below code is to test out aligning from bottom of page
-
-      // const menu = document.getElementById("projectList");
-      // const menuHeight = menu.offsetHeight;
-
-
-      // const containers = document.getElementsByClassName("projectListView");
-      // const containersHeight = containers[0].offsetHeight;
-
-      // const displacementFromBottom = menu.offsetHeight - containers[0].offsetHeight;
-
-      // this.verticalMovement = {bottom: "" + displacementFromBottom +  "px"};
-    }
-  }
-  componentDidUpdate = () => {
-    if (this.props.projects !== undefined && this.props.currentProjectIndex == -1) {
-      // console.log("testing for projects loading, this would be the place to switch to bottom css positioning");
-    }
-        
   }
   render = () => {
     let loop;
-
-    if (this.props.projects !== undefined && this.props.imageReady == true) {
-      loop = this.props.projects.map(function (project) {
+    if (this.props.projects !== undefined && this.props.imagesReady == true) {
+      loop = this.props.projects.map((project) => {
         return (
           <ProjectName
             key={project.name}
@@ -85,9 +32,8 @@ class ProjectList extends React.Component{
         );
       }, this);
     }
-
     return (
-      <div id="projectList" style={this.verticalMovement} >
+      <div id="projectList" style={{top: "-" + this.verticalMovementInPixels +  "px"}} >
         <p className="introExplainingText">
           scroll down to view some of the key projects 
           <i className="fa fa-arrow-down introText__arrow" onClick={this.props.chooseProjectOne} />
@@ -103,10 +49,13 @@ class ProjectList extends React.Component{
     );
   }
 }
+
+ProjectList.PROJECT_TITLE_HEIGHT = 120;
+
 ProjectList.propTypes = {
   currentProjectIndex: PropTypes.number,
   projects:  PropTypes.arrayOf(PropTypes.object),
-  imageReady: PropTypes.bool.isRequired,
+  imagesReady: PropTypes.bool.isRequired,
   selctProject: PropTypes.func.isRequired,
   handleProjectDetailsShow: PropTypes.func.isRequired,
   chooseProjectOne: PropTypes.func.isRequired,

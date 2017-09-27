@@ -206,7 +206,7 @@ class PortfolioContainer extends React.Component{
  
     let overallStatusClasses;
 
-    if (this.props.imageReady == false ){
+    if (this.props.imagesReady == false ){
       overallStatusClasses = ClassNames({"imageLoadingView_active": true});
     }
     else if (this.state.showContactModal == true) {
@@ -225,7 +225,7 @@ class PortfolioContainer extends React.Component{
       });
     }
     /**
-     *  if (this.props.imageReady == false ){
+     *  if (this.props.imagesReady == false ){
         overallStatusClasses = "imageLoadingView_active";
     }
     else if (this.state.showListView == true && this.currentProjectIndex == -1) {
@@ -275,7 +275,7 @@ class PortfolioContainer extends React.Component{
               selctProject={this.selctProject}
               handleProjectDetailsShow={this.handleProjectDetailsShow}
               chooseProjectOne={this.chooseProjectOne}
-              imageReady={this.props.imageReady}
+              imagesReady={this.props.imagesReady}
               currentProjectIndex={this.currentProjectIndex}>
             </ProjectList>
           </div>
@@ -292,7 +292,7 @@ class PortfolioContainer extends React.Component{
 }
 PortfolioContainer.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.object),
-  imageReady: PropTypes.bool,
+  imagesReady: PropTypes.bool,
 };
 
 export default PortfolioContainer;

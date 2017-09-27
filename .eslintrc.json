@@ -41,7 +41,8 @@
     },
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "jest/globals": true
     },
     "extends": "eslint:recommended",
     "globals": {
@@ -60,6 +61,7 @@
         "babel",
         "react",
         "class-property",
+        "jest",
         "import",
         "promise"
     ]

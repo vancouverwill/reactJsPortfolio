@@ -1,6 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import values from "object.values";
+if (!Object.values) {
+  values.shim();
+}
 
 class ProjectAnimationContainer extends React.Component{
   render = () => {

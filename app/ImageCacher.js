@@ -2,7 +2,6 @@ class ImageCacher {
   constructor() {
     this.hash = {};
     this.cache = [];
-    // this.loadImages(urls);
   }
   loadImages = (urls) => {
     const promises = urls.map(this.imgRequestUrlLoad);
@@ -58,7 +57,7 @@ class ImageCacher {
           reject(Error("Image didn't load successfully; error code:" + request.statusText));
         }
       };
-      request.onerror = function() {
+      request.onerror = () => {
         // Also deal with the case when the entire request fails to begin with
         // This is probably a network error, so reject the promise with an appropriate message
         reject(Error("There was a network error."));

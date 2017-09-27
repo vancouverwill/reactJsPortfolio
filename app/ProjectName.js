@@ -36,7 +36,8 @@ class ProjectName  extends React.Component {
 }
 ProjectName.propTypes = {
   name:  PropTypes.string.isRequired,
-  shortDescription:  PropTypes.string.isRequired, 
+  shortDescription:  PropTypes.string.isRequired,
+  fontColor: PropTypes.string.isRequired,
   active: PropTypes.bool,
   selctProject: PropTypes.func.isRequired,
   handleProjectDetailsShow: PropTypes.func.isRequired

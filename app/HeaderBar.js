@@ -9,7 +9,7 @@ class HeaderBar  extends React.Component {
         <ContactModal hideContactView={this.props.hideContactView} ></ContactModal>
         <div id="contactSection" className="headerBarFont">
           <p>
-            <a  href="https://github.com/vancouverwill/reactJsPortfolio">Source</a>
+            <a  href="https://github.com/vancouverwill/reactJsPortfolio" target="_blank" rel="noopener">Source</a>
             &nbsp;
             <span id="contactButton"  onClick={this.props.showContactView} >Contact</span>
           </p>
