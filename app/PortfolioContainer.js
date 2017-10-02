@@ -16,8 +16,7 @@ class PortfolioContainer extends React.Component{
   constructor() {
     super();
     this.isAnimating = false;
-    this.unSetProjectIndex = -1;
-    this.currentProjectIndex = this.unSetProjectIndex;
+    this.currentProjectIndex = PortfolioContainer.unSetProjectIndex;
     this.animationDirection = ProjectAnimationContainer.ANIMATING.UP;
     this.animationDuration = 1200;
     this.state = {
@@ -28,9 +27,6 @@ class PortfolioContainer extends React.Component{
       items : []
     };
   }
-  static unSetProjectIndex() {
-    return this.unSetProjectIndex;
-  }
   selctProject = (projectName) => {
     if (this.state.currentProject === undefined || this.state.currentProject.name != projectName) {
       this.updateCurrentProject(projectName);
@@ -40,8 +36,8 @@ class PortfolioContainer extends React.Component{
     }
   }
   updateCurrentProject = (projectName) => {
-    if (this.isAnimating ===   true) return;
-    if (this.state.showListView ===  false) return;
+    if (this.isAnimating === true) return;
+    if (this.state.showListView === false) return;
     let currentProject;
 
     this.setAnimating();
@@ -69,12 +65,11 @@ class PortfolioContainer extends React.Component{
     else {
       // no project means reset
       this.animationDirection = ProjectAnimationContainer.ANIMATING.DOWN;
-      this.currentProjectIndex = this.unSetProjectIndex;
+      this.currentProjectIndex = PortfolioContainer.unSetProjectIndex;
       this.setState({"animatedProject" : null});
       this.setState({"animatedImageUrl" : null});
       this.setState({"animatedImageUrlIndex" : null});
     }
-
     this.setNotAnimating();
   }
   handleProjectDetailsShow = () => {
@@ -212,10 +207,10 @@ class PortfolioContainer extends React.Component{
     else if (this.state.showContactModal == true) {
       overallStatusClasses = ClassNames({"modalView_active": true});
     }
-    else if (this.state.showListView == true && this.currentProjectIndex == this.unSetProjectIndex) {
+    else if (this.state.showListView == true && this.currentProjectIndex == PortfolioContainer.unSetProjectIndex) {
       overallStatusClasses = ClassNames({"intialView_active": true});
     }
-    else if (this.state.showListView == true && this.currentProjectIndex != this.unSetProjectIndex) {
+    else if (this.state.showListView == true && this.currentProjectIndex != PortfolioContainer.unSetProjectIndex) {
       overallStatusClasses = ClassNames({"projectListView_active": true});
     }
     else {
@@ -290,6 +285,7 @@ class PortfolioContainer extends React.Component{
     );
   }
 }
+PortfolioContainer.unSetProjectIndex = -1;
 PortfolioContainer.propTypes = {
   projects: PropTypes.arrayOf(PropTypes.object),
   imagesReady: PropTypes.bool,

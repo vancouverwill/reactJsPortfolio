@@ -29,7 +29,7 @@ class ImagePreLoadingClass  extends React.Component{
           const projects = [];
           const allImages = [];
 
-          apiProjects.forEach((apiProject) => {
+          apiProjects.map((apiProject) => {
             const project = {};
             project.name = apiProject.title.rendered;
             project.shortDescription = apiProject.project_short_description;
@@ -39,7 +39,7 @@ class ImagePreLoadingClass  extends React.Component{
             project.images = [];
 
             if (apiProject.gallery_set !== undefined && apiProject.gallery_set.length > emptyGallerySetSize) {
-              apiProject.gallery_set.forEach((galleryImage) => {
+              apiProject.gallery_set.map((galleryImage) => {
                 project.images.push(galleryImage.url);
                 allImages.push(galleryImage.url);
               });

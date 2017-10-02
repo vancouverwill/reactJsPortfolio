@@ -1,4 +1,3 @@
-// import PortfolioContainer from "./PortfolioContainer";
 import ProjectList from "./ProjectList";
 import ProjectName from "./ProjectName";
 import React from "react";
