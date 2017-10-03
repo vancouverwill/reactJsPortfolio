@@ -3,15 +3,19 @@ import React from "react";
 
 class ProjectDetailsIntroView extends React.Component {
   render = () => {
-    if (this.props.currentProject === undefined) {
-      return (
-        <div className="projectDetailsIntroView"></div>
-      );
+    let content;
+    if (this.props.currentProject !== undefined) {
+      content = 
+        <div>
+          <h2>{this.props.currentProject.name}</h2>
+          <p dangerouslySetInnerHTML={{__html: this.props.currentProject.shortDescription}}></p>    
+        </div>;  
     }
     return (
       <div className="projectDetailsIntroView">
-        <h2>{this.props.currentProject.name}</h2>
-        <p dangerouslySetInnerHTML={{__html: this.props.currentProject.shortDescription}}></p>      </div>
+        {content}
+      </div>
+        
     );
   }
 }

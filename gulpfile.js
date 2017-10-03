@@ -79,7 +79,7 @@ gulp.task("clean", () => {
 gulp.task("test", run("npm test", {
   // So our task doesn"t error out when a test fails
   env: { NODE_ENV: "test" },
-  ignoreErrors: true
+  ignoreErrors: false
 }));
 
 

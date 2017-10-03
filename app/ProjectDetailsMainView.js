@@ -12,7 +12,6 @@ class ProjectDetailsMainView  extends React.Component {
       <div key={this.props.currentProject.name} className="projectDetailsContent">
         <span className="pointer"><i className="fa fa-arrow-up" onClick={this.props.handleProjectListShow}>Back to Projects</i></span>
         <h2>{this.props.currentProject.name}</h2>
-
         <p dangerouslySetInnerHTML={{__html: this.props.currentProject.description}}></p>
       </div>
     );

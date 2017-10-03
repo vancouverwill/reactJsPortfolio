@@ -42,19 +42,19 @@ class PortfolioContainer extends React.Component{
 
     this.setAnimating();
     for (let i = 0; i < this.props.projects.length; i++) {
-      if (this.props.projects[i].name == projectName) {
-        if (i < this.currentProjectIndex) {
-          this.animationDirection = ProjectAnimationContainer.ANIMATING.DOWN;
-        } else {
-          this.animationDirection = ProjectAnimationContainer.ANIMATING.UP;
-        }
-        this.setState({"currentProject" : this.props.projects[i]});
-        this.currentProjectIndex = i;
-        this.props.projects[i].active = true;
-        currentProject = this.props.projects[i];
-      } else {
+      if (this.props.projects[i].name != projectName) {
         this.props.projects[i].active = false;
+        continue;
       }
+      if (i < this.currentProjectIndex) {
+        this.animationDirection = ProjectAnimationContainer.ANIMATING.DOWN;
+      } else {
+        this.animationDirection = ProjectAnimationContainer.ANIMATING.UP;
+      }
+      this.setState({"currentProject" : this.props.projects[i]});
+      this.currentProjectIndex = i;
+      this.props.projects[i].active = true;
+      currentProject = this.props.projects[i];
     }
 
     if (currentProject !== undefined) {
@@ -145,7 +145,6 @@ class PortfolioContainer extends React.Component{
   }
   setNotAnimating = () => {
     const self = this;
-
     this.timeout = setTimeout(() => {
       self.isAnimating = false;
       self.setState({"showIsAnimating" : false});
