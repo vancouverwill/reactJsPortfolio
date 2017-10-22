@@ -58,17 +58,15 @@ class PortfolioContainer extends React.Component{
     }
 
     if (currentProject !== undefined) {
-      this.setState({"animatedProject" : currentProject});
       this.setState({"animatedImageUrl" : currentProject.images[0]});
-      this.setState({"animatedImageUrlIndex" : 0});
+      this.animatedImageIndex = 0;
     }
     else {
       // no project means reset
       this.animationDirection = ProjectAnimationContainer.ANIMATING.DOWN;
       this.currentProjectIndex = PortfolioContainer.unSetProjectIndex;
-      this.setState({"animatedProject" : null});
       this.setState({"animatedImageUrl" : null});
-      this.setState({"animatedImageUrlIndex" : null});
+      this.animatedImageIndex = null;
     }
     this.setNotAnimating();
   }
@@ -114,7 +112,6 @@ class PortfolioContainer extends React.Component{
     } else {
       this.moveDown();
     }
-
     this.setAnimating();
   }
   handleSwipeStart = (event) => {
@@ -158,17 +155,13 @@ class PortfolioContainer extends React.Component{
     this.setAnimating();
 
     this.animationDirection = ProjectAnimationContainer.ANIMATING.LEFT;     
-    let newIndex;         
 
-    if (this.state.animatedImageUrlIndex != 0) {
-      newIndex = this.state.animatedImageUrlIndex - 1;
+    if (this.animatedImageIndex != 0) {
+      this.animatedImageIndex = this.animatedImageIndex - 1;
     } else {
-      newIndex = this.state.currentProject.images.length - 1; 
+      this.animatedImageIndex = this.state.currentProject.images.length - 1; 
     }
-
-    this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
-    this.setState({"animatedImageUrlIndex" : newIndex});
-
+    this.setState({"animatedImageUrl" : this.state.currentProject.images[this.animatedImageIndex]});
     this.setNotAnimating();
   }
   /**
@@ -179,17 +172,13 @@ class PortfolioContainer extends React.Component{
     this.setAnimating();
 
     this.animationDirection = ProjectAnimationContainer.ANIMATING.RIGHT;
-    let newIndex;        
 
-    if (this.state.animatedImageUrlIndex != this.state.currentProject.images.length - 1) {
-      newIndex = this.state.animatedImageUrlIndex + 1;
+    if (this.animatedImageIndex != this.state.currentProject.images.length - 1) {
+      this.animatedImageIndex = this.animatedImageIndex + 1;
     } else {
-      newIndex =  0;
+      this.animatedImageIndex =  0;
     }
-
-    this.setState({"animatedImageUrl" : this.state.currentProject.images[newIndex]});
-    this.setState({"animatedImageUrlIndex" : newIndex});
-
+    this.setState({"animatedImageUrl" : this.state.currentProject.images[this.animatedImageIndex]});
     this.setNotAnimating();
   }
   getRootStatusClasses = () => {
