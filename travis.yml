@@ -1,0 +1,6 @@
+before_script:
+  - npm install -g gulp-cli
+cache:
+  directories:
+    - "node_modules"
+script: gulp test
