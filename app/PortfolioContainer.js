@@ -38,7 +38,6 @@ class PortfolioContainer extends React.Component{
   updateCurrentProject = (projectName) => {
     if (this.isAnimating === true) return;
     if (this.state.showListView === false) return;
-    let currentProject;
 
     this.setAnimating();
     for (let i = 0; i < this.props.projects.length; i++) {
@@ -54,11 +53,10 @@ class PortfolioContainer extends React.Component{
       this.setState({"currentProject" : this.props.projects[i]});
       this.currentProjectIndex = i;
       this.props.projects[i].active = true;
-      currentProject = this.props.projects[i];
     }
 
-    if (currentProject !== undefined) {
-      this.setState({"animatedImageUrl" : currentProject.images[0]});
+    if (this.state.currentProject !== undefined) {
+      this.setState({"animatedImageUrl" : this.state.currentProject.images[0]});
       this.animatedImageIndex = 0;
     }
     else {
