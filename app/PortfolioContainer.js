@@ -192,14 +192,8 @@ class PortfolioContainer extends React.Component{
 
     this.setNotAnimating();
   }
-  render = () => {
-
-    const animatingStatusClass = ClassNames({
-      "animating_active" : this.state.showIsAnimating
-    });
- 
+  getRootStatusClasses = () => {
     let overallStatusClasses;
-
     if (this.props.imagesReady == false ){
       overallStatusClasses = ClassNames({"imageLoadingView_active": true});
     }
@@ -218,6 +212,12 @@ class PortfolioContainer extends React.Component{
         "singleImageProject" : this.state.currentProject.images.length == 1 ? true : false
       });
     }
+    return overallStatusClasses;
+  }
+  render = () => {
+    const animatingStatusClass = ClassNames({
+      "animating_active" : this.state.showIsAnimating
+    });    
     /**
      *  if (this.props.imagesReady == false ){
         overallStatusClasses = "imageLoadingView_active";
@@ -244,7 +244,7 @@ class PortfolioContainer extends React.Component{
       
 
     return ( 
-      <div id="mainView" className={overallStatusClasses}><div id="animatingStatus" className={animatingStatusClass}>
+      <div id="mainView" className={this.getRootStatusClasses()}><div id="animatingStatus" className={animatingStatusClass}>
         <HeaderBar
           hideContactView={this.hideContactView}
           showContactView={this.showContactView}
