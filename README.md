@@ -1,3 +1,5 @@
+<img src="https://travis-ci.org/vancouverwill/reactJsPortfolio.svg?branch=master" />
+
 # reactJsPortfolio
 
 
