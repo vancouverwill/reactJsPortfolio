@@ -2,38 +2,36 @@ import PropTypes from "prop-types";
 import React from "react";
 import classNames from"classnames";
 
-class ProjectName  extends React.Component {
-  selctProject= () => {
-    this.props.selctProject(this.props.name);
-  }
-  render= () => {
-    const classes = classNames({
-      "active": this.props.active,
-      "projectName" : true
-    });
+const ProjectName = ({name, shortDescription, fontColor, active, selctProject, handleProjectDetailsShow}) => {
+  const selctProjectClick = () => {
+    selctProject (name);
+  };
+  const classes = classNames({
+    "active": active,
+    "projectName" : true
+  });
 
-    let fontColor;
-    if (this.props.active == true) {
-      fontColor = {"color" : this.props.fontColor};
-    }
-    else {
-      fontColor = {};
-    }
-
-    return (
-      <div className={classes}>          
-        <h4  onClick={this.selctProject} style={fontColor} >
-          {this.props.name}       
-        </h4>
-        <p className="projectShortDescription" dangerouslySetInnerHTML={{__html: this.props.shortDescription}}></p>
-        <p className="arrowSeeProjectDetails" onClick={this.props.handleProjectDetailsShow}>
-                    Read More 
-          <i className="fa fa-arrow-right arrowSeeProjectDetailsArrow" ></i>
-        </p>
-      </div>
-    );
+  let fontColorCSS;
+  if (active == true) {
+    fontColorCSS = {"color" : fontColor};
   }
-}
+  else {
+    fontColorCSS = {};
+  }
+
+  return (
+    <div className={classes}>          
+      <h4  onClick={selctProjectClick} style={fontColorCSS} >
+        {name}       
+      </h4>
+      <p className="projectShortDescription" dangerouslySetInnerHTML={{__html: shortDescription}}></p>
+      <p className="arrowSeeProjectDetails" onClick={handleProjectDetailsShow}>
+                  Read More 
+        <i className="fa fa-arrow-right arrowSeeProjectDetailsArrow" ></i>
+      </p>
+    </div>
+  );
+};
 ProjectName.propTypes = {
   name:  PropTypes.string.isRequired,
   shortDescription:  PropTypes.string.isRequired,
